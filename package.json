@@ -1,5 +1,5 @@
 {
-  "name": "Fooddesk",
+  "name": "delivery-react",
   "homepage": "https://fooddesk.dexignlab.com/react/demo",
   "version": "0.1.0",
   "private": true,
@@ -62,12 +62,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "sass": "sass --watch src/scss/main.scss src/css/style.css --source-map src/css/style.css.map"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
