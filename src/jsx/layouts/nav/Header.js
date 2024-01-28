@@ -38,7 +38,7 @@ function  AddSearchSlider(){
 
 const Header = ({ onNote }) => {
 	//const [rightSelect, setRightSelect] = useState('Eng');
-	const [selectCountry, setSelectCountry] = useState([LocationIcon, 'India']);
+	const [selectCountry, setSelectCountry] = useState([LocationIcon, 'Boca do Acre']);
 	//For fix header
 	const [headerFix, setheaderFix] = useState(false);
 	useEffect(() => {
@@ -110,15 +110,7 @@ const Header = ({ onNote }) => {
 										{selectCountry} <i className="header-select-icon fa-solid fa-sort-down"></i>
 									</Dropdown.Toggle>
 									<Dropdown.Menu className="">
-										<Dropdown.Item onClick={()=>setSelectCountry([LocationIcon, 'India'])}>{LocationIcon} India</Dropdown.Item>
-										<Dropdown.Item onClick={()=>setSelectCountry([LocationIcon, 'Nepal'])}>{LocationIcon} Nepal</Dropdown.Item>
-										<Dropdown.Item onClick={()=>setSelectCountry([LocationIcon, 'Bangladesh'])}>{LocationIcon} Bangladesh</Dropdown.Item>
-										<Dropdown.Item onClick={()=>setSelectCountry([LocationIcon, 'Brazil'])}>{LocationIcon} Brazil</Dropdown.Item>
-										<Dropdown.Item onClick={()=>setSelectCountry([LocationIcon, 'China'])}>{LocationIcon} China</Dropdown.Item>
-										<Dropdown.Item onClick={()=>setSelectCountry([LocationIcon, 'Denmark'])}>{LocationIcon} Denmark</Dropdown.Item>
-										<Dropdown.Item onClick={()=>setSelectCountry([LocationIcon, 'Germany'])}>{LocationIcon} Germany</Dropdown.Item>
-										<Dropdown.Item onClick={()=>setSelectCountry([LocationIcon, 'Japan'])}>{LocationIcon} Japan</Dropdown.Item>
-										<Dropdown.Item onClick={()=>setSelectCountry([LocationIcon, 'Lithuania'])}>{LocationIcon} Lithuania</Dropdown.Item>
+										<Dropdown.Item onClick={()=>setSelectCountry([LocationIcon, 'Boca do Acre'])}>{LocationIcon} Boca do Acre</Dropdown.Item>
 									</Dropdown.Menu>
 								</Dropdown>
 								<div className="input-group search-area2 ps-3" id="Serach-bar"
@@ -132,7 +124,7 @@ const Header = ({ onNote }) => {
 											</svg>
 										</Link>
 									</span>
-									<input type="text" className="form-control"  placeholder="What do you want eat today" />									
+									<input type="text" className="form-control"  placeholder="O que você quer comer hoje?" />									
 								</div>
 								<div className="search-drop">
 									<div className="card tag-bx">
