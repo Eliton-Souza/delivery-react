@@ -16,7 +16,7 @@ const cadastroSchema = Yup.object().shape({
     .required("Por favor, digite seu identificador de usuário"),
 });
 
-const UsernameFild = ({changeLogin, validar}) => {
+const UsernameFild = ({ changeLogin, validar }) => {
 
   const mudarLogin = (event) => {
     const novoLogin = event.target.value;

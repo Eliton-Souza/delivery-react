@@ -1,68 +1,44 @@
 import React, { useState } from 'react'
-import { connect, useDispatch } from 'react-redux';
-import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { loadingToggleAction,loginAction,
-} from '../../store/actions/AuthActions';
-
-//
+import { NavLink, useNavigate } from 'react-router-dom'
 
 import logo from '../../images/logo-full.png'
 import bgimage from '../../images/login-img/pic-5.jpg';
 import UsernameFild from '../components/componentes/Username';
 import SenhaFild from '../components/componentes/Senha';
 import swal from 'sweetalert';
+import { api, saveToken } from '../../services/api';
 
-function Login (props) {
+function Login () {
+
 	const navigate = useNavigate();
     
-    let errorsObj = { login: '', password: '' };
-    const [errors, setErrors] = useState(errorsObj);
-
 	const [login, setLogin] = useState('');
     const [senha, setSenha] = useState('');
 
+	const [loading, setLoading]= useState(false);
 	
 
-    const dispatch = useDispatch();
+    const onLogin= async () => {     
 
-    function onLogin(e) {
+        if (login !== '' && senha !== '') {
+			setLoading(true);
+			const result = await api.fazerLogin(login, senha);			
+			setLoading(false);
 
-		alert(login);
-		alert(senha);
-		swal("Oops", "Email already exists", "error");
-        e.preventDefault();
-        let error = false;
-        const errorObj = { ...errorsObj };
-        if (login === '') {
-            errorObj.login = 'Email ou Celular são obrigatórios';
-            error = true;
-        }
-        if (senha === '') {
-            errorObj.password = 'Senha é obrigatória';
-            error = true;
-        }
-        setErrors(errorObj);
-        if (error) {
-			return ;
-		}
-		
-		dispatch(loadingToggleAction(true));
-
-		dispatch(loginAction(login, senha, navigate));
-		
-		/* dispatch(loginAction(login, password, props.history)).then((result) => {
-			if(typeof(result) != 'undefined' && result != null && result.registered == true){
+			if(result.success){
+				saveToken(result.token);       
 				navigate('/dashboard');
+			}else{
+				swal("Oops", result.error, "error");
 			}
-		}); */
-		
-		//navigate('/dashboard');
+        }
+        else {
+			swal("Oops", "Preencha todos os campos", "error");
+        }
     }
 
   return (
-        
-        
-                
+            
 		<div className="container mt-0">
 			<div className="row  align-items-center justify-contain-center bg-login">
 				<div className="col-xl-12 mt-5">
@@ -81,63 +57,26 @@ function Login (props) {
 											<h4 className="fs-20 font-w800 text-black">Faça login</h4>											
 										</div>
 
-										<form onSubmit={onLogin}>
+										<form >					
+											<div className="form">
+												<UsernameFild
+													changeLogin={setLogin} validar={'login'}>
+												</UsernameFild>
 
-						
-										<div className="form">
-											<UsernameFild changeLogin={setLogin} validar={'login'}>
-											</UsernameFild>
+												<SenhaFild changeSenha={setSenha} validar={'login'}>
+												</SenhaFild>
 
-											<SenhaFild changeSenha={setSenha} validar={'login'}>
-											</SenhaFild>
-
-											<div className="text-center mt-3">
-												<button type="submit" className="btn btn-primary btn-block">Fazer Login</button>
-											</div>
-
-										</div>
-											
-											
-										
-                    
-
-					
-                 
-
-
-											
-
-{/* lembrar informações de login
-											<div className="row d-flex justify-content-between mt-4 mb-2">
-												<div className="mb-3">
-													<div className="form-check custom-checkbox ms-1">
-														<input type="checkbox" className="form-check-input" id="basic_checkbox_1" />
-														<label className="form-check-label" htmlFor="basic_checkbox_1">Remember my preference</label>
-													</div>
+												<div className="text-center mt-3">
+													<button type="button" onClick={onLogin} disabled={loading} className="btn btn-primary btn-block">Fazer Login</button>
 												</div>
-												 <div className="mb-3">
-													<Link to="/page-register">Sign up</Link>
-												</div>
-											</div>
-*/}
-											
-											
+
+											</div>											
 										</form>
 
-{/*//Login com outras plataformas
-										<div className="text-center my-3">
-											<span className="dlab-sign-up style-1">Continue With</span>
-										</div>
-										<div className="mb-3 dlab-signup-icon">
-											<button className="btn btn-outline-light me-1"><i className="fa-brands fa-facebook me-2 facebook"></i>Facebook</button>
-											<button className="btn btn-outline-light me-1"><i className="fa-brands fa-google me-2 google"></i>Google</button>
-											<button className="btn btn-outline-light mt-lg-0 mt-md-1 mt-sm-0 mt-1 linked-btn"><i className="fa-brands fa-linkedin me-2 likedin"></i>linkedin</button>
-										</div>
-
-*/}
 										<div className="text-center mt-5">
 											<span>Não tem uma conta?<NavLink to="/page-register" className="text-primary"> Jute-se a nós</NavLink></span>
 										</div>
+
 									</div>
 								</div>
 							</div>
@@ -146,7 +85,6 @@ function Login (props) {
 				</div>
 			</div>
 		</div>
-            
     )
 }
 
