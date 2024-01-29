@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+/*import React,{useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { connect, useDispatch } from 'react-redux';
 import {
@@ -118,5 +118,5 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(Register);
+export default connect(mapStateToProps)(Register);*/
 

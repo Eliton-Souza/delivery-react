@@ -1,4 +1,4 @@
-import React  from 'react';
+/*import React  from 'react';
 import {connect, useDispatch } from 'react-redux';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 
@@ -51,3 +51,4 @@ const mapStateToProps = (state) => {
 //export default LogoutPage;
 
 export default withRouter(connect(mapStateToProps)(LogoutPage));
+*/
