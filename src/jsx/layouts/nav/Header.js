@@ -16,8 +16,11 @@ import HeaderSlider from './HeaderSlider';
 
 //import avatar from "../../../images/avatar/1.jpg";
 import profile from "../../../images/banner-img/pic-1.png";
+import { dadosUsuario, getToken } from "../../../services/api";
 
 const LocationIcon = <i className="fa-solid fa-location-dot mx-2 " />;
+
+
 
 
 //return BoxTab.classList.toggle("active"),SearchBlog.classList.toggle("active");
@@ -38,7 +41,25 @@ function  AddSearchSlider(){
 
 const Header = ({ onNote }) => {
 	//const [rightSelect, setRightSelect] = useState('Eng');
-	const [selectCountry, setSelectCountry] = useState([LocationIcon, 'Boca do Acre']);
+	const [cidade, setCidade] = useState([LocationIcon, 'Boca do Acre']);
+
+	const [nome, setNome] = useState('Perfil');
+	const [avatar, setAvatar] = useState();
+
+	useEffect(() => {
+		
+		const fetchUsuario = () => {		
+			const dados = dadosUsuario();
+			setNome(dados.nome);
+			setAvatar(dados.avatar);	  
+		};
+	
+		// Chama a função assíncrona
+		fetchUsuario();
+	  }, [getToken()]); 
+
+
+
 	//For fix header
 	const [headerFix, setheaderFix] = useState(false);
 	useEffect(() => {
@@ -107,10 +128,10 @@ const Header = ({ onNote }) => {
 
 								<Dropdown className="bootstrap-select">
 									<Dropdown.Toggle className="header-select-toggle btn btn-light i-false" as="div"> 
-										{selectCountry} <i className="header-select-icon fa-solid fa-sort-down"></i>
+										{cidade} <i className="header-select-icon fa-solid fa-sort-down"></i>
 									</Dropdown.Toggle>
 									<Dropdown.Menu className="">
-										<Dropdown.Item onClick={()=>setSelectCountry([LocationIcon, 'Boca do Acre'])}>{LocationIcon} Boca do Acre</Dropdown.Item>
+										<Dropdown.Item onClick={()=>setCidade([LocationIcon, 'Boca do Acre'])}>{LocationIcon} Boca do Acre</Dropdown.Item>
 									</Dropdown.Menu>
 								</Dropdown>
 								<div className="input-group search-area2 ps-3" id="Serach-bar"
@@ -131,8 +152,8 @@ const Header = ({ onNote }) => {
 										<div className="card-header d-block border-0">
 											<h4>Recently Searched</h4>
 											<ul className="d-flex align-items-center flex-wrap">
-												<li><Link to={"#"} className="btn btn-outline-light btn-rounded me-2">Bakery</Link></li>		
-												<li><Link to={"#"} className="btn btn-outline-light btn-rounded me-2">Burger</Link></li>		
+												<li><Link to={"#"} className="btn btn-outline-light btn-rounded me-2">Pizza</Link></li>		
+												<li><Link to={"#"} className="btn btn-outline-light btn-rounded me-2">Hamburguer</Link></li>		
 												<li><Link to={"#"} className="btn btn-outline-light btn-rounded me-2">Beverage</Link></li>	
 												<li><Link to={"#"} className="btn btn-outline-light btn-rounded me-2">Chicken</Link></li>
 												<li><Link to={"#"} className="btn btn-outline-light btn-rounded mt-3 mt-xl-0">Pizza</Link></li>
@@ -162,7 +183,7 @@ const Header = ({ onNote }) => {
 										<img src={profile} alt="" />
 										<div className="d-flex align-items-center sidebar-info">
 											<div>
-												<h6 className="font-w500 mb-0 ms-2">Joshua</h6>
+												<h6 className="font-w500 mb-0 ms-2">{nome}</h6>
 											</div>	
 											<i className="fas fa-chevron-down"></i>
 										</div>
@@ -172,15 +193,15 @@ const Header = ({ onNote }) => {
 								<Dropdown.Menu className="dropdown-menu-end">
 									<Link to="./app-profile" className="dropdown-item ai-icon ">
 										<svg  xmlns="http://www.w3.org/2000/svg" className="text-primary" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-										<span className="ms-2">Profile</span>
+										<span className="ms-2">Perfil</span>
+									</Link>									
+									<Link to="./edit-profile" className="dropdown-item ai-icon">
+										<svg xmlns="http://www.w3.org/2000/svg" className="text-primary" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+										<span className="ms-2">Editar Perfil</span>
 									</Link>
 									<Link to="./email-inbox" className="dropdown-item ai-icon">
 										<svg  xmlns="http://www.w3.org/2000/svg" className="text-primary" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-										<span className="ms-2">Inbox</span>
-									</Link>
-									<Link to="./edit-profile" className="dropdown-item ai-icon">
-										<svg xmlns="http://www.w3.org/2000/svg" className="text-primary" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-										<span className="ms-2">Edit Profile</span>
+										<span className="ms-2">Pedidos</span>
 									</Link>
 									<Link to="./message" className="dropdown-item ai-icon ">
 										<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" className="svg-main-icon">
@@ -211,7 +232,7 @@ const Header = ({ onNote }) => {
 										</svg>
 										<span className="ms-2">Settings </span>
 									</Link>
-									<LogoutPage />
+									{/*<LogoutPage /> corrigir pagina de logout		*/}
 								</Dropdown.Menu>
 							</Dropdown>
 						</li>

@@ -5,10 +5,13 @@ const Footer = () => {
 	return (
 		<div className="footer">
 			<div className="copyright border-top">
-				<p>Copyright © Designed &amp; Developed by{" "}
-					<a href="http://dexignlab.com/" target="_blank"  rel="noreferrer">
-						DexignLab
-					</a>{" "}
+				<p>Projetado e desenvolvipo por {" "}
+					<a href="https://www.instagram.com/eliton.exe/" target="_blank"  rel="noreferrer">
+						Eliton Souza
+					</a>
+					{" "}
+					©
+					{" "}
 					{d.getFullYear()}
 				</p>
 			</div>
