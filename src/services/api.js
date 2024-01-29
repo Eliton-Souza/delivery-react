@@ -1,5 +1,6 @@
+import { jwtDecode } from "jwt-decode";
 import http from "./axiosConfig";
-//import jwt_decode from "jwt-decode";
+
 
 export const saveToken = (token) => {
   localStorage.setItem('token', token);
@@ -13,15 +14,18 @@ export const removeToken = () => {
   localStorage.removeItem('token');
 };
 
-export const dadosUsuário = () => {
+export const dadosUsuario = () => {
   const token = getToken();
 
-  /*if(token){
-    const decodedToken = jwt_decode(token);
+  if(token){
+    const decodedToken = jwtDecode(token);
     return decodedToken;
-  }*/
+  }
+
+  return false;
 
   window.location.href = '/login';
+  
 };
 
 
