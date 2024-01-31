@@ -122,11 +122,14 @@ import Error500 from "./pages/Error500";
 import Error503 from "./pages/Error503";
 import { ThemeContext } from "../context/ThemeContext";
 
+import CadastroUsuario from "./views/CadastroUsuario/cadastroMain";
+
 
 
 const Markup = () => {
 
   const allroutes = [
+    { url: "cadastro-usuario", component: <CadastroUsuario /> },
     /// Dashboard
     { url: "", component: <Home /> },
     { url: "dashboard", component: <Home /> },

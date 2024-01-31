@@ -9,6 +9,7 @@ import {  Route, Routes } from 'react-router-dom';
 /// Style
 import "./vendor/bootstrap-select/dist/css/bootstrap-select.min.css";
 import "./css/style.css";
+import { ToastContainer } from 'react-toastify';
 
 
 const SignUp = lazy(() => import('./jsx/pages/Registration'));
@@ -18,7 +19,6 @@ const Login = lazy(() => import('./jsx/pages/Login'));
 
 function App () {
         
-   
     let rotasSemLayout = (         
         <Routes>
 			<Route path='/login' element={<Login />} />
@@ -41,6 +41,7 @@ function App () {
                 >
 				<Index / > 
                 {rotasSemLayout}
+                <ToastContainer></ToastContainer>
                 </Suspense>
             </>
         );

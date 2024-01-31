@@ -38,9 +38,18 @@ export const api = {
 
 
   //envia mensagem de validação
-  validaNumero: async (numero) => {
-    const response = await http.post('/numero', {
-      numero
+  validaNumero: async (celular) => {
+    const response = await http.post('/celular', {
+      celular
+    });
+    return response.data;
+  },
+
+  //valida mensagem enviada
+  validaCodigo: async (celular, codigo) => {
+    const response = await http.post('/codigo', {
+      celular,
+      codigo
     });
     return response.data;
   },
