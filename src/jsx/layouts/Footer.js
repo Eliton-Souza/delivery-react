@@ -5,7 +5,7 @@ const Footer = () => {
 	return (
 		<div className="footer">
 			<div className="copyright border-top">
-				<p>Projetado e desenvolvipo por {" "}
+				<p>Projetado e desenvolvido por {" "}
 					<a href="https://www.instagram.com/eliton.exe/" target="_blank"  rel="noreferrer">
 						Eliton Souza
 					</a>
