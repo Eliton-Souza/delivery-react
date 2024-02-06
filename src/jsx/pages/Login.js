@@ -16,6 +16,7 @@ function Login () {
     const [senha, setSenha] = useState('');
 
 	const [loading, setLoading]= useState(false);
+	const [erro, setErro] = useState(true);
 	
 
     const onLogin= async () => {     
@@ -59,15 +60,27 @@ function Login () {
 
 										<form >					
 											<div className="form">
+
+												<label className="text-label">
+													<strong>Email ou Celular
+													<span className="text-danger"> *</span>
+													</strong>
+												</label>											
 												<UsernameFild
-													changeLogin={setLogin} validar={'login'}>
+													login={login} changeLogin={setLogin} validar={'login'} changeErro={setErro} placeholder={"Digite seu identificador"}>
 												</UsernameFild>
 
-												<SenhaFild changeSenha={setSenha} validar={'login'}>
+												<label className="text-label">
+													<strong>Senha
+													<span className="text-danger"> *</span>
+													</strong>
+												</label>
+												<SenhaFild
+													senha={senha} changeSenha={setSenha} validar={'login'} changeErro={setErro} placeholder={"Digite sua senha"}>
 												</SenhaFild>
 
 												<div className="text-center mt-3">
-													<button type="button" onClick={onLogin} disabled={loading} className="btn btn-primary btn-block">Fazer Login</button>
+													<button type="button" onClick={onLogin} disabled={loading || erro} className="btn btn-primary btn-block">{loading ? "Carregando..." : "Fazer Login"}</button>
 												</div>
 
 											</div>											
