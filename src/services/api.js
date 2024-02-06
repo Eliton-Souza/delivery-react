@@ -22,10 +22,7 @@ export const dadosUsuario = () => {
     return decodedToken;
   }
 
-  return false;
-
-  window.location.href = '/login';
-  
+  return false;  
 };
 
 
@@ -64,6 +61,26 @@ export const api = {
     return response.data;
   },
 
+  uploadFoto: async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+  
+    const response = await http.post('/upload-file', formData);
+  
+    return response.data;
+  },
+  
+
+
+
+  //USUARIO
+  cadastrarUsuario: async (nome, sobrenome, genero, nascimento, email, celular, senha, tipo, id_loja, avatar) => {
+    const response = await http.post('/usuario', {
+      nome, sobrenome, genero, nascimento, email, celular, senha, tipo, id_loja, avatar
+    });
+      
+    return response.data;
+  },
 
 
 
