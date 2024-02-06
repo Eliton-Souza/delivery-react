@@ -53,7 +53,6 @@ const StepTwo = ({ onChange }) => {
             <h6 className="code">
                Digite o código enviado para seu WhatsApp{" "}
                <span className="text-danger">*</span>
-               
             </h6>
 
             <div className="input-group mb-3 input-warning">

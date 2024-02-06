@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 //import Multistep from "react-multistep";
 import { Stepper, Step } from 'react-form-stepper';
 
@@ -7,18 +7,30 @@ import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
 import StepFour from "./StepFour";
 import { Button } from "react-bootstrap";
-import { api } from "../../../services/api";
+import { api, saveToken } from "../../../services/api";
 import { formataCelular } from "./helper";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 
 
 const CadastroUsuario = () => {
+
+	const navigate = useNavigate();
+
 	const [goSteps, setGoSteps] = useState(0);
 	const [loading, setLoading]= useState(false);
 
+	const [erro, setErro]= useState(true);
+	const [erroLogin, setErroLogin]= useState(true);
+
 	const [celular, setCelular] = useState("");
 	const [codigo, setCodigo] = useState("");
+
+	const [usuario, setUsuario] = useState({ nome: "", sobrenome: "", genero: "", nascimento: "" });
+	const [dadosLogin, setDadosLogin] = useState({ email: "", senha: ""})
+	const [foto, setFoto] = useState(null);
+
 
 	const notificacao = (mensagem) => {
 		toast.success("✔️ " + mensagem, {
@@ -30,7 +42,6 @@ const CadastroUsuario = () => {
 		  draggable: true,
 		});
 	};
-
 
 	const enviarMensagem= async () => {    
 	
@@ -80,6 +91,45 @@ const CadastroUsuario = () => {
         }
     }
 
+	const cadastrarUsuario= async () => {    
+
+		let result= null;
+	
+		setLoading(true);
+		if(foto){
+			const avatar= await api.uploadFoto(foto);
+
+			if(avatar.success){
+				result = await api.cadastrarUsuario(usuario.nome, usuario.sobrenome, usuario.genero, usuario.nascimento, dadosLogin.email, celular, dadosLogin.senha, "cliente", null, avatar.imageUrl);			
+			}else{
+				result = await api.cadastrarUsuario(usuario.nome, usuario.sobrenome, usuario.genero, usuario.nascimento, dadosLogin.email, celular, dadosLogin.senha, "cliente", null, null);			
+			}
+		}else{
+			result = await api.cadastrarUsuario(usuario.nome, usuario.sobrenome, usuario.genero, usuario.nascimento, dadosLogin.email, celular, dadosLogin.senha, "cliente", null, null);			
+		}
+		setLoading(false);
+
+		if(result.success){
+			swal("Wooow", "Agora você é um de nós!!", "success");
+			saveToken(result.token);
+			setTimeout(() => {
+				navigate('/dashboard');
+			}, 500);
+				
+		}else{
+			swal("Oops", result.error, "error");
+		}
+       
+    }
+
+	const changeUsuario = (nome, sobrenome, genero, nascimento) => {
+		setUsuario({ nome, sobrenome, genero, nascimento});
+		
+	};
+
+	const changeDadosLogin = (email, senha) => {
+		setDadosLogin({ email, senha});
+	};
 
 	  
 	
@@ -113,7 +163,7 @@ const CadastroUsuario = () => {
 											<div className="text-center toolbar toolbar-bottom p-2">
 												<Button className="btn btn-primary sw-btn-next" disabled={loading} variant="warning" onClick={enviarMensagem}>
 													
-													{loading? "Enviando.." : "Enviar Código"}
+													{loading? "Enviando..." : "Enviar Código"}
 
 													<span className="btn-icon-end">
 														<i className="fa fa-envelope" />
@@ -147,24 +197,30 @@ const CadastroUsuario = () => {
 										</div>
 									</>							  
 							  	)}
-							  {goSteps === 2 && (
-								<>
-									<StepThree />
-									<div className="text-end toolbar toolbar-bottom p-2">
-										<button  className="btn btn-secondary sw-btn-prev me-1" onClick={() => setGoSteps(1)}>Prev</button>
-										<button className="btn btn-primary sw-btn-next ms-1"  onClick={() => setGoSteps(3)}>Next</button>
-									</div>	
-								</>
-							  )}
-							  {goSteps === 3 && (
-								<>
-									<StepFour />
-									<div className="text-end toolbar toolbar-bottom p-2">
-										<button  className="btn btn-secondary sw-btn-prev me-1" onClick={() => setGoSteps(2)}>Prev</button>
-										<button className="btn btn-primary sw-btn-next ms-1"  onClick={() => setGoSteps(4)}>Submit</button>
-									</div>	
-								</>	
-							  )}
+								{/* Inserir dados pessoais */}
+								{goSteps === 2 && (
+									<>
+										<StepThree 
+											usuario={usuario} onChange={changeUsuario} onChangeErro={setErro} setFile={setFoto}>
+										</StepThree> 
+										<div className="text-end toolbar toolbar-bottom p-2">											
+											<button className="btn btn-primary sw-btn-next ms-1" disabled={erro} onClick={() => setGoSteps(3)}>Próximo</button>
+										</div>	
+									</>
+								)}
+								{/* Inserir dados de login */}
+								{goSteps === 3 && (
+									<>
+										<StepFour onChange={changeDadosLogin} celular={celular} onChangeErro={setErroLogin}/>
+										<div className="text-end toolbar toolbar-bottom p-2">
+											<button  className="btn btn-secondary sw-btn-prev me-1"
+												onClick={() => setGoSteps(2)}
+												>Voltar
+											</button>
+											<button className="btn btn-primary sw-btn-next ms-1" disabled={erroLogin} onClick={cadastrarUsuario}>Cadastrar</button>
+										</div>	
+									</>	
+								)}
 							  
 							</div>
 						</div>

@@ -1,106 +1,101 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import "react-datepicker/dist/react-datepicker.css";
+import "bootstrap-daterangepicker/daterangepicker.css";
+import UsernameFild from "../../components/componentes/Username";
+import SenhaFild from "../../components/componentes/Senha";
 
-const StepFour = () => {
+const StepFour = ({ celular, onChange, onChangeErro }) => {
+  
+   
+   const [email, setEmail] = useState("");
+   const [senha, setSenha] = useState("");
+   const [confirmarSenha, setConfirmarSenha] = useState("");
+
+   const [emailErro, setEmailErro] = useState("");
+   const [senhaErro, setSenhaErro] = useState("");
+   const [confirmarSenhaErro, setConfirmarSenhaErro] = useState("");
+
+   useEffect(() => {
+         onChange(email, senha);
+   }, [email, senha]);
+
+   useEffect(() => {
+      if(emailErro || senhaErro || confirmarSenhaErro){
+         onChangeErro(true);
+      }else{
+         onChangeErro(false);
+      }
+   }, [emailErro, senhaErro, confirmarSenhaErro]);
+
+
    return (
       <section>
-         <div className="row emial-setup">
-            <div className="col-lg-3 col-sm-6 col-6">
-               <div className="form-group">
-                  <label
-                     htmlFor="mailclient11"
-                     className="mailclinet mailclinet-gmail"
-                  >
-                     <input
-                        type="radio"
-                        className="redio-false"
-                        name="emailclient"
-                        id="mailclient11"
-                     />
-                     <span className="mail-icon">
-                        <i
-                           className="mdi mdi-google-plus"
-                           aria-hidden="true"
-                        ></i>
-                     </span>
-                     <span className="mail-text">I'm using Gmail</span>
-                  </label>
-               </div>
-            </div>
-            <div className="col-lg-3 col-sm-6 col-6">
-               <div className="form-group">
-                  <label
-                     htmlFor="mailclient12"
-                     className="mailclinet mailclinet-office"
-                  >
-                     <input
-                        type="radio"
-                        className="redio-false"
-                        name="emailclient"
-                        id="mailclient12"
-                     />
-                     <span className="mail-icon">
-                        <i className="mdi mdi-office" aria-hidden="true"></i>
-                     </span>
-                     <span className="mail-text">I'm using Office</span>
-                  </label>
-               </div>
-            </div>
-            <div className="col-lg-3 col-sm-6 col-6">
-               <div className="form-group">
-                  <label
-                     htmlFor="mailclient13"
-                     className="mailclinet mailclinet-drive"
-                  >
-                     <input
-                        type="radio"
-                        className="redio-false"
-                        name="emailclient"
-                        id="mailclient13"
-                     />
-                     <span className="mail-icon">
-                        <i
-                           className="mdi mdi-google-drive"
-                           aria-hidden="true"
-                        ></i>
-                     </span>
-                     <span className="mail-text">I'm using Drive</span>
-                  </label>
-               </div>
-            </div>
-            <div className="col-lg-3 col-sm-6 col-6">
-               <div className="form-group">
-                  <label
-                     htmlFor="mailclient14"
-                     className="mailclinet mailclinet-another"
-                  >
-                     <input
-                        type="radio"
-                        className="redio-false"
-                        name="emailclient"
-                        id="mailclient14"
-                     />
-                     <span className="mail-icon">
-                        <i
-                           className="fas fa-question-circle"
-                           aria-hidden="true"
-                        ></i>
-                     </span>
-                     <span className="mail-text">Another Service</span>
-                  </label>
-               </div>
-            </div>
-         </div>
-
          <div className="row">
-            <div className="col-12">
-               <div className="skip-email text-center pt-5 pb-2">
-                  <p>Or if want skip this step entirely and setup it later</p>
-                  <Link to="#" className="wizard-four-color">
-                     Skip step
-                  </Link>
+            <div className="col-xl-12">
+              
+                  <div className="card-header">
+                     <h4 className="card-title">Dados de Login</h4>
+                  </div>
+
+                  <div className="card-body">
+                     <div className="basic-form">
+
+                        <form >
+                           <div className="row">
+                              <div className="form-group mb-3 col-md-6">                     
+                                 <label className="text-label">
+                                    <strong>Celular
+                                       <span className="text-danger"> *</span>
+                                    </strong>
+                                 </label>
+                                 
+                                 <UsernameFild
+                                    login={celular} desabilitado={true} changeErro={null}>                                 
+                                 </UsernameFild>
+                              </div>
+
+                              <div className="form-group mb-3 col-md-6">                     
+                                 <label className="text-label">
+                                    <strong>Email</strong>
+                                 </label>
+
+                                 <UsernameFild
+                                    login={email} changeLogin={setEmail} validar={"email"} placeholder={"exemplo@email.com"} changeErro={setEmailErro} desabilitado={false}>                                 
+                                 </UsernameFild>
+                              </div>                              
+                           </div>
+
+                           <div className="row">
+                              <div className="form-group mb-3 col-md-6">                     
+                                 <label className="text-label">
+                                    <strong>Senha
+                                       <span className="text-danger"> *</span>
+                                    </strong>
+                                 </label>
+                                 
+                                 <SenhaFild
+                                    changeSenha={setSenha} validar={"novaSenha"} changeErro={setSenhaErro} placeholder={"Digite sua senha"}>                                
+                                 </SenhaFild>
+                              </div>
+
+                              <div className="form-group mb-3 col-md-6">                     
+                                 <label className="text-label">
+                                    <strong>Confirmar Senha
+                                       <span className="text-danger"> *</span>
+                                    </strong>
+                                 </label>
+
+                                 <SenhaFild
+                                    senhaAnterior={senha} changeSenha={setConfirmarSenha} validar={"confirmarSenha"} changeErro={setConfirmarSenhaErro} placeholder={"Confirme sua senha"}>                                
+                                 </SenhaFild>
+                              </div>                              
+                           </div>
+
+                        </form>
+                     </div>
+                  </div>
                </div>
-            </div>
+            
          </div>
       </section>
    );

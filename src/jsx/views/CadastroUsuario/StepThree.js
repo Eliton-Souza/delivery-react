@@ -1,142 +1,118 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import NomeField from "../../components/componentes/nome";
+import GeneroField from "../../components/componentes/genero";
+import "react-datepicker/dist/react-datepicker.css";
+import "bootstrap-daterangepicker/daterangepicker.css";
+import DataField from "../../components/componentes/data";
+import FotoField from "../../components/componentes/foto";
 
-const StepThree = () => {
+const StepThree = ({ onChange, onChangeErro, usuario, setFile }) => {
+
+   const [nome, setNome] = useState(usuario.nome);
+   const [sobrenome, setSobrenome] = useState(usuario.sobrenome);
+   const [nascimento, setNascimento] = useState(usuario.nascimento);
+   const [genero, setGenero] = useState(usuario.genero);
+
+   const [nomeErro, setNomeErro] = useState(true);
+   const [sobrenomeErro, setSobrenomeErro] = useState(true);
+   const [nascimentoErro, setNascimentoErro] = useState(true);
+   const [generoErro, setGeneroErro] = useState(true);
+
+   useEffect(() => {
+      onChange(nome, sobrenome, genero, nascimento);
+   }, [nome, sobrenome, genero, nascimento]); 
+
+   useEffect(() => {
+      if(nomeErro || sobrenomeErro || generoErro || nascimentoErro){
+         onChangeErro(true);
+      }else{
+         onChangeErro(false);
+      }
+   }, [nomeErro, sobrenomeErro, generoErro, nascimentoErro]);
+
+
    return (
       <section>
          <div className="row">
-            <div className="col-sm-4 mb-2">
-               <h4>Monday *</h4>
-            </div>
-            <div className="col-6 col-sm-4 mb-2">
-               <div className="form-group">
-                  <input
-                     className="form-control"
-                     value="9.00"
-                     type="number"
-                     name="input1"
-                     id="input1"
-                  />
+            <div className="col-xl-12">
+              
+                  <div className="card-header">
+                     <h4 className="card-title">Dados Pessoais</h4>
+                  </div>
+
+                  <div className="card-body">
+                     <div className="basic-form">
+
+                        <form >
+                           <div className="row">
+                              <div className="form-group mb-3 col-md-6">                     
+                                 <label className="text-label">
+                                    <strong>Nome
+                                       <span className="text-danger"> *</span>
+                                    </strong>
+                                 </label>
+                                 
+                                 <NomeField
+                                    changeNome={setNome} validar={"nome"} placeholder={"Primeiro Nome"} changeErro={setNomeErro}>                                 
+                                 </NomeField>
+                              </div>
+
+                              <div className="form-group mb-3 col-md-6">                     
+                                 <label className="text-label">
+                                    <strong>Sobrenome
+                                       <span className="text-danger"> *</span>
+                                    </strong>
+                                 </label>
+                                 
+                                 <NomeField
+                                    changeNome={setSobrenome} validar={"sobrenome"} placeholder={"Segundo Nome"} changeErro={setSobrenomeErro}>                                 
+                                 </NomeField>
+                              </div>                              
+                           </div>
+
+                           <div className="row">
+                              <div className="form-group mb-3 col-md-6">
+                                 <label className="text-label">
+                                    <strong>Nascimento
+                                       <span className="text-danger"> *</span>
+                                    </strong>
+                                 </label>
+
+                                 <DataField 
+                                    changeData={setNascimento} changeErro={setNascimentoErro}>
+                                 </DataField>
+                              </div>
+
+                              <div className="form-group mb-3 col-md-6">
+                                 <label className="text-label">
+                                    <strong>Gênero
+                                       <span className="text-danger"> *</span>
+                                    </strong>
+                                 </label>
+
+                                 <GeneroField 
+                                    changeGenero={setGenero} changeErro={setGeneroErro}>
+                                 </GeneroField>                              
+                              </div>
+                           </div>
+
+
+                           <div className="row">
+                              <div className="form-group mb-3 col-md-6">
+                                 <label className="text-label">
+                                    <strong>Foto de Perfil</strong>
+                                 </label>
+
+                                 <FotoField 
+                                   changeFoto={setFile} >
+                                 </FotoField>                              
+                              </div>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
                </div>
-            </div>
-            <div className="col-6 col-sm-4 mb-2">
-               <div className="form-group">
-                  <input
-                     className="form-control"
-                     value="6.00"
-                     type="number"
-                     name="input2"
-                     id="input2"
-                  />
-               </div>
-            </div>
-         </div>
-         <div className="row">
-            <div className="col-sm-4 mb-2">
-               <h4>Tuesday *</h4>
-            </div>
-            <div className="col-6 col-sm-4 mb-2">
-               <div className="form-group">
-                  <input
-                     className="form-control"
-                     value="9.00"
-                     type="number"
-                     name="input3"
-                     id="input3"
-                  />
-               </div>
-            </div>
-            <div className="col-6 col-sm-4 mb-2">
-               <div className="form-group">
-                  <input
-                     className="form-control"
-                     value="6.00"
-                     type="number"
-                     name="input4"
-                     id="input4"
-                  />
-               </div>
-            </div>
-         </div>
-         <div className="row">
-            <div className="col-sm-4 mb-2">
-               <h4>Wednesday *</h4>
-            </div>
-            <div className="col-6 col-sm-4 mb-2">
-               <div className="form-group">
-                  <input
-                     className="form-control"
-                     value="9.00"
-                     type="number"
-                     name="input5"
-                     id="input5"
-                  />
-               </div>
-            </div>
-            <div className="col-6 col-sm-4 mb-2">
-               <div className="form-group">
-                  <input
-                     className="form-control"
-                     value="6.00"
-                     type="number"
-                     name="input6"
-                     id="input6"
-                  />
-               </div>
-            </div>
-         </div>
-         <div className="row">
-            <div className="col-sm-4 mb-2">
-               <h4>Thrusday *</h4>
-            </div>
-            <div className="col-6 col-sm-4 mb-2">
-               <div className="form-group">
-                  <input
-                     className="form-control"
-                     value="9.00"
-                     type="number"
-                     name="input7"
-                     id="input7"
-                  />
-               </div>
-            </div>
-            <div className="col-6 col-sm-4 mb-2">
-               <div className="form-group">
-                  <input
-                     className="form-control"
-                     value="6.00"
-                     type="number"
-                     name="input8"
-                     id="input8"
-                  />
-               </div>
-            </div>
-         </div>
-         <div className="row">
-            <div className="col-sm-4 mb-2">
-               <h4>Friday *</h4>
-            </div>
-            <div className="col-6 col-sm-4 mb-2">
-               <div className="form-group">
-                  <input
-                     className="form-control"
-                     value="9.00"
-                     type="number"
-                     name="input9"
-                     id="input9"
-                  />
-               </div>
-            </div>
-            <div className="col-6 col-sm-4 mb-2">
-               <div className="form-group">
-                  <input
-                     className="form-control"
-                     value="6.00"
-                     type="number"
-                     name="input10"
-                     id="input10"
-                  />
-               </div>
-            </div>
+            
          </div>
       </section>
    );
