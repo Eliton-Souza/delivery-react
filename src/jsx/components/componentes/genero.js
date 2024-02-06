@@ -6,7 +6,7 @@ const validaGenero = Yup.object().shape({
   genero: Yup.string().required("Por favor, escolha uma opção"),
 });
 
-const GeneroField = ({ changeGenero }) => {
+const GeneroField = ({ changeGenero, changeErro }) => {
   return (
     <Fragment>
       <div className="row">
@@ -17,7 +17,7 @@ const GeneroField = ({ changeGenero }) => {
           >
             {({ values, errors, handleChange }) => (
               <form>
-                <div className={`form-group mb-3 ${values.genero ? errors.genero ? "is-invalid" : "is-valid" : ""}`}>
+                <div className={`form-group mb-3 ${values.genero ? errors.genero ? "is-invalid" + changeErro(true) : "is-valid" + changeErro(false): ""+ changeErro(true)}`}>
                   <div className="form-group">
                     <div className="form-check">
                       <input
@@ -25,7 +25,6 @@ const GeneroField = ({ changeGenero }) => {
                         type="radio"
                         name="genero"
                         value="Masculino"
-                        checked={values.genero === "Masculino"}
                         onChange={(e) => {
                           handleChange(e);
                           changeGenero(e.target.value);
@@ -40,7 +39,6 @@ const GeneroField = ({ changeGenero }) => {
                         type="radio"
                         name="genero"
                         value="Feminino"
-                        checked={values.genero === "Feminino"}
                         onChange={(e) => {
                           handleChange(e);
                           changeGenero(e.target.value);
@@ -55,7 +53,6 @@ const GeneroField = ({ changeGenero }) => {
                         type="radio"
                         name="genero"
                         value="NaoInformado"
-                        checked={values.genero === "NaoInformado"}
                         onChange={(e) => {
                           handleChange(e);
                           changeGenero(e.target.value);

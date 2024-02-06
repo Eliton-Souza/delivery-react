@@ -3,18 +3,16 @@ import bgimage from '../../../images/no-img-avatar.png';
 import { Link } from "react-router-dom";
 
 
-
-const FotoField = ({ }) => {
+const FotoField = ({ changeFoto }) => {
 
 	const [file, setFile] = useState(null);
-
-
+   
     const mudarFoto = (e) => {
         setFile(e.target.files[0]);
+        changeFoto(e.target.files[0]);
 
 		setTimeout(function(){
-			var src = document.getElementById("saveImageFile").getAttribute("src");
-            console.log(src)
+			document.getElementById("saveImageFile").getAttribute("src");
 		}, 250);
     }
 

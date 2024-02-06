@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
@@ -7,14 +7,15 @@ const senhaSchema = Yup.object().shape({
     .required("Por favor, digite sua senha"),
 });
 
-const cadastarSenhaSchema = Yup.object().shape({
+const novaSenha = Yup.object().shape({
   password: Yup.string()
-    .min(5, "Your password must be at least 5 characters long")
-    .max(50, "Your password must be at least 5 characters long")
-    .required("Por favor, digite sua senha"),
+    .min(6, 'Mínimo 6 caracteres')
+    .matches(/^(?=.*[A-Za-z])(?=.*\d)/, 'Deve conter pelo menos uma letra e um número')
+    .required('A senha é obrigatória'),
 });
 
-const SenhaFild = ({changeSenha, validar}) => {
+
+const SenhaFild = ({changeSenha, validar, placeholder, senhaAnterior, changeErro}) => {
   const [mostrarSenha, setMostrarSenha] = useState(false);
 
   const mudarSenha = (event) => {
@@ -22,15 +23,23 @@ const SenhaFild = ({changeSenha, validar}) => {
     changeSenha(novaSenha);
   };
 
+  const confirmarSenha = Yup.object().shape({
+    password: Yup.string()
+      .oneOf([senhaAnterior, null], 'As senhas não coincidem')
+      .required('A senha é obrigatória'),
+  });
+
+  useEffect(() => {
+		changeSenha("");
+  }, [senhaAnterior]);
+
   return (
     <Fragment>
-     
-
       <div className="row">          
         <div className="col-lg-12">
           <Formik
             initialValues={{ password: "" }}
-            validationSchema={validar=='login'? senhaSchema: cadastarSenhaSchema}
+            validationSchema={validar=='login'? senhaSchema: validar=='novaSenha'? novaSenha: confirmarSenha}
           >
             {({
               values,
@@ -38,12 +47,14 @@ const SenhaFild = ({changeSenha, validar}) => {
               handleChange,
               handleBlur                
             }) => (
-              <form>                     
-                <div
-                  className={`form-group mb-3 ${ values.password ? errors.password ? "is-invalid" : "is-valid" : "" }`}>
-                  <label className="text-label"><strong>Senha *</strong></label>
-                  <div className="input-group transparent-append mb-2">
+              <form>                 
                     
+                <div className={`form-group mb-3 
+                ${values.password ? 
+                  errors.password ? "is-invalid" + changeErro(true) : "is-valid" + changeErro(false)
+                : ""+ changeErro(true)}`}>
+
+                  <div className="input-group transparent-append mb-2">
                       <span className="input-group-text">                              
                         <i className="fa fa-lock" />
                       </span>
@@ -51,7 +62,6 @@ const SenhaFild = ({changeSenha, validar}) => {
                     <input
                       type={`${mostrarSenha ? "text" : "password"}`}
                       className="form-control"
-                      id="val-password1"
                       name="password"
                       onChange={(event) => {
                         handleChange(event);    //Atualiza no componente
@@ -59,7 +69,7 @@ const SenhaFild = ({changeSenha, validar}) => {
                       }}
                       onBlur={handleBlur}
                       value={values.password}
-                      placeholder="Digite sua senha"
+                      placeholder={placeholder}
                     />
 
                     <div

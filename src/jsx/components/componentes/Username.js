@@ -9,14 +9,14 @@ const loginSchema = Yup.object().shape({
     .required("Por favor, digite seu identificador de usuário"),
 });
 
-const cadastroSchema = Yup.object().shape({
+
+const validaEmail = Yup.object().shape({
   username: Yup.string()
-    .min(3, "Your username must consist of at least 3 characters ")
-    .max(50, "Your username must consist of at least 3 characters ")
-    .required("Por favor, digite seu identificador de usuário"),
+    .email('Digite um endereço de e-mail válido')
+   
 });
 
-const UsernameFild = ({ changeLogin, validar }) => {
+const UsernameFild = ({ changeLogin, validar, login, desabilitado, placeholder, changeErro }) => {
 
   const mudarLogin = (event) => {
     const novoLogin = event.target.value;
@@ -29,7 +29,7 @@ const UsernameFild = ({ changeLogin, validar }) => {
         <div className="col-lg-12">
           <Formik
             initialValues={{ username: "" }}
-            validationSchema={validar=='login'? loginSchema: cadastroSchema}
+            validationSchema={validar === 'login' ? loginSchema :  validaEmail}
           >
             {({
               values,
@@ -38,10 +38,13 @@ const UsernameFild = ({ changeLogin, validar }) => {
               handleChange           
             }) => (
               <form >
-                <div className={`form-group mb-3 ${values.username ? errors.username ? "is-invalid" : "is-valid" : ""}`}>
-                  <label className="text-label"><strong>Email ou Celular *</strong></label>
-                  <div className="input-group">
 
+                <div className={`form-group mb-3 
+                ${values.username ? 
+                  errors.username ? "is-invalid" + desabilitado??changeErro(true) : "is-valid" + desabilitado??changeErro(false)
+                : ""+ desabilitado??changeErro(true)}`}>
+
+                  <div className="input-group">
                       <span className="input-group-text">
                         <i className="fa fa-user" />{" "}
                       </span>
@@ -49,15 +52,15 @@ const UsernameFild = ({ changeLogin, validar }) => {
                     <input
                       type="text"
                       className="form-control"
-                      id="val-username1"
-                      placeholder="Digite seu identificador"
+                      placeholder={placeholder}
                       name="username"
+                      disabled={desabilitado}
                       onChange={(event) => {
                         handleChange(event);    //Atualiza no componente
                         mudarLogin(event);      //Atualiza no componente pai
                       }}
                       onBlur={handleBlur}
-                      value={values.username}
+                      value={login}
                     />
                     <div
                       id="val-username1-error"
@@ -66,12 +69,6 @@ const UsernameFild = ({ changeLogin, validar }) => {
                     >
                       {errors.username && errors.username}
                     </div>
-
-                    <div
-                      id="val-username1-error"
-                      className="invalid-feedback animated fadeInUp"
-                      style={{ display: "block" }}
-                    />
 
                   </div>
                 </div>                

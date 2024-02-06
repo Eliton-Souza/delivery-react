@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -6,15 +6,22 @@ import * as Yup from "yup";
 
 const validaNome = Yup.object().shape({
   nome: Yup.string()
+    .matches(/^[^\d]+$/, 'Não pode conter números')
+    .matches(/^\S+$/, 'Não pode conter espaços em branco')
     .required("Por favor, digite seu primeiro nome"),
 });
 
-const validaSobrenome = Yup.object().shape({
-    nome: Yup.string()
-      .required("Por favor, digite seu segundo nome"),
-  });
 
-const NomeField = ({ changeNome, validar, placeholder }) => {
+
+const validaSobrenome = Yup.object().shape({
+  nome: Yup.string()
+    .matches(/^[^\d]+$/, 'Não pode conter números')
+    .required("Por favor, digite seu segundo nome"),
+});
+
+
+
+const NomeField = ({ changeNome, validar, placeholder, changeErro }) => {
 
   const mudarNome = (event) => {
     const novoNome = event.target.value;
@@ -27,7 +34,7 @@ const NomeField = ({ changeNome, validar, placeholder }) => {
         <div className="col-lg-12">
           <Formik
             initialValues={{ nome: "" }}
-            validationSchema={validar=='nome'? validaNome: validaSobrenome}
+            validationSchema={validar === 'nome' ? validaNome : validaSobrenome}
           >
             {({
               values,
@@ -36,8 +43,7 @@ const NomeField = ({ changeNome, validar, placeholder }) => {
               handleChange           
             }) => (
               <form >
-                <div className={`form-group mb-3 ${values.nome ? errors.nome ? "is-invalid" : "is-valid" : ""}`}>
-                  
+                <div className={`form-group mb-3 ${values.nome ? errors.nome ? "is-invalid" + changeErro(true) : "is-valid" + changeErro(false): ""+ changeErro(true)}`}>
                   <div className="form-group">
                     <input
                       type="text"
@@ -46,7 +52,7 @@ const NomeField = ({ changeNome, validar, placeholder }) => {
                       name="nome"
                       onChange={(event) => {
                         handleChange(event);    //Atualiza no componente
-                        mudarNome(event);      //Atualiza no componente pai
+                        mudarNome(event);      //Atualiza no componente pai                       
                       }}
                       onBlur={handleBlur}
                       value={values.nome}
@@ -57,11 +63,6 @@ const NomeField = ({ changeNome, validar, placeholder }) => {
                     >
                       {errors.nome && errors.nome}
                     </div>
-
-                    <div                     
-                      className="invalid-feedback animated fadeInUp"
-                      style={{ display: "block" }}
-                    />
 
                   </div>
                 </div>                
