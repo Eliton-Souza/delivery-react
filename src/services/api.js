@@ -2,6 +2,21 @@ import { jwtDecode } from "jwt-decode";
 import http from "./axiosConfig";
 
 
+export const getCarrinho = () => {
+  return localStorage.getItem('carrinho');
+};
+
+export const setCarrinho = (carrinho) => {
+  return localStorage.setItem('carrinho', JSON.stringify(carrinho));
+};
+
+export const limparCarrinho = () => {
+  return localStorage.removeItem('carrinho');
+};
+
+
+
+
 export const saveToken = (token) => {
   localStorage.setItem('token', token);
 };
@@ -83,6 +98,23 @@ export const api = {
   },
 
 
+  //LOJA
+  dadosLoja: async (nome_loja) => {
+    const response = await http.get(`/loja/${nome_loja}`);
+    return response.data;
+  },
+
+  produtosLoja: async (id_loja) => {
+    const response = await http.get(`/produtos/${id_loja}`);
+    return response.data;
+  },
+
+
+  //SABOR
+  saboresProduto: async (id_produto) => {
+    const response = await http.get(`/sabores/${id_produto}`);
+    return response.data;
+  },
 
 
 
