@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from "react";
-import { Dropdown } from "react-bootstrap";
+import { Button, Dropdown } from "react-bootstrap";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { Link } from "react-router-dom";
 /// Scroll
@@ -16,7 +16,9 @@ import HeaderSlider from './HeaderSlider';
 
 //import avatar from "../../../images/avatar/1.jpg";
 import semImagem from "../../../images/no-img-avatar.png";
+import carrinhoIcon from "../../../images/carrinhoIcon.png"
 import { dadosUsuario, getToken, removeToken } from "../../../services/api";
+import Carrinho from "../../views/Produto/carrinho";
 
 const LocationIcon = <i className="fa-solid fa-location-dot mx-2 " />;
 
@@ -46,8 +48,10 @@ const Header = ({ onNote }) => {
 	const [nome, setNome] = useState('Perfil');
 	const [avatar, setAvatar] = useState();
 
+	const [modal, setModal] = useState(false);
+
 	useEffect(() => {
-		
+
 		const fetchUsuario = () => {		
 			const dados = dadosUsuario();
 			setNome(dados.nome);
@@ -56,12 +60,12 @@ const Header = ({ onNote }) => {
 	
 		// Chama a função assíncrona
 		fetchUsuario();
-	  }, [getToken()]);
+	  	}, [getToken()]);
 
-	  const logout = () => {
-		removeToken();
-		window.location.href = '/dashboard';
-	  }
+		const logout = () => {
+			removeToken();
+			window.location.href = '/dashboard';
+		}
 	  
 
 
@@ -87,6 +91,9 @@ const Header = ({ onNote }) => {
 	}, []); 
 	
   return ( 
+	
+	<>
+
     <div className={`header ${headerFix ? "is-fixed" : ""}`}>
       <div className="header-content">
         <nav className="navbar navbar-expand">
@@ -155,6 +162,22 @@ const Header = ({ onNote }) => {
 						</div>
 					</div>					
 					<ul className="navbar-nav header-right">
+						
+						<li>		
+							<Dropdown className=" header-profile2 ">
+								<Button className="nav-link i-false cursor-pointer" id="droptoggle2"
+										onClick={() => {setModal(true)}}
+									>
+									<div className="header-info2 d-flex align-items-center">
+										<img src={carrinhoIcon} alt="" />
+									</div>
+								</Button>
+							</Dropdown>
+						</li>
+
+
+
+
 						<li>		
 							<Dropdown className=" header-profile2 ">
 								<Dropdown.Toggle as="a" className={`nav-link i-false cursor-pointer `} id="droptoggle1"
@@ -252,6 +275,19 @@ const Header = ({ onNote }) => {
         </nav>
       </div>
     </div>
+
+
+		{modal && (
+			<Carrinho modal={modal} setModal={setModal}/>
+		)}
+
+</>
+
+
+
+
+
+
   );
 };
 

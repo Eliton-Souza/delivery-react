@@ -6,7 +6,7 @@ export const getCarrinho = () => {
   return localStorage.getItem('carrinho');
 };
 
-export const setCarrinho = (carrinho) => {
+export const setCarrinhoCompras = (carrinho) => {
   return localStorage.setItem('carrinho', JSON.stringify(carrinho));
 };
 

@@ -16,6 +16,7 @@ const ModalDetalhesProduto = ({ modal, setModal, produto }) => {
 
   const [sabores, setSabores] = useState([]);
   const [grupoSabores, setGrupoSabores]= useState([]);
+  const [maiorPrecoSabor, setMaiorPrecoSabor] = useState(null);
 
   const [saboresEscolhidos, setSaboresEscolhidos] = useState([]);
   const [numSabor, setNumSabor] = useState(null);
@@ -74,6 +75,8 @@ const ModalDetalhesProduto = ({ modal, setModal, produto }) => {
         saboresEscolhidos.forEach(item => {
           total = Math.max(total, item.preco);
         });
+
+        setMaiorPrecoSabor(parseFloat(total).toFixed(2));
   
         total = (parseFloat(total) * quantProd).toFixed(2);
         setValorTotal(total);
@@ -91,7 +94,9 @@ const ModalDetalhesProduto = ({ modal, setModal, produto }) => {
 
         const produtoF= {
           id_produto: produto.id_produto,
+          imagem: produto.imagem,
           nome: produto.nome,
+          valorUnidade : maiorPrecoSabor,
           subtotal: valorTotal,
           tipo: produto.tipo,
           quantidade: quantProd,
@@ -104,7 +109,9 @@ const ModalDetalhesProduto = ({ modal, setModal, produto }) => {
 
         const produtoF= {
           id_produto: produto.id_produto,
+          imagem: produto.imagem,
           nome: produto.nome,
+          valorUnidade: produto.preco,
           subtotal: valorTotal,
           tipo: produto.tipo,
           quantidade: quantProd,       

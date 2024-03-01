@@ -11,8 +11,6 @@ import 'lightgallery/css/lg-thumbnail.css';
 import cover from "../../../images/profile/cover.jpg";
 import { api } from "../../../services/api";
 
-import loadingIcon from "../../../icons/loadingIcon.svg"
-
 
 import ProdutosList from "../Produto/produtosList";
 import ProdutosGrid from "../Produto/produtosGrid";
@@ -75,7 +73,7 @@ const PerfilLoja = () => {
 
     
   useEffect(() => {
-    pegarDadosLoja(nome_loja);
+    pegarDadosLoja();
   }, []); 
 		
     const aviso= async () => {    
