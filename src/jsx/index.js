@@ -15,7 +15,7 @@ import Footer from "./layouts/Footer";
 
 import ScrollToTop from "./layouts/ScrollToTop";
 /// Dashboard
-import Home from "./components/Dashboard/Home";
+import Home from "./views/Home/Home";
 import DashboardDark from "./components/Dashboard/DashboardDark";
 import FoodOrder from "./components/Dashboard/FoodOrder";
 import FavoriteMenu from "./components/Dashboard/FavoriteMenu";
