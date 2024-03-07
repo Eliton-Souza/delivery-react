@@ -2,17 +2,14 @@ import { jwtDecode } from "jwt-decode";
 import http from "./axiosConfig";
 
 
-export const getCarrinho = () => {
+export const getCarrinhoLS = () => {
   return localStorage.getItem('carrinho');
 };
 
-export const setCarrinhoCompras = (carrinho) => {
+export const setCarrinhoLS = (carrinho) => {
   return localStorage.setItem('carrinho', JSON.stringify(carrinho));
 };
 
-export const limparCarrinho = () => {
-  return localStorage.removeItem('carrinho');
-};
 
 
 

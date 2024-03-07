@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom';
 import { api } from "../../../services/api";
 import { addProdutoCarrinho } from "./helper";
 import LoadingPage from "../../components/componentes/LoadingPage";
-
-
+import { useCarrinho } from "../../../context/CarrinhoContext";
 
 
 const ModalDetalhesProduto = ({ modal, setModal, produto }) => {
+
+  const { carrinho, setCarrinho } = useCarrinho();
 
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState();
   const [tamanhos, setTamanhos] = useState([]);
@@ -25,7 +26,6 @@ const ModalDetalhesProduto = ({ modal, setModal, produto }) => {
 
   const [valorTotal, setValorTotal] = useState(produto.preco);
   const [loading, setLoading] = useState(null);
-
 
     const pegarSabores= async () => {    
 	
@@ -207,10 +207,8 @@ const ModalDetalhesProduto = ({ modal, setModal, produto }) => {
     setTamanhoSelecionado(event.target.value);
   };
 
-  const adicionarCarrinho = async () => {
-    
-    addProdutoCarrinho(montarProduto(), produto.id_loja);
-    swal("Sucesso!", "Produto adicionado ao seu carrinho!", "success");
+  const adicionarCarrinho = () => {
+    addProdutoCarrinho(montarProduto(), produto.id_loja, carrinho, setCarrinho);
     setModal(false);   
   };
 
