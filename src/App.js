@@ -2,7 +2,6 @@ import { lazy, Suspense } from 'react';
 
 /// Components
 import Index from "./jsx";
-
 import {  Route, Routes } from 'react-router-dom';
 
 
@@ -10,6 +9,7 @@ import {  Route, Routes } from 'react-router-dom';
 import "./vendor/bootstrap-select/dist/css/bootstrap-select.min.css";
 import "./css/style.css";
 import { ToastContainer } from 'react-toastify';
+import { CarrinhoProvider } from './context/CarrinhoContext';
 
 
 const SignUp = lazy(() => import('./jsx/pages/Registration'));
@@ -37,15 +37,15 @@ function App () {
                             <div className="sk-child sk-bounce3"></div>
                         </div>
                     </div>  
-                   }
-                >
-				<Index / > 
-                {rotasSemLayout}
-                <ToastContainer></ToastContainer>
+                   }>
+                    <CarrinhoProvider>
+                        <Index /> 
+                    </CarrinhoProvider>
+                    {rotasSemLayout}
+                    <ToastContainer />
                 </Suspense>
             </>
         );
 };
-
 
 export default App; 
