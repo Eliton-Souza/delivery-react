@@ -101,6 +101,11 @@ export const api = {
     return response.data;
   },
 
+  pegarLojas: async () => {
+    const response = await http.get('/lojas');
+    return response.data;
+  },
+
   produtosLoja: async (id_loja) => {
     const response = await http.get(`/produtos/${id_loja}`);
     return response.data;

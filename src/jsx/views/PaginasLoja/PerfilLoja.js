@@ -43,7 +43,8 @@ const PerfilLoja = () => {
 	const pegarDadosLoja= async () => {    
 	
 		setLoading(true);
-		const resultDados = await api.dadosLoja(nome_loja);			
+    const nomeFormatado = nome_loja.replace(/-/g, ' ');
+		const resultDados = await api.dadosLoja(nomeFormatado);			
 		
 
 		if(resultDados.success){

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {Link} from 'react-router-dom';
 //import {NavLink} from 'react-router-dom';
 //import loadable from "@loadable/component";
@@ -11,6 +11,7 @@ import CategorySlider from './CategorySlider';
 import PopularDishesSlider from './PopularDishesSlider';
 import RecentOrderSlider from './RecentOrderSlider';
 import Carrinho from '../Produto/carrinho';
+import LojasGrid from './lojasGrid';
 
 
 const Home = () => {
@@ -40,18 +41,17 @@ const Home = () => {
 						</div>	
 						<div className="col-xl-12">
 							<div className="d-flex align-items-center justify-content-between mb-2">
-								<h4 className=" mb-0 cate-title">Popular Dishes</h4>
-								<Link to="/favorite-menu" className="text-primary">View all <i className="fa-solid fa-angle-right ms-2"></i></Link>
+								<h4 className=" mb-0 cate-title">Nossas Lojas</h4>
 							</div>
-							<PopularDishesSlider />
+							<LojasGrid />
 						</div>
-						<div className="col-xl-12">
+						{/*<div className="col-xl-12">
 							<div className="d-flex align-items-center justify-content-between mb-2">
-								<h4 className=" mb-0 cate-title">Recent Order</h4>
-								<Link to="/favorite-menu" className="text-primary">View all <i className="fa-solid fa-angle-right ms-2"></i></Link>
+								<h4 className=" mb-0 cate-title">Pedidos Recentes</h4>
+								<Link to="/favorite-menu" className="text-primary">Ver todos<i className="fa-solid fa-angle-right ms-2"></i></Link>
 							</div>
 							<RecentOrderSlider />
-						</div>
+	</div>*/}
 					</div>	
 				</div>
 
