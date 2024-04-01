@@ -10,6 +10,7 @@ import "./vendor/bootstrap-select/dist/css/bootstrap-select.min.css";
 import "./css/style.css";
 import { ToastContainer } from 'react-toastify';
 import { CarrinhoProvider } from './context/CarrinhoContext';
+import { UsuarioProvider } from './context/UsuarioContext';
 
 
 const SignUp = lazy(() => import('./jsx/pages/Registration'));
@@ -38,9 +39,12 @@ function App () {
                         </div>
                     </div>  
                    }>
-                    <CarrinhoProvider>
-                        <Index /> 
-                    </CarrinhoProvider>
+                    <UsuarioProvider>                      
+                        <CarrinhoProvider>
+                            <Index /> 
+                        </CarrinhoProvider>
+                    </UsuarioProvider>
+                    
                     {rotasSemLayout}
                     <ToastContainer />
                 </Suspense>
