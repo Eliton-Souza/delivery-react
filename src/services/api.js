@@ -38,6 +38,29 @@ export const dadosUsuario = () => {
 };
 
 
+export const pegarLocalizacao = async () => {
+  try {
+    const response = await http.post(
+      'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCW4Oli-CFB7gjpPZzYb9YN1lgg2XESN6I',
+      {considerIp: false}
+    );
+
+    return response.data;
+   
+  } catch (error) {
+
+    if (error.response.status === 404) {
+      return ({status: 404, error: "Não encontramos sua localização precisa. Por favor, faça ajustes no mapa arrastando o ponteiro vermelho ou tente repetir este processo usando um dispositivo móvel"});
+    } else if (error.response.status === 429) {
+      return ({status: 429, error: "Você está fazendo muitas requisições em pouco tempo, aguarde!"});
+    }
+
+    return ({status: 500, error: "Ocorreu algum erro, tente novamente!"});
+  }
+};
+
+
+
 export const api = {
 
   validaToken: async () => {
@@ -91,6 +114,18 @@ export const api = {
       nome, sobrenome, genero, nascimento, email, celular, senha, tipo, id_loja, avatar
     });
       
+    return response.data;
+  },
+
+
+  //ENDEREÇO
+  pegarEnderecos: async () => {
+    const response = await http.get('/endereco');
+    return response.data;
+  },
+
+  deletarEndereco: async (id_endereco) => {
+    const response = await http.delete(`endereco/${id_endereco}`);
     return response.data;
   },
 
