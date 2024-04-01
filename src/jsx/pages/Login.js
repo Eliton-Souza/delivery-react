@@ -28,7 +28,7 @@ function Login () {
 
 			if(result.success){
 				saveToken(result.token);       
-				navigate('/dashboard');
+				window.location.href = '/';
 			}else{
 				swal("Oops", result.error, "error");
 			}
