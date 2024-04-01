@@ -124,6 +124,7 @@ import { ThemeContext } from "../context/ThemeContext";
 
 import CadastroUsuario from "./views/CadastroUsuario/cadastroMain";
 import PerfilLoja from "./views/PaginasLoja/PerfilLoja";
+import Endereco from "./views/Endereco/Endereco";
 
 
 
@@ -133,6 +134,7 @@ const Markup = () => {
 
     { url: "cadastro-usuario", component: <CadastroUsuario /> },
     { url: "loja/:nome_loja", component: <PerfilLoja /> },
+    { url: "endereco", component: <Endereco /> },
 
 
     /// Dashboard
