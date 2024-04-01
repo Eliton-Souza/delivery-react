@@ -49,7 +49,7 @@ const Carrinho = () =>{
                                         </svg>
                                         Elm Street, 23
                                     </h4>
-                                    <Link to={"#"} className="btn btn-outline-primary btn-sm change">Mudar</Link>
+                                    <Link to={"/endereco"} className="btn btn-outline-primary btn-sm change">Mudar</Link>
                                 </div>
                                 <p>Lorem ipsum dolor sit amet, consectetur  elit, sed do eiusmod tempor incididunt. </p>
                                 
@@ -116,7 +116,7 @@ const Carrinho = () =>{
                                     <h4 className="font-w500">Total</h4>
                                     <h3 className="font-w500 text-primary">R$ {carrinho.total}</h3>
                                 </div>
-                                <Link to="/checkout" className="btn btn-primary btn-block">Finalizar</Link>
+                                <Link to="/checkout" className="btn btn-primary btn-block">Fechar Pedido</Link>
                             </div>
                         )}
                         
