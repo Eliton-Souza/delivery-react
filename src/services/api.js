@@ -155,7 +155,11 @@ export const api = {
 
 
 
-
+  //BAIRRO
+  pegarBairros: async (cidade) => {
+    const response = await http.get(`/bairro/${cidade}`);
+    return response.data;
+  },
 
 
   //ALUNOS
