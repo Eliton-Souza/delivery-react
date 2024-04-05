@@ -4,43 +4,74 @@ import TextoGenerico from "../../components/componentes/textoGenerico";
 import MapContainer from "../../components/componentes/MapContainer";
 import BairroFild from "../../components/componentes/bairros";
 import TextAreaGenericFild from "../../components/componentes/textarea";
+import { toast } from "react-toastify"
+import { api } from "../../../services/api";
 
-const CadastrarEndereco = ({ setModal }) => {
+const CadastrarEndereco = ({ setModal, enderecos, setEnderecos }) => {
 
    const [permissao, setPermissao] = useState(false);
+   const [bairros, setBairros] = useState([]);
    
    const [estado, setEstado] = useState("AM");
    const [cidade, setCidade] = useState("Boca do Acre");
-   const [bairro, setBairro] = useState(null);
+   const [id_bairro, setIdBairro] = useState(null);
    const [rua, setRua] = useState(null);
    const [numero, setNumero] = useState(null);
-   const [semNumero, setSemNumero] = useState(false);
    const [referencia, setReferencia] = useState(null);
    const [descricao, setDescricao] = useState(null);
+   const [latitude, setLatitude] = useState(null);
+   const [longitude, setLongitude] = useState(null);
 
    const [erro, setErro] = useState(true);
    const [estadoErro, setEstadoErro] = useState(false);
    const [cidadeErro, setCidadeErro] = useState(false);
-   const [bairroErro, setBairroErro] = useState(true);
+   const [id_bairroErro, setIdBairroErro] = useState(true);
    const [ruaErro, setRuaErro] = useState(true);
    const [numeroErro, setNumeroErro] = useState(true);
    const [referenciaErro, setReferenciaErro] = useState(true);
    const [descricaoErro, setDescricaoErro] = useState(true);
 
-   const [loading, setLoading] = useState(null);
+   const [loading, setLoading] = useState(false);
 
    useEffect(() => {
-      if(estadoErro || cidadeErro || bairroErro || ruaErro || numeroErro || referenciaErro || descricaoErro){
+      console.log(erro);
+      if(id_bairroErro || ruaErro || numeroErro || referenciaErro || descricaoErro){
          setErro(true);
       }else{
          setErro(false);
       }
-   }, [estadoErro, cidadeErro, bairroErro, ruaErro, numeroErro, referenciaErro, descricaoErro]);
+   }, [id_bairroErro, ruaErro, numeroErro, referenciaErro, descricaoErro]);
 
+   const cadastrar= async () => {     
+      
+      setLoading(true);
+      const result = await api.cadastrarEndereco(estado, cidade, id_bairro, rua, numero, referencia, descricao, latitude, longitude);			
+  
+      if(result.success){
+
+         const novoBairro = bairros.find((bairro) => bairro.id_bairro == result.endereco.id_bairro);
+         const nomeNovoBairro = novoBairro.nome;
+
+         const novoEndereco = { ...result.endereco, bairro: nomeNovoBairro };
+         setEnderecos([...enderecos, novoEndereco]);
+
+         setModal(false);   			
+         swal("Sucesso!", "Endereço cadastrado com sucesso", "success");
+         toast.success("✔️ " + "Endereço cadastrado com sucesso", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+          });
+      }else{
+        swal("Oops", result.error, "error");
+      }
+      setLoading(false);
+    }
 
    return (
-    
-
       <Modal show={true} onHide={() => { setModal(false) }} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Cadrastre um novo endereço!</Modal.Title>
@@ -88,7 +119,7 @@ const CadastrarEndereco = ({ setModal }) => {
                                  </strong>
                               </label>
                               
-                              <BairroFild changeBairro={setBairro} changeErro={setBairroErro} desabilitado={false}></BairroFild>
+                              <BairroFild changeIdBairro={setIdBairro} bairros={bairros} setBairros={setBairros} changeErro={setIdBairroErro} desabilitado={false}></BairroFild>
                            
                            </div>
 
@@ -147,7 +178,7 @@ const CadastrarEndereco = ({ setModal }) => {
 
                         
                         <div className="row mt-4">
-                           <MapContainer permissao={permissao} setPermissao={setPermissao}></MapContainer>  
+                           <MapContainer permissao={permissao} setPermissao={setPermissao} setLatitude={setLatitude} setLongitude={setLongitude}></MapContainer>  
                            
                            <div className="mb-1"></div>
 
@@ -169,7 +200,7 @@ const CadastrarEndereco = ({ setModal }) => {
                Fechar
             </Button>
          
-            <Button variant="primary" disabled={loading || erro}>
+            <Button variant="primary" disabled={loading || erro} onClick={()=> cadastrar()}>
                <i className="fa fa-plus me-2" />
                Cadastrar
             </Button>

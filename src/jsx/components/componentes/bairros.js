@@ -3,14 +3,13 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { api } from "../../../services/api";
 
-const BairroFild = ({ changeBairro, changeErro, desabilitado }) => {
+const BairroFild = ({ changeIdBairro, bairros, setBairros, changeErro, desabilitado }) => {
   
-  const [bairros, setBairros] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const mudarBairro = (event) => {
     const novoBairro = event.target.value;
-    changeBairro(novoBairro);
+    changeIdBairro(novoBairro);
   };
 
   const validaBairro = Yup.object().shape({

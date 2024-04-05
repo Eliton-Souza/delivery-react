@@ -30,10 +30,8 @@ const Endereco = () => {
   }, []); 
 
 	
-	
 	return(
 		<>
-
       {loading && (
         <LoadingPage></LoadingPage>
       )}
@@ -103,7 +101,7 @@ const Endereco = () => {
       </Card>
 
       {modal && (
-        <CadastrarEndereco setModal={setModal}></CadastrarEndereco>
+        <CadastrarEndereco setModal={setModal} enderecos={enderecos} setEnderecos={setEnderecos}></CadastrarEndereco>
       )}
 		</>
 	)
