@@ -22,7 +22,7 @@ const TextoGenerico = ({ changeTexto, campo, placeholder, changeErro, desabilita
         >
           {({ values, errors, handleChange, handleBlur }) => (
             <form>
-              <div className={`form-group mb-3 ${values.textArea ? errors.textArea ? "is-invalid" + changeErro(true) : "is-valid" + changeErro(false): ""+ changeErro(true)}`}>
+              <div className={`form-group mb-3 ${values.texto ? errors.texto ? "is-invalid" + changeErro(true) : "is-valid" + changeErro(false): ""+ changeErro(true)}`}>
                 
                 <Field
                   type="text"
