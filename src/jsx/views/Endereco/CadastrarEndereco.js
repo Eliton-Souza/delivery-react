@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import TextoGenerico from "../../components/componentes/textoGenerico";
 import MapContainer from "../../components/componentes/MapContainer";
+import BairroFild from "../../components/componentes/bairros";
+import TextAreaGenericFild from "../../components/componentes/textarea";
 
 const CadastrarEndereco = ({ setModal }) => {
+
    const [permissao, setPermissao] = useState(false);
+   
    const [estado, setEstado] = useState("AM");
    const [cidade, setCidade] = useState("Boca do Acre");
    const [bairro, setBairro] = useState(null);
@@ -84,9 +88,8 @@ const CadastrarEndereco = ({ setModal }) => {
                                  </strong>
                               </label>
                               
-                              <TextoGenerico
-                                 changeTexto={setBairro} campo={"Bairro"} placeholder={"Digite seu bairro"} changeErro={setBairroErro} desabilitado={false}>                                 
-                              </TextoGenerico>
+                              <BairroFild changeBairro={setBairro} changeErro={setBairroErro} desabilitado={false}></BairroFild>
+                           
                            </div>
 
                            <div className="form-group mb-3 col-md-4">                     
@@ -109,7 +112,7 @@ const CadastrarEndereco = ({ setModal }) => {
                               </label>
                            
                               <TextoGenerico
-                              changeTexto={setNumero} campo={"Número"} placeholder={"Número"} changeErro={setNumeroErro} desabilitado={semNumero}>                                 
+                                 changeTexto={setNumero} campo={"Número"} placeholder={"Número"} changeErro={setNumeroErro} desabilitado={false}>                                 
                               </TextoGenerico>
          
                            </div>                            
@@ -124,8 +127,9 @@ const CadastrarEndereco = ({ setModal }) => {
                                  </strong>
                               </label>
                               
-                              <textarea name="textarea" id="textareaReferencia" cols={30} rows={5} className="form-control bg-transparent" placeholder="Ex: Próximo a prefeitura" defaultValue={""}/>
-                        
+                              <TextAreaGenericFild
+                                 changeTextArea={setReferencia} campo={"Ponto de Referência"} placeholder={"Ex: Próximo a prefeitura"} changeErro={setReferenciaErro} desabilitado={false}>
+                              </TextAreaGenericFild>
                            </div>
 
                            <div className="form-group mb-3 col-md-6">                     
@@ -135,8 +139,9 @@ const CadastrarEndereco = ({ setModal }) => {
                                  </strong>
                               </label>
                               
-                              <textarea name="textarea" id="textareaDescricao" cols={30} rows={5} className="form-control bg-transparent" placeholder="Ex: Casa do fulado que trabalha na prefeitura, casa com muro na cor branca e portão de ferro..." defaultValue={""}/>
-                        
+                              <TextAreaGenericFild
+                                 changeTextArea={setDescricao} campo={"Complemento"} placeholder={"Ex: Casa do fulado que trabalha na prefeitura, casa com muro na cor branca e portão de ferro..."} changeErro={setDescricaoErro} desabilitado={false}>
+                              </TextAreaGenericFild>
                            </div>                              
                         </div>
 
