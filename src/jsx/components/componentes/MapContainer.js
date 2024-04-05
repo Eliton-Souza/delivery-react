@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import { pegarLocalizacao } from '../../../services/api';
 
-const MapContainer = ({permissao, setPermissao}) => {
+const MapContainer = ({permissao, setPermissao, setLatitude, setLongitude}) => {
     const [userLocation, setUserLocation] = useState(null);
     
    
@@ -21,6 +21,10 @@ const MapContainer = ({permissao, setPermissao}) => {
 
     const handleMarkerDragEnd = (event) => {
         setUserLocation({ lat: event.latLng.lat(), lng: event.latLng.lng() });
+
+        setLatitude(event.latLng.lat());
+        setLongitude(event.latLng.lng());
+
         setZoom(17);
     };
 
@@ -38,6 +42,8 @@ const MapContainer = ({permissao, setPermissao}) => {
             }
 
             setUserLocation({ lat: local.location.lat, lng: local.location.lng });
+            setLatitude(local.location.lat);
+            setLongitude(local.location.lng);
         }
         else if(local.status === 404){
            
@@ -48,11 +54,16 @@ const MapContainer = ({permissao, setPermissao}) => {
             })
             setZoom(13);
             setUserLocation({ lat: -8.764259, lng: -67.364798 });
+            setLatitude(-8.764259);
+            setLongitude(-67.364798);
         }
         else{
             swal("Oops", local.error, "error");
             setPermissao(false);
+
             setUserLocation(null);
+            setLatitude(null);
+            setLongitude(null);
         }
     };
 
@@ -71,6 +82,8 @@ const MapContainer = ({permissao, setPermissao}) => {
                     }
 
                     setUserLocation({ lat: position.coords.latitude, lng: position.coords.longitude });
+                    setLatitude( position.coords.latitude);
+                    setLongitude(position.coords.longitude);
                     setPermissao(true);
                 },
                 (error) => {
