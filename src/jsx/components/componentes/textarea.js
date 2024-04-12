@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-const TextAreaGenericField = ({ changeTextArea, campo, placeholder, changeErro, desabilitado }) => {
+const TextAreaGenericField = ({ changeTextArea, valor, campo, placeholder, changeErro, desabilitado }) => {
   
   const mudarTexto = (event) => {
     const novoTexto = event.target.value;
@@ -10,12 +10,18 @@ const TextAreaGenericField = ({ changeTextArea, campo, placeholder, changeErro, 
   };
 
   const validaGenerico = Yup.object().shape({
-    textArea: Yup.string().required(`O campo ${campo} é obrigatório`),
+    textArea: Yup.string()
+    .required(`O campo ${campo} é obrigatório`)
+    .test(
+      "espacoEmBranco",
+      `O campo ${campo} é obrigatório`,
+      (value) => !(/^\s+$/.test(value))
+    ),
   });
 
   return (
     <Formik
-      initialValues={{ textArea: "" }}
+      initialValues={{ textArea: valor ?? "" }}
       validationSchema={validaGenerico}
       onSubmit={() => {}}
     >
@@ -38,7 +44,6 @@ const TextAreaGenericField = ({ changeTextArea, campo, placeholder, changeErro, 
                     mudarTexto(event);
                   }}
                   onBlur={handleBlur}
-                  value={values.textArea}
                 />
 
                 <ErrorMessage

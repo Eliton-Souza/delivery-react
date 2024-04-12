@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-const TextoGenerico = ({ changeTexto, campo, placeholder, changeErro, desabilitado }) => {
+const TextoGenerico = ({ changeTexto, valor, campo, placeholder, changeErro, desabilitado }) => {
   
   const mudarTexto = (event) => {
     const novoTexto = event.target.value;
@@ -10,14 +10,20 @@ const TextoGenerico = ({ changeTexto, campo, placeholder, changeErro, desabilita
   };
 
   const validaGenerico = Yup.object().shape({
-    texto: Yup.string().required(`O campo ${campo} é obrigatório`),
+    texto: Yup.string()
+    .required(`O campo ${campo} é obrigatório`)
+    .test(
+      "espacoEmBranco",
+      `O campo ${campo} é obrigatório`,
+      (value) => !(/^\s+$/.test(value))
+    ),
   });
 
   return (
     <div className="row">
       <div className="col-lg-12">
         <Formik
-          initialValues={{ texto: "" }}
+          initialValues={{ texto: valor ?? "" }}
           validationSchema={validaGenerico}
         >
           {({ values, errors, handleChange, handleBlur }) => (
@@ -35,7 +41,6 @@ const TextoGenerico = ({ changeTexto, campo, placeholder, changeErro, desabilita
                     mudarTexto(event);
                   }}
                   onBlur={handleBlur}
-                  value={values.texto}
                 />
 
                 <ErrorMessage

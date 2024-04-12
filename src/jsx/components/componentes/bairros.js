@@ -3,7 +3,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { api } from "../../../services/api";
 
-const BairroFild = ({ changeIdBairro, bairros, setBairros, changeErro, desabilitado }) => {
+const BairroFild = ({ changeIdBairro, valor, bairros, setBairros, changeErro, desabilitado }) => {
   
   const [loading, setLoading] = useState(false);
 
@@ -39,7 +39,7 @@ const BairroFild = ({ changeIdBairro, bairros, setBairros, changeErro, desabilit
     <div className="row">          
       <div className="col-lg-12">
         <Formik
-          initialValues={{ bairro: "" }}
+          initialValues={{ bairro: valor ?? "" }}
           validationSchema={ validaBairro }
         >
           {({
