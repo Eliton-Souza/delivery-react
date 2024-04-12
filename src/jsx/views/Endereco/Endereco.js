@@ -5,12 +5,16 @@ import TituloPagina from '../../components/componentes/TituloPagina';
 import Drop from './DropEditDel';
 import LoadingPage from '../../components/componentes/LoadingPage';
 import CadastrarEndereco from './CadastrarEndereco';
+import EditarEndereco from './EditarEndereco';
 
 const Endereco = () => {
 
   const [loading, setLoading] = useState(false);
   const [enderecos, setEnderecos] = useState([]);
   const [modal, setModal]= useState(false);
+  const [modalEditar, setModalEditar]= useState(false);
+  const [enderecoEdit, setEnderecoEdit] = useState([]);
+  
 
 	const pegarEnderecos= async () => {    
 	
@@ -56,7 +60,7 @@ const Endereco = () => {
                                 {item.bairro + ', ' + item.rua + ', ' + item.numero}
                               </h4>
 
-                              <Drop id_endereco={item.id_endereco} enderecos={enderecos} setEnderecos={setEnderecos}></Drop>
+                              <Drop id_endereco={item.id_endereco} enderecos={enderecos} setEnderecos={setEnderecos} setModalEditar={setModalEditar} setEnderecoEdit={setEnderecoEdit}></Drop>
                             </div>
         
                             <div>
@@ -93,7 +97,16 @@ const Endereco = () => {
         </Card.Body>
         
         <Card.Footer>
-          <Button className="btn btn-primary" disabled={loading } onClick={()=> setModal(true)}>
+          <Button className="btn btn-primary" disabled={loading} onClick={()=> {
+            enderecos.length >= 6 ? 
+                swal({
+                  title: "Atenção",
+                  text: "Você atingiu o limite máximo de endereços cadastrados. Por favor, exclua ou edite um endereço existente para adicionar um novo endereço.",
+                  icon: "warning",
+                })
+              :  
+                setModal(true)} 
+            }>
             <i className="fa fa-plus me-2" />
             Novo endereço
           </Button>
@@ -102,6 +115,10 @@ const Endereco = () => {
 
       {modal && (
         <CadastrarEndereco setModal={setModal} enderecos={enderecos} setEnderecos={setEnderecos}></CadastrarEndereco>
+      )}
+
+      {modalEditar && (
+        <EditarEndereco setModal={setModalEditar} enderecoEdit={enderecoEdit} enderecos={enderecos} setEnderecos={setEnderecos}></EditarEndereco>
       )}
 		</>
 	)

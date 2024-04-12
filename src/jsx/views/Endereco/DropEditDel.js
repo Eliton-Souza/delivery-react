@@ -4,7 +4,7 @@ import { Dropdown } from 'react-bootstrap';
 import LoadingPage from '../../components/componentes/LoadingPage';
 
 
-const Drop = ({id_endereco, enderecos, setEnderecos}) => {
+const Drop = ({id_endereco, enderecos, setEnderecos, setModalEditar, setEnderecoEdit}) => {
 
   const [loading, setLoading] = useState(false);
 
@@ -26,7 +26,7 @@ const Drop = ({id_endereco, enderecos, setEnderecos}) => {
     setLoading(false);
   }
 
-	const deletarEndereco= async () => {    
+	const deletarEndereco= () => {    
     swal({
       title: "Deseja realmente deletar este endereço?",
       text: "Atenção! Esta ação é irrevesível",
@@ -43,6 +43,11 @@ const Drop = ({id_endereco, enderecos, setEnderecos}) => {
         swal("Sua lista de endereços não foi alterada");
       }
     })
+	}
+
+  const pegarEndereco= () => {    
+    const endereco = enderecos.find((endereco) => endereco.id_endereco == id_endereco);
+    setEnderecoEdit(endereco);
 	}
 
 	return(
@@ -64,7 +69,7 @@ const Drop = ({id_endereco, enderecos, setEnderecos}) => {
           </svg>
        </Dropdown.Toggle>
        <Dropdown.Menu>
-          <Dropdown.Item href="#" onClick={()=> alert("clicou")}>
+          <Dropdown.Item href="#" onClick={()=> {setModalEditar(true); pegarEndereco()}}>
             Editar
           </Dropdown.Item>
           <Dropdown.Item href="#" onClick={()=> deletarEndereco()} className="text-danger">
