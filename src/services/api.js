@@ -127,6 +127,14 @@ export const api = {
     return response.data;
   },
 
+  editarEndereco: async (id_endereco, estado, cidade, id_bairro, rua, numero, referencia, descricao, latitude, longitude) => {
+    const response = await http.put(`/endereco/${id_endereco}`, {
+      estado, cidade, id_bairro, rua, numero, referencia, descricao, latitude, longitude
+    });
+      
+    return response.data;
+  },
+
   pegarEnderecos: async () => {
     const response = await http.get('/endereco');
     return response.data;
