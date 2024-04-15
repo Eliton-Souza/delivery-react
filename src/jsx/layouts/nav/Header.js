@@ -1,23 +1,11 @@
 import React,{useState, useEffect} from "react";
 import { Button, Dropdown, Modal } from "react-bootstrap";
-import PerfectScrollbar from "react-perfect-scrollbar";
 import { Link } from "react-router-dom";
-/// Scroll
-//import PerfectScrollbar from "react-perfect-scrollbar";
-
-/// Image
-//import profile from "../../../images/profile/pic1.jpg";
-//import avatar from "../../../images/avatar/1.jpg";
-//import { Dropdown } from "react-bootstrap";
-
-
 import HeaderSlider from './HeaderSlider';
 
 
-//import avatar from "../../../images/avatar/1.jpg";
 import semImagem from "../../../images/no-img-avatar.png";
 import carrinhoIcon from "../../../images/carrinhoIcon.png"
-import { dadosUsuario, getToken, removeToken } from "../../../services/api";
 import Carrinho from "../../views/Produto/carrinho";
 import { useUsuario } from "../../../context/UsuarioContext";
 
@@ -38,16 +26,12 @@ function  AddSearchSlider(){
 
 const Header = ({ onNote }) => {
 	//const [rightSelect, setRightSelect] = useState('Eng');
-	const { usuario, setUsuario} = useUsuario();
-
+	const { usuario } = useUsuario();
 	const [cidade, setCidade] = useState([LocationIcon, 'Boca do Acre']);
-
 	const [modal, setModal] = useState(false);
 
 	const logout = () => {
-		removeToken();
-		setUsuario(null);
-		window.location.href = '/';
+		window.location.href = '/logout';
 	}
 	  
 

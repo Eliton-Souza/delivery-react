@@ -10,7 +10,9 @@ export const setCarrinhoLS = (carrinho) => {
   return localStorage.setItem('carrinho', JSON.stringify(carrinho));
 };
 
-
+export const limpaLS = () => {
+  return localStorage.clear();
+};
 
 
 
@@ -22,10 +24,10 @@ export const getToken = () => {
   return localStorage.getItem('token');
 };
 
-export const removeToken = () => {
+/*export const removeToken = () => {
   localStorage.removeItem('token');
 };
-
+*/
 export const dadosUsuario = () => {
   const token = getToken();
 
@@ -35,6 +37,11 @@ export const dadosUsuario = () => {
   }
 
   return false;  
+};
+
+export const decodeToken = (token) => {
+  const decodedToken = jwtDecode(token);
+  return decodedToken;
 };
 
 
