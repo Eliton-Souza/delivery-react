@@ -1,16 +1,19 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { getCarrinhoLS, setCarrinhoLS } from '../services/api';
+import { getCarrinhoLS, getToken, setCarrinhoLS } from '../services/api';
 
 const CarrinhoContext = createContext();
 
 export const CarrinhoProvider = ({ children }) => {
-    const [carrinho, setCarrinho] = useState(() => {
-        const carrinhoLocalStorage = getCarrinhoLS();
-        return carrinhoLocalStorage ? JSON.parse(carrinhoLocalStorage) : null;
-      });
+  const [carrinho, setCarrinho] = useState(() => {
+    const carrinhoLocalStorage = getCarrinhoLS();
+    return carrinhoLocalStorage ? JSON.parse(carrinhoLocalStorage) : null;
+  });
 
   useEffect(() => {
-    setCarrinhoLS(carrinho);   //salva no localStorage
+    const logado = getToken();
+    if(logado){
+      setCarrinhoLS(carrinho);   //salva no localStorage
+    }
   }, [carrinho]);
 
   return (
