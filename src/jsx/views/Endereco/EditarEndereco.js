@@ -229,7 +229,7 @@ const EditarEndereco = ({ setModal, enderecoEdit, enderecos, setEnderecos }) => 
          
             <Button variant="primary" disabled={loading || erro} onClick={()=> editar()}>
                <i className="fa fa-edit me-2" />
-               Editar
+               Salvar
             </Button>
         </Modal.Footer>
 
