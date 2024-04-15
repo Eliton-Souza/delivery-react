@@ -52,7 +52,6 @@ const LojasGrid = () =>{
               <div className="card dishe-bx b-hover review style-1" onClick={()=>redirecionarLoja(loja.nome)}>
                 <div className="card-body text-center py-3 d-flex justify-content-center">
                     <img src={loja.logo} alt="" />
-                    <i className="fa-solid fa-heart c-heart c-pointer style-1"></i>
                 </div>
                 <div className="card-footer pt-0 border-0 text-center">
                   <div>
