@@ -90,3 +90,22 @@ export const addProdutoCarrinho = (produto, id_loja, carrinho, setCarrinho) => {
   }
 
 };
+
+
+export const avisoLogin = () => {
+
+  swal({
+    title: "Atenção!",
+    text: "Para adicionar produtos ao seu carrinho você precisar estador logado. Por favor, faça seu login.",
+    icon: "warning",
+    buttons: {
+      cancel: "Cancelar",
+      confirm: "Fazer Login"
+    },
+    dangerMode: false,
+  }).then((confirmou) => {
+    if (confirmou) {
+      window.location.href = '/logout';
+    }
+  })
+}

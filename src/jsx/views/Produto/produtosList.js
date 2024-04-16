@@ -6,12 +6,25 @@ import 'lightgallery/css/lg-zoom.css';
 import 'lightgallery/css/lg-thumbnail.css';
 import ModalDetalhesProduto from './modalDetalhesProduto';
 import { Card } from 'react-bootstrap';
+import { useUsuario } from '../../../context/UsuarioContext';
+import { avisoLogin } from './helper';
 
 
 const ProdutosList = ({produtos}) =>{
 
     const [modal, setModal] = useState(false);
     const [produto, setProduto] = useState(false);
+
+    const { usuario } = useUsuario();
+
+    const verificaLogado = ( produtoSelect ) => {
+        if(usuario){
+            setModal(true);
+            setProduto(produtoSelect)
+        }else{
+            avisoLogin();
+        }
+    }
 
     return(
         <>
@@ -61,7 +74,7 @@ const ProdutosList = ({produtos}) =>{
                                                             <div className="card dishe-bx border-0">                           
                                                                 <div className="common">
                                                                     <div className="plus c-pointer"
-                                                                        onClick={()=>{setModal(true); setProduto(produtosCategoria[ind])}}>
+                                                                        onClick={()=>{verificaLogado(item)}}>
                                                                         <div className="sub-bx"></div>
                                                                     </div>
                                                                 </div>
