@@ -5,12 +5,12 @@ import {Link} from 'react-router-dom';
 //import pMinDelay from "p-min-delay";
 
 //Import Components
-import { ThemeContext } from "../../../context/ThemeContext";
+import { ThemeContext } from "../../../../context/ThemeContext";
 import BannerSlider from './BannerSlider';
 import CategorySlider from './CategorySlider';
 import PopularDishesSlider from './PopularDishesSlider';
 import RecentOrderSlider from './RecentOrderSlider';
-import Carrinho from '../Produto/carrinho';
+import Carrinho from '../../Produto/carrinho';
 import LojasGrid from './lojasGrid';
 
 

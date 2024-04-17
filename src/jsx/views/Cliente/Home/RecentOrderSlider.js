@@ -5,9 +5,9 @@ import { Autoplay } from "swiper";
 
 import "swiper/css";
 
-import img1 from './../../../images/popular-img/review-img/pic-1.jpg';
-import img2 from './../../../images/popular-img/review-img/pic-2.jpg';
-import img3 from './../../../images/popular-img/review-img/pic-3.jpg';
+import img1 from './../../../../images/popular-img/review-img/pic-1.jpg';
+import img2 from './../../../../images/popular-img/review-img/pic-2.jpg';
+import img3 from './../../../../images/popular-img/review-img/pic-3.jpg';
 
 
 const sliderBlog = [

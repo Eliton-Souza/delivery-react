@@ -1,16 +1,14 @@
 import React, { useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
-import logo from '../../images/logo-full.png'
-import bgimage from '../../images/login-img/pic-5.jpg';
-import UsernameFild from '../components/componentes/Username';
-import SenhaFild from '../components/componentes/Senha';
+import logo from '../../../images/logo-full.png'
+import bgimage from '../../../images/login-img/pic-5.jpg';
+import UsernameFild from '../../components/componentes/Username';
+import SenhaFild from '../../components/componentes/Senha';
 import swal from 'sweetalert';
-import { api, saveToken } from '../../services/api';
+import { api, saveToken } from '../../../services/api';
 
 function Login () {
-
-	const navigate = useNavigate();
     
 	const [login, setLogin] = useState('');
     const [senha, setSenha] = useState('');
@@ -27,7 +25,7 @@ function Login () {
 			setLoading(false);
 
 			if(result.success){
-				saveToken(result.token);       
+				saveToken(result.token);
 				window.location.href = '/';
 			}else{
 				swal("Oops", result.error, "error");
@@ -87,7 +85,11 @@ function Login () {
 										</form>
 
 										<div className="text-center mt-5">
-											<span>Não tem uma conta?<NavLink to="/page-register" className="text-primary"> Jute-se a nós</NavLink></span>
+											<span>Não tem uma conta?<NavLink to="/cadastro-usuario" className="text-primary"> Cadastre-se</NavLink></span>
+										</div>
+
+										<div className="text-center mt-2">
+											<NavLink to="/" className="text-primary">Voltar para home</NavLink>
 										</div>
 
 									</div>

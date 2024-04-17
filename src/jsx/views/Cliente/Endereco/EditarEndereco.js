@@ -1,40 +1,52 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import TextoGenerico from "../../components/componentes/textoGenerico";
-import MapContainer from "../../components/componentes/MapContainer";
-import BairroFild from "../../components/componentes/bairros";
-import TextAreaGenericFild from "../../components/componentes/textarea";
+import TextoGenerico from "../../../components/componentes/textoGenerico";
+import BairroFild from "../../../components/componentes/bairros";
+import TextAreaGenericFild from "../../../components/componentes/textarea";
 import { toast } from "react-toastify"
-import { api } from "../../../services/api";
+import { api } from "../../../../services/api";
+import MapEditar from "../../../components/componentes/MapEditar";
 
-const CadastrarEndereco = ({ setModal, enderecos, setEnderecos }) => {
+const EditarEndereco = ({ setModal, enderecoEdit, enderecos, setEnderecos }) => {
 
    const [permissao, setPermissao] = useState(false);
    const [bairros, setBairros] = useState([]);
-   
+
    const [estado, setEstado] = useState("AM");
    const [cidade, setCidade] = useState("Boca do Acre");
-   const [id_bairro, setIdBairro] = useState(null);
-   const [rua, setRua] = useState(null);
-   const [numero, setNumero] = useState(null);
-   const [referencia, setReferencia] = useState(null);
-   const [descricao, setDescricao] = useState(null);
+   const [id_bairro, setIdBairro] = useState(enderecoEdit.id_bairro);
+   const [rua, setRua] = useState(enderecoEdit.rua);
+   const [numero, setNumero] = useState(enderecoEdit.numero);
+   const [referencia, setReferencia] = useState(enderecoEdit.referencia);
+   const [descricao, setDescricao] = useState(enderecoEdit.descricao);
    const [latitude, setLatitude] = useState(null);
    const [longitude, setLongitude] = useState(null);
 
    const [erro, setErro] = useState(true);
    const [estadoErro, setEstadoErro] = useState(false);
    const [cidadeErro, setCidadeErro] = useState(false);
-   const [id_bairroErro, setIdBairroErro] = useState(true);
-   const [ruaErro, setRuaErro] = useState(true);
-   const [numeroErro, setNumeroErro] = useState(true);
-   const [referenciaErro, setReferenciaErro] = useState(true);
-   const [descricaoErro, setDescricaoErro] = useState(true);
+   const [id_bairroErro, setIdBairroErro] = useState(false);
+   const [ruaErro, setRuaErro] = useState(false);
+   const [numeroErro, setNumeroErro] = useState(false);
+   const [referenciaErro, setReferenciaErro] = useState(false);
+   const [descricaoErro, setDescricaoErro] = useState(false);
 
    const [loading, setLoading] = useState(false);
 
+   
    useEffect(() => {
-      console.log(erro);
+      if (enderecoEdit.coordenadas) {
+         const partes = enderecoEdit.coordenadas.split(',');
+         setLatitude(Number (partes[0]));
+         setLongitude(Number (partes[1]));
+         setPermissao(true);
+      }
+   }, []);
+
+
+
+   useEffect(() => {
+      //console.log(erro);
       if(id_bairroErro || ruaErro || numeroErro || referenciaErro || descricaoErro){
          setErro(true);
       }else{
@@ -42,22 +54,26 @@ const CadastrarEndereco = ({ setModal, enderecos, setEnderecos }) => {
       }
    }, [id_bairroErro, ruaErro, numeroErro, referenciaErro, descricaoErro]);
 
-   const cadastrar= async () => {     
+   const editar= async () => {     
       
       setLoading(true);
-      const result = await api.cadastrarEndereco(estado, cidade, id_bairro, rua, numero, referencia, descricao, latitude, longitude);			
+      const result = await api.editarEndereco(enderecoEdit.id_endereco, estado, cidade, id_bairro, rua, numero, referencia, descricao, latitude, longitude);			
   
       if(result.success){
 
          const novoBairro = bairros.find((bairro) => bairro.id_bairro == result.endereco.id_bairro);
          const nomeNovoBairro = novoBairro.nome;
+         const enderecoEditado = { ...result.endereco, bairro: nomeNovoBairro };
 
-         const novoEndereco = { ...result.endereco, bairro: nomeNovoBairro };
-         setEnderecos([...enderecos, novoEndereco]);
+         const enderecoIndex = enderecos.findIndex((endereco) => endereco.id_endereco == enderecoEdit.id_endereco);
+         const copiaEnderecos = [...enderecos];
+         copiaEnderecos[enderecoIndex] = { ...enderecoEditado };
+         setEnderecos(copiaEnderecos);
+
 
          setModal(false);   			
-         swal("Sucesso!", "Endereço cadastrado com sucesso", "success");
-         toast.success("✔️ " + "Endereço cadastrado com sucesso", {
+         swal("Sucesso!", "Endereço editado com sucesso", "success");
+         toast.success("✔️ " + "Endereço editado com sucesso", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -74,7 +90,7 @@ const CadastrarEndereco = ({ setModal, enderecos, setEnderecos }) => {
    return (
       <Modal show={true} onHide={() => { setModal(false) }} size="lg">
         <Modal.Header closeButton>
-          <Modal.Title>Cadrastre um novo endereço!</Modal.Title>
+          <Modal.Title>Edite seu endereço!</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -93,7 +109,7 @@ const CadastrarEndereco = ({ setModal, enderecos, setEnderecos }) => {
                               </label>
                               
                               <TextoGenerico
-                                 changeTexto={setEstado} campo={"Estado"} placeholder={"Amazonas"} changeErro={setEstadoErro} desabilitado={true}>                                 
+                                 changeTexto={setEstado} valor={"Amazonas"} campo={"Estado"} placeholder={"Amazonas"} changeErro={setEstadoErro} desabilitado={true}>                                 
                               </TextoGenerico>
                            </div>
 
@@ -105,7 +121,7 @@ const CadastrarEndereco = ({ setModal, enderecos, setEnderecos }) => {
                               </label>
                               
                               <TextoGenerico
-                                 changeTexto={setCidade} campo={"Cidade"} placeholder={"Boca do Acre"} changeErro={setCidadeErro} desabilitado={true}>                                 
+                                 changeTexto={setCidade} valor={"Boca do Acre"} campo={"Cidade"} placeholder={"Boca do Acre"} changeErro={setCidadeErro} desabilitado={true}>                                 
                               </TextoGenerico>
                            </div>                              
                         </div>
@@ -119,7 +135,7 @@ const CadastrarEndereco = ({ setModal, enderecos, setEnderecos }) => {
                                  </strong>
                               </label>
                               
-                              <BairroFild changeIdBairro={setIdBairro} bairros={bairros} setBairros={setBairros} changeErro={setIdBairroErro} desabilitado={false}></BairroFild>
+                              <BairroFild changeIdBairro={setIdBairro} valor={id_bairro} bairros={bairros} setBairros={setBairros} changeErro={setIdBairroErro} desabilitado={false}></BairroFild>
                            
                            </div>
 
@@ -131,7 +147,7 @@ const CadastrarEndereco = ({ setModal, enderecos, setEnderecos }) => {
                               </label>
                               
                               <TextoGenerico
-                                 changeTexto={setRua} campo={"Rua"} placeholder={"Digite sua Rua"} changeErro={setRuaErro} desabilitado={false}>                                 
+                                 changeTexto={setRua} valor={rua} campo={"Rua"} placeholder={"Digite sua Rua"} changeErro={setRuaErro} desabilitado={false}>                                 
                               </TextoGenerico>
                            </div>  
 
@@ -143,7 +159,7 @@ const CadastrarEndereco = ({ setModal, enderecos, setEnderecos }) => {
                               </label>
                            
                               <TextoGenerico
-                                 changeTexto={setNumero} campo={"Número"} placeholder={"Número"} changeErro={setNumeroErro} desabilitado={false}>                                 
+                                 changeTexto={setNumero} valor={numero} campo={"Número"} placeholder={"Número"} changeErro={setNumeroErro} desabilitado={false}>                                 
                               </TextoGenerico>
          
                            </div>                            
@@ -159,7 +175,7 @@ const CadastrarEndereco = ({ setModal, enderecos, setEnderecos }) => {
                               </label>
                               
                               <TextAreaGenericFild
-                                 changeTextArea={setReferencia} campo={"Ponto de Referência"} placeholder={"Ex: Próximo a prefeitura"} changeErro={setReferenciaErro} desabilitado={false}>
+                                 changeTextArea={setReferencia} valor={referencia} campo={"Ponto de Referência"} placeholder={"Ex: Próximo a prefeitura"} changeErro={setReferenciaErro} desabilitado={false}>
                               </TextAreaGenericFild>
                            </div>
 
@@ -171,19 +187,30 @@ const CadastrarEndereco = ({ setModal, enderecos, setEnderecos }) => {
                               </label>
                               
                               <TextAreaGenericFild
-                                 changeTextArea={setDescricao} campo={"Complemento"} placeholder={"Ex: Casa do fulado que trabalha na prefeitura, casa com muro na cor branca e portão de ferro..."} changeErro={setDescricaoErro} desabilitado={false}>
+                                 changeTextArea={setDescricao} valor={descricao} campo={"Complemento"} placeholder={"Ex: Casa do fulado que trabalha na prefeitura, casa com muro na cor branca e portão de ferro..."} changeErro={setDescricaoErro} desabilitado={false}>
                               </TextAreaGenericFild>
                            </div>                              
                         </div>
 
                         
                         <div className="row mt-4">
-                           <MapContainer permissao={permissao} setPermissao={setPermissao} setLatitude={setLatitude} setLongitude={setLongitude}></MapContainer>  
-                           
+                           {permissao && (
+                              <MapEditar permissao={permissao} setPermissao={setPermissao} latitude={latitude} setLatitude={setLatitude} longitude={longitude} setLongitude={setLongitude}></MapEditar>
+                           )}
                            <div className="mb-1"></div>
 
-                           <Button variant="info"  onClick={() => { setPermissao(!permissao) }}>
-                              <i className="fa fa-map-marker me-2" />
+                           <Button variant= {permissao? "danger": "info"}  onClick={() => {
+                              //setPermissao(!permissao);
+                              if (permissao) {
+                                 setLatitude(null);
+                                 setLongitude(null);
+                                 setPermissao(false);
+                              }
+                              else{
+                                 setPermissao(true);
+                              }}}
+                           >
+                              <i className={`fa ${permissao ? 'fa-remove' : 'fa-map-marker'} me-2`} />
                               {permissao? 'Remover Localização' : 'Adicionar Localização'}
                            </Button>     
                         </div>          
@@ -200,9 +227,9 @@ const CadastrarEndereco = ({ setModal, enderecos, setEnderecos }) => {
                Fechar
             </Button>
          
-            <Button variant="primary" disabled={loading || erro} onClick={()=> cadastrar()}>
-               <i className="fa fa-plus me-2" />
-               Cadastrar
+            <Button variant="primary" disabled={loading || erro} onClick={()=> editar()}>
+               <i className="fa fa-edit me-2" />
+               Salvar
             </Button>
         </Modal.Footer>
 
@@ -210,4 +237,4 @@ const CadastrarEndereco = ({ setModal, enderecos, setEnderecos }) => {
    );
 };
 
-export default CadastrarEndereco;
+export default EditarEndereco;

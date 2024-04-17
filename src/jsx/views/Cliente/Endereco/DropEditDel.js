@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { api } from '../../../services/api';
+import { api } from '../../../../services/api';
 import { Dropdown } from 'react-bootstrap';
-import LoadingPage from '../../components/componentes/LoadingPage';
+import LoadingPage from '../../../components/componentes/LoadingPage';
 
 
 const Drop = ({id_endereco, enderecos, setEnderecos, setModalEditar, setEnderecoEdit}) => {

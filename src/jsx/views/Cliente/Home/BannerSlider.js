@@ -5,9 +5,9 @@ import { Autoplay, Pagination } from "swiper";
 
 import "swiper/css";
 
-import banerimg1 from './../../../images/banner-img/pic-1.jpg';
-import banerimg2 from './../../../images/banner-img/pic-3.jpg';
-import banerimg3 from './../../../images/banner-img/pic-4.jpg';
+import banerimg1 from './../../../../images/banner-img/pic-1.jpg';
+import banerimg2 from './../../../../images/banner-img/pic-3.jpg';
+import banerimg3 from './../../../../images/banner-img/pic-4.jpg';
 
 const sliderBlog = [
     {image: banerimg1},

@@ -6,9 +6,9 @@ import "swiper/css";
 
 //images
 
-import pic1 from './../../../images/popular-img/pic-1.jpg';
-import pic2 from './../../../images/popular-img/pic-2.jpg';
-import pic3 from './../../../images/popular-img/pic-3.jpg';
+import pic1 from './../../../../images/popular-img/pic-1.jpg';
+import pic2 from './../../../../images/popular-img/pic-2.jpg';
+import pic3 from './../../../../images/popular-img/pic-3.jpg';
 
 
 const sliderData = [

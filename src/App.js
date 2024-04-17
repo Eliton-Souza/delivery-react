@@ -15,7 +15,7 @@ import { UsuarioProvider } from './context/UsuarioContext';
 
 const SignUp = lazy(() => import('./jsx/pages/Registration'));
 const ForgotPassword = lazy(() => import('./jsx/pages/ForgotPassword'));
-const Login = lazy(() => import('./jsx/pages/Login'));
+const Login = lazy(() => import('./jsx/views/Acesso/Login'));
 
 
 function App () {

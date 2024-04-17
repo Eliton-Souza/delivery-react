@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 
 /// React router dom
 import {  Routes, Route, Outlet  } from "react-router-dom";
+import { useUsuario } from "../context/UsuarioContext";
 
 /// Css
 import "./index.css";
@@ -15,7 +16,7 @@ import Footer from "./layouts/Footer";
 
 import ScrollToTop from "./layouts/ScrollToTop";
 /// Dashboard
-import Home from "./views/Home/Home";
+import Home from "./views/Cliente/Home/Home";
 import DashboardDark from "./components/Dashboard/DashboardDark";
 import FoodOrder from "./components/Dashboard/FoodOrder";
 import FavoriteMenu from "./components/Dashboard/FavoriteMenu";
@@ -27,7 +28,7 @@ import HomeSetting from "./components/Dashboard/Setting";
 import CheckoutPage from "./components/Dashboard/CheckoutPage";
 
 //Restaurant
-import Restaurant from './components/Dashboard/Restaurant/Restaurant';
+import Restaurant from './views/PaginasFuncinoario/Restaurant';
 import Withdrow from './components/Dashboard/Restaurant/Withdrow';
 import Menu from './components/Dashboard/Restaurant/Menu';
 import Orders from './components/Dashboard/Restaurant/Orders';
@@ -122,24 +123,44 @@ import Error500 from "./pages/Error500";
 import Error503 from "./pages/Error503";
 import { ThemeContext } from "../context/ThemeContext";
 
+//meus componentes
 import CadastroUsuario from "./views/CadastroUsuario/cadastroMain";
-import PerfilLoja from "./views/PaginasLoja/PerfilLoja";
-import Endereco from "./views/Endereco/Endereco";
+import PerfilLoja from "./views/Cliente/Loja/PerfilLoja";
+import Endereco from "./views/Cliente/Endereco/Endereco";
 
 
+import Logout from "./views/Acesso/Logout";
 
 const Markup = () => {
 
+  const { usuario } = useUsuario();
+
   const allroutes = [
 
+
+    //rotas publicas
+    { url: "logout", component: <Logout /> },
     { url: "cadastro-usuario", component: <CadastroUsuario /> },
     { url: "loja/:nome_loja", component: <PerfilLoja /> },
-    { url: "endereco", component: <Endereco /> },
 
 
+    //rotas para home
+    { url: "", component: (usuario?.id_funcionario) ? <Restaurant /> : <Home/>},
+    { url: "dashboard", component: (usuario?.id_funcionario) ? <Restaurant /> : <Home/>},
+
+
+    //rota apenas de clientes e nao funcionarios
+    { url: "endereco",  component: (usuario && !usuario.id_funcionario) ? <Endereco /> : <Logout/> },
+
+
+    //rotas de funcionarios autenticados
+    { url: "restaurant", component: (usuario?.id_funcionario) ? <Restaurant /> : <Logout/> },
+    { url: "withdrow", component: <Withdrow /> },
+    { url: "menu", component: <Menu /> },
+    { url: "orders", component: <Orders /> },
+    { url: "customer-reviews", component: <CustomerReviews /> },
     /// Dashboard
-    { url: "", component: <Home /> },
-    { url: "dashboard", component: <Home /> },
+
     { url: "dashboard-dark", component: <DashboardDark /> },
     { url: "food-order", component: <FoodOrder /> },
     { url: "favorite-menu", component: <FavoriteMenu /> },
@@ -150,12 +171,7 @@ const Markup = () => {
     { url: "setting", component: <HomeSetting /> },
     { url: "checkout", component: <CheckoutPage /> },
     
-    // Restaurant
-    { url: "restaurant", component: <Restaurant /> },
-    { url: "withdrow", component: <Withdrow /> },
-    { url: "menu", component: <Menu /> },
-    { url: "orders", component: <Orders /> },
-    { url: "customer-reviews", component: <CustomerReviews /> },
+   
     
 
     //Drivers

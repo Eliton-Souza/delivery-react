@@ -8,14 +8,14 @@ import 'lightgallery/css/lg-thumbnail.css';
 
 
 
-import cover from "../../../images/profile/cover.jpg";
-import { api } from "../../../services/api";
+import cover from "../../../../images/profile/cover.jpg";
+import { api } from "../../../../services/api";
 
 
-import ProdutosList from "../Produto/produtosList";
-import ProdutosGrid from "../Produto/produtosGrid";
+import ProdutosList from "../../Produto/produtosList";
+import ProdutosGrid from "../../Produto/produtosGrid";
 import { pathGrid, pathLista } from "./icones";
-import LoadingPage from "../../components/componentes/LoadingPage";
+import LoadingPage from "../../../components/componentes/LoadingPage";
 
 
 

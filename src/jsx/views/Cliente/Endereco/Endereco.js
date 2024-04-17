@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { api } from '../../../services/api';
+import { api } from '../../../../services/api';
 import { Button, Card } from 'react-bootstrap';
-import TituloPagina from '../../components/componentes/TituloPagina';
+import TituloPagina from '../../../components/componentes/TituloPagina';
 import Drop from './DropEditDel';
-import LoadingPage from '../../components/componentes/LoadingPage';
+import LoadingPage from '../../../components/componentes/LoadingPage';
 import CadastrarEndereco from './CadastrarEndereco';
 import EditarEndereco from './EditarEndereco';
 
