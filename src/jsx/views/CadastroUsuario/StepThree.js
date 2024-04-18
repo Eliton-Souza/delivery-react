@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "bootstrap-daterangepicker/daterangepicker.css";
 import DataField from "../../components/componentes/data";
 import FotoField from "../../components/componentes/foto";
+import noAvatar from '../../../images/no-img-avatar.png';
 
 const StepThree = ({ onChange, onChangeErro, usuario, setFile }) => {
 
@@ -104,7 +105,7 @@ const StepThree = ({ onChange, onChangeErro, usuario, setFile }) => {
                                  </label>
 
                                  <FotoField 
-                                   changeFoto={setFile} >
+                                   changeFoto={setFile} noImage={noAvatar}>
                                  </FotoField>                              
                               </div>
                            </div>

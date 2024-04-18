@@ -1,9 +1,7 @@
 import React, { Fragment, useState } from "react";
-import bgimage from '../../../images/no-img-avatar.png';
 import { Link } from "react-router-dom";
 
-
-const FotoField = ({ changeFoto }) => {
+const FotoField = ({ changeFoto, noImage }) => {
 
 	const [file, setFile] = useState(null);
    
@@ -25,7 +23,7 @@ const FotoField = ({ changeFoto }) => {
                     <div className=" change position-relative d-flex">
                         <div className="avatar-preview">         
                          
-                            <img id="saveImageFile" src={file? URL.createObjectURL(file) : bgimage} 
+                            <img id="saveImageFile" src={file? URL.createObjectURL(file) : noImage} 
                                 alt={file? file.name : null}
                             />
                         </div>
