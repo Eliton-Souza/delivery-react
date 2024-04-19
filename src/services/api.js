@@ -159,6 +159,11 @@ export const api = {
     return response.data;
   },
 
+  dadosLojaFuncionario: async () => {
+    const response = await http.get('loja-funcionario');
+    return response.data;
+  },
+
   pegarLojas: async () => {
     const response = await http.get('/lojas');
     return response.data;
