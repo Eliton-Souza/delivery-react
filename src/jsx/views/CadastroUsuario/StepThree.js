@@ -105,7 +105,7 @@ const StepThree = ({ onChange, onChangeErro, usuario, setFile }) => {
                                  </label>
 
                                  <FotoField 
-                                   changeFoto={setFile} noImage={noAvatar}>
+                                   changeFoto={setFile} noImage={noAvatar} id={"perfilUsuario"}>
                                  </FotoField>                              
                               </div>
                            </div>
