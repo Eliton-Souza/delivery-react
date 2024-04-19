@@ -1,12 +1,10 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 
-const FotoField = ({ changeFoto, noImage, id }) => {
-    const [file, setFile] = useState(null);
-
+const FotoField = ({file, setFile, noImage, id, tipo }) => {
+    
     const mudarFoto = (e) => {
         setFile(e.target.files[0]);
-        changeFoto(e.target.files[0]);
     }
 
     return (
@@ -15,13 +13,41 @@ const FotoField = ({ changeFoto, noImage, id }) => {
                 <div className="setting-img d-flex align-items-center mb-4">
                     <div className="avatar-upload d-flex align-items-center">
                         <div className=" change position-relative d-flex">
-                            <div className="avatar-preview">
+                        <div className="avatar-preview">
+                            {tipo === 'perfil' && (
+                                <div
+                                    id={`saveImageFile_${id}`}
+                                    style={{
+                                        width: "150px",
+                                        height: "150px",
+                                        backgroundImage: `url(${typeof file === 'string' && file.startsWith('http') ? file : (file ? URL.createObjectURL(file) : noImage)})`,
+                                        backgroundSize: "cover",
+                                        backgroundPosition: "center",
+                                        borderRadius: "50%",
+                                        overflow: "hidden"
+                                    }}
+                                />
+                            )}
+
+                            {tipo === 'logo' && (
                                 <img
                                     id={`saveImageFile_${id}`}
-                                    src={file ? URL.createObjectURL(file) : noImage}
+                                    src={typeof file === 'string' && file.startsWith('http') ? file : (file ? URL.createObjectURL(file) : noImage)}
                                     alt={file ? file.name : null}
+                                    style={{ width: '150px', height: '150px' }}
                                 />
-                            </div>
+                            )}
+
+                            {tipo === 'capa' && (
+                                <img
+                                    id={`saveImageFile_${id}`}
+                                    src={typeof file === 'string' && file.startsWith('http') ? file : (file ? URL.createObjectURL(file) : noImage)}
+                                    alt={file ? file.name : null}
+                                    style={{ width: '268px', height: '150px' }}
+                                />
+                            )}
+                        </div>
+
                             <div className="change-btn d-flex align-items-center flex-wrap">
                                 <input
                                     type='file'
