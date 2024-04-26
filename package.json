@@ -34,6 +34,7 @@
     "react-datepicker": "^4.8.0",
     "react-dom": "^18.2.0",
     "react-dropzone-uploader": "^2.11.0",
+    "react-easy-crop": "^5.0.6",
     "react-form-stepper": "^2.0.3",
     "react-linear-gradient-picker": "^3.0.1",
     "react-multiselect-dropdown-bootstrap": "^1.1.0",
