@@ -4,7 +4,7 @@ import noImage from '../../../../images/noImage.png';
 import EditarFoto from "./editarFoto";
 import ModalCrop from "./modalCrop";
 
-const ModalEditarDados = ({ dados, setImagens, modal, setModal }) => {
+const ModalEditarDados = ({ dados, imagens, setImagens, modal, setModal }) => {
 
   const [modalCrop, setModalCrop] = useState(false);
   const [tipo, setTipo] = useState(null);
@@ -29,28 +29,20 @@ const ModalEditarDados = ({ dados, setImagens, modal, setModal }) => {
                     <Card.Body>
                       <ul>
                         <li className="mt-0" key={1}>     
-                          <label className="ms-4">
-                            <strong style={{ fontSize: '15px' }}>Logo da loja</strong>
-                          </label>
+                          
                           
                           <EditarFoto 
-                            linkImagem={dados.logo} noImage={noImage} tipo={"logo"} setTipo={setTipo} setModalCrop={setModalCrop}>
+                            linkImagem={imagens.capa} noImage={noImage} tipo={"capa"} setTipo={setTipo} setModalCrop={setModalCrop} titulo={"Capa"}>
                           </EditarFoto>
                         </li>
 
                         <hr/>
 
-
-                        <li className="mt-0" key={2}>     
-                          <label className="ms-4">
-                            <strong style={{ fontSize: '15px' }}>Capa da loja</strong>
-                          </label>
-                          
+                        <li className="mt-0" key={2}>
                           <EditarFoto 
-                            linkImagem={dados.capa} noImage={noImage} tipo={"capa"} setTipo={setTipo} setModalCrop={setModalCrop}>
+                            linkImagem={imagens.logo} noImage={noImage} tipo={"logo"} setTipo={setTipo} setModalCrop={setModalCrop} titulo={"Perfil"}>
                           </EditarFoto>
                         </li>
-
                       </ul>
                     </Card.Body>
 
@@ -111,7 +103,7 @@ const ModalEditarDados = ({ dados, setImagens, modal, setModal }) => {
 
 
       {modalCrop && (
-        <ModalCrop linkImagem={dados[tipo]} setImagens={setImagens} setModal={setModal} tipo={tipo}/>
+        <ModalCrop linkImagem={imagens[tipo]} setImagens={setImagens} setModal={setModal} tipo={tipo}/>
       )}
       
     </>

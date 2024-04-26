@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Button } from "react-bootstrap";
 
-const EditarFoto = ({linkImagem, noImage, tipo, setTipo, setModalCrop }) => {
+const EditarFoto = ({linkImagem, noImage, tipo, setTipo, setModalCrop, titulo }) => {
 
 	const auxEditar= () => {
         setTipo(tipo);
@@ -11,51 +11,40 @@ const EditarFoto = ({linkImagem, noImage, tipo, setTipo, setModalCrop }) => {
     return (
         <Fragment>
             <div className="setting-right">
-                <div className="setting-img d-flex align-items-center mb-4">
-                    <div className="avatar-upload d-flex align-items-center">
-                        <div className=" change position-relative d-flex">
-                        <div className="avatar-preview">
-                            {tipo === 'perfil' && (
-                                <div
-                                    id={`saveImageFile_${tipo}`}
-                                    style={{
-                                        width: "150px",
-                                        height: "150px",
-                                        backgroundImage: `url(${linkImagem ?? noImage})`,
-                                        backgroundSize: "cover",
-                                        backgroundPosition: "center",
-                                        borderRadius: "50%",
-                                        overflow: "hidden"
-                                    }}
-                                />
-                            )}
-
-                            {tipo === 'logo' && (
-                                <img
-                                    id={`saveImageFile_${tipo}`}
-                                    src={ linkImagem ?? noImage}
-                                    alt={linkImagem ? linkImagem.name : null}
-                                    style={{ width: '150px', height: '150px' }}
-                                />
-                            )}
-
-                            {tipo === 'capa' && (
-                                <img
-                                    id={`saveImageFile_${tipo}`}
-                                    src={ linkImagem ?? noImage}
-                                    alt={linkImagem ? linkImagem.name : null}
-                                    style={{ width: '268px', height: '150px' }}
-                                />
-                            )}
+                <label className="mb-2">
+                    <strong style={{ fontSize: '15px' }}>{titulo}</strong>
+                </label>
+                        
+                <div className="row">
+                    {tipo === 'capa' && (
+                        <div className="col-8">
+                            <img
+                                id={`saveImageFile_${tipo}`}
+                                src={linkImagem ?? noImage}
+                                alt={linkImagem ? linkImagem.name : null}
+                                className="capa-image"
+                                style={{ width: '100%', height: 'auto' }}
+                            />
                         </div>
+                    )}
 
-                            <div className="change-btn d-flex align-items-center flex-wrap">
-                                <Button variant="primary" onClick={()=> auxEditar()}>
-                                    <i className="fa fa-edit me-2" />
-                                    Editar
-                                </Button>
-                            </div>
+                    {tipo === 'logo' && (
+                        <div className="col-md-5 col-8">
+                            <img
+                                id={`saveImageFile_${tipo}`}
+                                src={linkImagem ?? noImage}
+                                alt={linkImagem ? linkImagem.name : null}
+                                className="logo-image"
+                                style={{ width: '100%', height: 'auto' }}
+                            />
                         </div>
+                    )}
+
+                    <div className="col-4 change-btn d-flex align-items-center">
+                        <Button variant="primary" onClick={() => auxEditar()}>
+                            <i className="fa fa-edit me-2" />
+                            editar
+                        </Button>
                     </div>
                 </div>
             </div>

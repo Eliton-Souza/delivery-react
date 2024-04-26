@@ -165,7 +165,7 @@ const GerenciarLoja = () => {
       )}
         
       {modal && (
-        <ModalEditarDados dados={dadosDaLoja} setImagens={setImagens} modal={modal} setModal={setModal}/>
+        <ModalEditarDados dados={dadosDaLoja} imagens={imagens} setImagens={setImagens} modal={modal} setModal={setModal}/>
       )}
 
     </>
