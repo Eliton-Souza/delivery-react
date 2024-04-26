@@ -98,12 +98,16 @@ const PerfilLoja = () => {
                 <div className="profile-head">
                   <div className="photo-content">
                     {/* foto de capa */}
-                    <img src={dadosDaLoja ? (dadosDaLoja.capa ?? cover) : null} className="cover-photo rounded" alt="capa"/>
+                    <img src={dadosDaLoja.capa != '' ? dadosDaLoja.capa : cover} className="cover-photo rounded" alt="capa"/>
                   </div>
                   <div className="profile-info">
-                    <div className="profile-photo">
-                      <img src={dadosDaLoja ? dadosDaLoja.logo : null} className="img-fluid rounded-circle" alt="profile"/>
-                    </div>
+
+                    {dadosDaLoja.logo != '' && ( 
+                      <div className="profile-photo">
+                        <img src={dadosDaLoja.logo} className="img-fluid rounded-circle" alt="profile"/>
+                      </div>
+                    )}
+                    
                     <div className="profile-details">
                       <div className="profile-name px-3 pt-2">
                         <h4 className="text-primary mb-0">{dadosDaLoja ? dadosDaLoja.nome : '...'}</h4>
@@ -113,52 +117,7 @@ const PerfilLoja = () => {
                         <h4 className="text-muted mb-0">hello@email.com</h4>
                         <p>Entrega Grátis - {dadosDaLoja ? dadosDaLoja.entrega : ''}</p>
                       </div>
-                      <Dropdown className="dropdown ms-auto">
-                        <Dropdown.Toggle
-                          variant="primary"
-                          className="btn btn-primary light sharp i-false"
-                          data-toggle="dropdown"
-                          aria-expanded="true"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="18px"
-                            height="18px"
-                            viewBox="0 0 24 24"
-                            version="1.1"
-                          >
-                            <g
-                              stroke="none"
-                              strokeWidth="1"
-                              fill="none"
-                              fillRule="evenodd"
-                            >
-                              <rect x="0" y="0" width="24" height="24"></rect>
-                              <circle fill="#000000" cx="5" cy="12" r="2"></circle>
-                              <circle fill="#000000" cx="12" cy="12" r="2"></circle>
-                              <circle fill="#000000" cx="19" cy="12" r="2"></circle>
-                            </g>
-                          </svg>
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu className="dropdown-menu dropdown-menu-right">
-                          <Dropdown.Item className="dropdown-item">
-                            <i className="fa fa-user-circle text-primary me-2" />
-                            View profile
-                          </Dropdown.Item>
-                          <Dropdown.Item className="dropdown-item">
-                            <i className="fa fa-users text-primary me-2" />
-                            Add to close friends
-                          </Dropdown.Item>
-                          <Dropdown.Item className="dropdown-item">
-                            <i className="fa fa-plus text-primary me-2" />
-                            Add to group
-                          </Dropdown.Item>
-                          <Dropdown.Item className="dropdown-item">
-                            <i className="fa fa-ban text-primary me-2" />
-                            Block
-                          </Dropdown.Item>
-                        </Dropdown.Menu>
-                      </Dropdown>
+                      
                     </div>
                   </div>
                 </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { api } from '../../../../services/api';
 import LoadingPage from '../../../components/componentes/LoadingPage';
-
+import semLogo from "../../../../images/lojaSemImagemCliente.png";
 
 const LojasGrid = () =>{
 
@@ -51,7 +51,7 @@ const LojasGrid = () =>{
             <div className="col-xl-3 col-xxl-4 col-sm-6" key={index}>
               <div className="card dishe-bx b-hover review style-1" onClick={()=>redirecionarLoja(loja.nome)}>
                 <div className="card-body text-center py-3 d-flex justify-content-center">
-                    <img src={loja.logo} alt="" />
+                    <img src={ loja.logo != '' ? loja.logo : semLogo } alt="" />
                 </div>
                 <div className="card-footer pt-0 border-0 text-center">
                   <div>

@@ -7,6 +7,7 @@ import 'lightgallery/css/lg-zoom.css';
 import 'lightgallery/css/lg-thumbnail.css';
 
 import cover from "../../../../images/profile/cover.jpg";
+import suaLogo from "../../../../images/suaLogoAqui.png";
 import { api } from "../../../../services/api";
 
 
@@ -47,7 +48,9 @@ const GerenciarLoja = () => {
       if(resultDados.success){
         
         setDadosDaLoja(resultDados.loja);
-        setImagens({ logo: resultDados.loja.logo, capa: resultDados.loja.capa});
+        setImagens({ 
+          logo: resultDados.loja.logo!= '' ? resultDados.loja.logo : suaLogo,
+          capa: resultDados.loja.capa!= '' ? resultDados.loja.capa : cover});
     
         const resultProdutos = await api.produtosLoja(resultDados.loja.id_loja);			
 
@@ -88,11 +91,11 @@ const GerenciarLoja = () => {
                 <div className="profile-head">
                   <div className="photo-content">
                     {/* foto de capa */}
-                    <img src={imagens ? (imagens.capa ?? cover) : null} className="cover-photo rounded" alt="capa"/>
+                    <img src={imagens.capa} className="cover-photo rounded" alt="Capa"/>
                   </div>
                   <div className="profile-info">
                     <div className="profile-photo">
-                      <img src={imagens ? imagens.logo : null} className="img-fluid rounded-circle" alt="profile"/>
+                      <img src={imagens.logo} className="img-fluid rounded-circle" alt="Logo"/>
                     </div>
                     <div className="profile-details">
                       <div className="profile-name px-3 pt-2">
