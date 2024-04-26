@@ -128,6 +128,8 @@ import CadastroUsuario from "./views/CadastroUsuario/cadastroMain";
 import PerfilLoja from "./views/Cliente/Loja/PerfilLoja";
 import Endereco from "./views/Cliente/Endereco/Endereco";
 
+import GerenciarLoja from "./views/Funcionario/Loja/GerenciarLoja";
+
 
 import Logout from "./views/Acesso/Logout";
 
@@ -145,7 +147,7 @@ const Markup = () => {
 
 
     //rotas para home
-    { url: "", component: (usuario?.id_funcionario) ? <Restaurant /> : <Home/>},
+    { url: "", component: (usuario?.id_funcionario) ? <GerenciarLoja /> : <Home/>},
     { url: "dashboard", component: (usuario?.id_funcionario) ? <Restaurant /> : <Home/>},
 
 
@@ -154,7 +156,7 @@ const Markup = () => {
 
 
     //rotas de funcionarios autenticados
-    { url: "restaurant", component: (usuario?.id_funcionario) ? <Restaurant /> : <Logout/> },
+    { url: "restaurant", component: (usuario?.id_funcionario) ? <GerenciarLoja /> : <Logout/> },
     { url: "withdrow", component: <Withdrow /> },
     { url: "menu", component: <Menu /> },
     { url: "orders", component: <Orders /> },

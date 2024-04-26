@@ -103,12 +103,26 @@ export const api = {
     return response.data;
   },
 
+
+  //IMAGENS
   uploadFoto: async (file) => {
     const formData = new FormData();
     formData.append('file', file);
   
     const response = await http.post('/upload-file', formData);
-  
+    return response.data;
+  },
+
+  pegarImagem: async (link) => {
+    const encodedLink = encodeURIComponent(link);
+    const response = await http.get(`/imagem/${encodedLink}`);
+    return response.data;
+  },
+
+  atualizarImagemPerfilLoja: async (linkImagem, tipo) => {
+    const response = await http.put('/loja/imagem', {
+      linkImagem, tipo
+    });
     return response.data;
   },
   
@@ -148,7 +162,7 @@ export const api = {
   },
 
   deletarEndereco: async (id_endereco) => {
-    const response = await http.delete(`endereco/${id_endereco}`);
+    const response = await http.delete(`/endereco/${id_endereco}`);
     return response.data;
   },
 
@@ -160,7 +174,7 @@ export const api = {
   },
 
   dadosLojaFuncionario: async () => {
-    const response = await http.get('loja-funcionario');
+    const response = await http.get('/loja-funcionario');
     return response.data;
   },
 
