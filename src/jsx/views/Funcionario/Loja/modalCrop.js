@@ -5,7 +5,6 @@ import { api } from "../../../../services/api";
 import LoadingPage from "../../../components/componentes/LoadingPage";
 
 
-
 const ModalCrop = ({ linkImagem, setImagens, setModal, tipo }) => {
 
   const inputFileRef = React.useRef(null);
@@ -19,17 +18,28 @@ const ModalCrop = ({ linkImagem, setImagens, setModal, tipo }) => {
 
   const pegarImagem= async () => {
     setLoading(true);
-    const result = await api.pegarImagem(linkImagem);
 
-    if(result.success){
-      const arrayBytes = new Uint8Array(result.imagem.data); //array de bytes da imagem
-      const blobImagem = new Blob([arrayBytes.buffer], { type: 'image/jpeg' });
-      const novo= new File([blobImagem], 'image.jpg', { type: blobImagem.type });
+    if (linkImagem.startsWith('http')) {
+      const result = await api.pegarImagem(linkImagem);
+  
+      if(result.success){
+        const arrayBytes = new Uint8Array(result.imagem.data); //array de bytes da imagem
+        const blobImagem = new Blob([arrayBytes.buffer], { type: 'image/jpeg' });
+        const novo= new File([blobImagem], 'image.jpg', { type: blobImagem.type });
+
+        setimagemOriginal(novo);
+      }else{
+        swal("Oops", result.error, "error");
+      }
+    }
+    else{
+      const response = await fetch(linkImagem);
+      const blob = await response.blob();
+      const novo= new File([blob], 'image.jpg', { type: blob.type });
 
       setimagemOriginal(novo);
-    }else{
-      swal("Oops", result.error, "error");
     }
+
     setLoading(false);
   }
 
