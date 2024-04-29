@@ -3,6 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import FotoCrop from "../../../components/componentes/fotoCrop";
 import { api } from "../../../../services/api";
 import LoadingPage from "../../../components/componentes/LoadingPage";
+import { comprimirImagem } from "./helper";
 
 
 const ModalCrop = ({ linkImagem, setImagens, setModal, tipo }) => {
@@ -85,8 +86,13 @@ const ModalCrop = ({ linkImagem, setImagens, setModal, tipo }) => {
   };
 
 
-  const handleFileChange = (e) => {
-    setimagemOriginal(e.target.files[0]);
+  const handleFileChange = async (e) => {
+
+    const compress= await comprimirImagem(e.target.files[0]);
+    const blob = new Blob([compress], { type: 'image/jpg' });
+    const imagemComprimida = new File([blob], 'image.jpg', { type: blob.type });
+
+    setimagemOriginal(imagemComprimida);
   }
 
   return (
