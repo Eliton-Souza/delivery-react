@@ -27,6 +27,7 @@ const GerenciarLoja = () => {
 	const [loading, setLoading] = useState(null);
   const [modal, setModal] = useState(false);
   const [imagens, setImagens] = useState( {logo: null, capa: null});
+  const [detalhes, setDetalhes] = useState( {nome: null, contato: null});
 
   const [dadosDaLoja, setDadosDaLoja] = useState(null);
   const [produtos, setProdutos] = useState(null);
@@ -48,9 +49,16 @@ const GerenciarLoja = () => {
       if(resultDados.success){
         
         setDadosDaLoja(resultDados.loja);
+
         setImagens({ 
           logo: resultDados.loja.logo!= '' ? resultDados.loja.logo : suaLogo,
-          capa: resultDados.loja.capa!= '' ? resultDados.loja.capa : cover});
+          capa: resultDados.loja.capa!= '' ? resultDados.loja.capa : cover,
+        });
+
+        setDetalhes({ 
+          nome: resultDados.loja.nome,
+          contato: resultDados.loja.contato,
+        });
     
         const resultProdutos = await api.produtosLoja(resultDados.loja.id_loja);			
 
@@ -99,11 +107,14 @@ const GerenciarLoja = () => {
                     </div>
                     <div className="profile-details">
                       <div className="profile-name px-3 pt-2">
-                        <h4 className="text-primary mb-0">{dadosDaLoja ? dadosDaLoja.nome : '...'}</h4>
+                        <h4 className="text-primary mb-0">{detalhes.nome ?? '...'}</h4>
                         <p>aberto até: 22h</p>
                       </div>
                       <div className="profile-email px-2 pt-2">
-                        <h4 className="text-muted mb-0">hello@email.com</h4>
+                        <h4 className="text-muted mb-0 ">
+                        <i class="fa-brands fa-whatsapp fa-fade text-success"></i>
+                          {' ' + detalhes.contato ?? '...'}
+                        </h4>
                         <p>Entrega Grátis - {dadosDaLoja ? dadosDaLoja.entrega : ''}</p>
                       </div>
                       <Dropdown className="ms-auto">
@@ -168,7 +179,7 @@ const GerenciarLoja = () => {
       )}
         
       {modal && (
-        <ModalEditarDados dados={dadosDaLoja} imagens={imagens} setImagens={setImagens} modal={modal} setModal={setModal}/>
+        <ModalEditarDados dados={{ detalhes: detalhes, setDetalhes: setDetalhes, imagens: imagens, setImagens: setImagens }} modal={modal} setModal={setModal}/>
       )}
 
     </>
