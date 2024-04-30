@@ -104,28 +104,7 @@ export const api = {
   },
 
 
-  //IMAGENS
-  uploadFoto: async (file) => {
-    const formData = new FormData();
-    formData.append('file', file);
-  
-    const response = await http.post('/upload-file', formData);
-    return response.data;
-  },
-
-  pegarImagem: async (link) => {
-    const encodedLink = encodeURIComponent(link);
-    const response = await http.get(`/imagem/${encodedLink}`);
-    return response.data;
-  },
-
-  atualizarImagemPerfilLoja: async (linkImagem, tipo) => {
-    const response = await http.put('/loja/imagem', {
-      linkImagem, tipo
-    });
-    return response.data;
-  },
-  
+    
 
 
 
@@ -187,6 +166,36 @@ export const api = {
     const response = await http.get(`/produtos/${id_loja}`);
     return response.data;
   },
+
+  editarNomeContato: async (nome, contato) => {
+    const response = await http.put('loja/detalhes', {
+      nome, contato
+    });
+    return response.data;
+  },
+
+  //IMAGENS LOJA  
+  pegarImagem: async (link) => {
+    const encodedLink = encodeURIComponent(link);
+    const response = await http.get(`/imagem/${encodedLink}`);
+    return response.data;
+  },
+
+  atualizarImagemPerfilLoja: async (linkImagem, tipo) => {
+    const response = await http.put('/loja/imagem', {
+      linkImagem, tipo
+    });
+    return response.data;
+  },
+
+  uploadFoto: async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await http.post('/upload-file', formData);
+    return response.data;
+  },
+
 
 
   //SABOR
