@@ -11,20 +11,27 @@ const TextoGenerico = ({ changeTexto, valor, campo, placeholder, changeErro, des
 
   const validaGenerico = Yup.object().shape({
     texto: Yup.string()
-    .required(`O campo ${campo} é obrigatório`)
-    .test(
-      "espacoEmBranco",
-      `O campo ${campo} é obrigatório`,
-      (value) => !(/^\s+$/.test(value))
-    ),
+      .required(`O campo ${campo} é obrigatório`)
+      .test(
+        "espacoEmBranco",
+        `O campo ${campo} é obrigatório`,
+        (value) => !(/^\s+$/.test(value))
+      ),
   });
+
+  const validacontato = Yup.object().shape({
+    texto: Yup.string()
+      .matches(/^\d{11}$/, 'Deve ter exatamente 11 números com DDD')
+      .required('Número de WhatsApp é obrigatório'),  
+  });
+  
 
   return (
     <div className="row">
       <div className="col-lg-12">
         <Formik
           initialValues={{ texto: valor ?? "" }}
-          validationSchema={validaGenerico}
+          validationSchema={campo=='WhatsApp'? validacontato : validaGenerico}
         >
           {({ values, errors, handleChange, handleBlur }) => (
             <form>
