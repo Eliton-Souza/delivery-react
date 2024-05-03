@@ -6,6 +6,7 @@ import EditarFoto from "./editarFoto";
 import ModalCrop from "./modalCrop";
 import TextoGenerico from "../../../components/componentes/textoGenerico";
 import { api } from "../../../../services/api";
+import EditarHorario from "./editarHorario";
 
 const ModalEditarDados = ({ dados, modal, setModal }) => {
 
@@ -102,7 +103,7 @@ const ModalEditarDados = ({ dados, modal, setModal }) => {
                       <ul>
                         <li className="mt-0" key={1}> 
                           <div className="row">
-                            <div className="form-group mb-3 col-md-4">                     
+                            <div className="form-group mb-3 col-md-5">                     
                               <label className="text-label">
                                 <strong>Nome da empresa
                                     <span className="text-danger"> *</span>
@@ -114,7 +115,7 @@ const ModalEditarDados = ({ dados, modal, setModal }) => {
                               </TextoGenerico>
                             </div>  
 
-                            <div className="form-group mb-3 col-md-4">                     
+                            <div className="form-group mb-3 col-md-5">                     
                               <label className="text-label">
                                 <strong>Número de Whatsapp
                                     <span className="text-danger"> *</span>
@@ -126,7 +127,7 @@ const ModalEditarDados = ({ dados, modal, setModal }) => {
                               </TextoGenerico>
                             </div>
 
-                            <div className="mb-3 col-md-4">
+                            <div className="mb-3 col-md-2">
                               <Button className="mr-2 mt-4" variant="success" disabled={loading || nomeErro || contatoErro} onClick={() => salvarDetalhes()}>
                                 Salvar
                               </Button>
@@ -135,15 +136,30 @@ const ModalEditarDados = ({ dados, modal, setModal }) => {
                         </li>
                       </ul>
                     </Card.Body>
-
-                    
-
                   </Card>
-                    
                 </Accordion.Body>
               </Accordion.Item>
 
-            
+
+              <Accordion.Item key={3} eventKey={3}>
+                <Accordion.Header className="accordion-header">
+                  <strong style={{ fontSize: '15px' }}>Horário de Funcionamento</strong>
+                </Accordion.Header>
+
+                <Accordion.Body>
+                  <Card>
+                    <Card.Body>
+                      <EditarHorario></EditarHorario>
+                    </Card.Body>
+
+                    <Card.Footer className="d-flex justify-content-end">
+                      <Button variant="success" disabled={loading} onClick={() => alert("clicou")}>
+                        Salvar
+                      </Button>
+                    </Card.Footer>
+                  </Card>
+                </Accordion.Body>
+              </Accordion.Item>
           </Accordion>
 
                             
