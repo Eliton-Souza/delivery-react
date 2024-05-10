@@ -10,7 +10,7 @@ import EditarHorario from "./editarHorario";
 
 const ModalEditarDados = ({ dados, modal, setModal }) => {
 
-  const { detalhes, setDetalhes, imagens, setImagens } = dados;
+  const { detalhes, setDetalhes, imagens, setImagens, horariosLoja, setHorariosLoja } = dados;
 
   const [nome, setNome] = useState(detalhes.nome);
   const [contato, setContato] = useState(detalhes.contato);
@@ -147,17 +147,7 @@ const ModalEditarDados = ({ dados, modal, setModal }) => {
                 </Accordion.Header>
 
                 <Accordion.Body>
-                  <Card>
-                    <Card.Body>
-                      <EditarHorario></EditarHorario>
-                    </Card.Body>
-
-                    <Card.Footer className="d-flex justify-content-end">
-                      <Button variant="success" disabled={loading} onClick={() => alert("clicou")}>
-                        Salvar
-                      </Button>
-                    </Card.Footer>
-                  </Card>
+                  <EditarHorario setModal={setModal} horariosLoja={horariosLoja} setHorariosLoja={setHorariosLoja}></EditarHorario>
                 </Accordion.Body>
               </Accordion.Item>
           </Accordion>

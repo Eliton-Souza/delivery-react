@@ -153,7 +153,7 @@ export const api = {
   },
 
   dadosLojaFuncionario: async () => {
-    const response = await http.get('/loja-funcionario');
+    const response = await http.get('/loja');
     return response.data;
   },
 
@@ -173,6 +173,14 @@ export const api = {
     });
     return response.data;
   },
+
+  cadastrarHorarios: async (horarios) => {
+    const response = await http.post('/loja/horarios', {
+      horarios
+    });
+    return response.data;
+  },
+  
 
   //IMAGENS LOJA  
   pegarImagem: async (link) => {
