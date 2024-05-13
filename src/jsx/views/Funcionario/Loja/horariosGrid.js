@@ -6,68 +6,48 @@ import Switch from "../../../components/componentes/botaoSwtich";
 
 const HorariosGrid = ({horarios, setHorario, diaSemana}) => {
 
-    const [abre1, setAbre1] = useState(null);
-    const [fecha1, setFecha1] = useState(null);
+    const [abre1, setAbre1] = useState(horarios.abertura1);
+    const [fecha1, setFecha1] = useState(horarios.fechamento1);
 
-    const [abre2, setAbre2] = useState(null);
-    const [fecha2, setFecha2] = useState(null);
+    const [abre2, setAbre2] = useState(horarios.abertura2);
+    const [fecha2, setFecha2] = useState(horarios.fechamento2);
 
-    const [check, setCheck] = useState(false);
-    const [addHorario, setAddHorario] = useState(false);
-
-    const [invalido, setInvalido] = useState(false);
-
-
-	const pegarHorario= () => {
-        const horarioSemana = horarios.find((horario) => horario.diaSemana == diaSemana);
-
-        if (horarioSemana) {
-            setAbre1(horarioSemana.abertura1);
-            setFecha1(horarioSemana.fechamento1);
-
-            setAbre2(horarioSemana.abertura2);
-            setFecha2(horarioSemana.fechamento2);
-
-            if(horarioSemana.abertura1 || horarioSemana.abertura2){
-                setCheck(true);
-            }
-            
-        } else {
-            console.log('Horário não encontrado');
-        }        
-    }    
-
-    useEffect(() => {
-        pegarHorario;
-    }, []);
-
-
+    const [check, setCheck] = useState(horarios.abertura1 || horarios.abertura2 ? true : false);
+    const [addHorario, setAddHorario] = useState(false);    
+    
     const removerCampo= (campo) => {
         if(campo == 1){
-            setAbre1(null);
             setFecha1(null);
+            setAbre1(null);
         }else{
             setAddHorario(false);
-            setAbre2(null);
             setFecha2(null);
+            setAbre2(null);
         }
-    } 
+    }
+
+    useEffect(() => {
+        if(!check){
+            removerCampo(1);
+            removerCampo(2);
+        }
+    }, [check]);
     
 
     useEffect(() => {
-        setHorario(diaSemana, "abertura1", abre1);
+        setHorario(horarios.diaSemana, "abertura1", abre1);
     }, [abre1]);
 
     useEffect(() => {
-        setHorario(diaSemana, "fechamento1", fecha1);
+        setHorario(horarios.diaSemana, "fechamento1", fecha1);
     }, [fecha1]);
 
     useEffect(() => {
-        setHorario(diaSemana, "abertura2", abre2);
+        setHorario(horarios.diaSemana, "abertura2", abre2);
     }, [abre2]);
 
     useEffect(() => {
-        setHorario(diaSemana, "fechamento2", fecha2);
+        setHorario(horarios.diaSemana, "fechamento2", fecha2);
     }, [fecha2]);
 
 
@@ -86,19 +66,18 @@ const HorariosGrid = ({horarios, setHorario, diaSemana}) => {
                     </div>
                 </div>
 
-
                 <div className="row">
                     {check ? (
                         <>
                             <div className="row">
                                 <div className="col-5 mb-3 d-flex justify-content-center align-items-center">
                                     <div className="color-time-picker style-1">
-                                        <TimePickerPicker onChange={setAbre1} value={abre1} onInvalidChange={() => alert('Invalid time')}/>
+                                        <TimePickerPicker onChange={setAbre1} value={abre1} autoFocus={true}/>
                                     </div>
                                 </div>
                                 <div className="col-5 mb-3 d-flex justify-content-center align-items-center">  
                                     <div className="color-time-picker style-1">    
-                                        <TimePickerPicker onChange={setFecha1} value={fecha1} minTime={abre1} onInvalidChange={() => alert('Invalid time')} />
+                                        <TimePickerPicker onChange={setFecha1} value={fecha1} minTime={abre1}/>
                                     </div>
                                 </div>
                                 <div className="col-2 mb-3 d-flex align-items-center justify-content-start">
@@ -119,12 +98,12 @@ const HorariosGrid = ({horarios, setHorario, diaSemana}) => {
                                 <div className="row">
                                     <div className="col-5 mb-3 d-flex justify-content-center align-items-center">
                                         <div className="color-time-picker style-1">
-                                            <TimePickerPicker onChange={setAbre2} value={abre2} onInvalidChange={() => alert('Invalid time')}/>
+                                            <TimePickerPicker onChange={setAbre2} value={abre2} minTime={fecha1} autoFocus={true}/>
                                         </div>
                                     </div>
                                     <div className="col-5 mb-3 d-flex justify-content-center align-items-center">  
                                         <div className="color-time-picker style-1">    
-                                            <TimePickerPicker onChange={setFecha2} value={fecha2} minTime={abre2} onInvalidChange={() => alert('Invalid time')} />
+                                            <TimePickerPicker onChange={setFecha2} value={fecha2} minTime={abre2}/>
                                         </div>
                                     </div>
                                     <div className="col-2 mb-3 d-flex align-items-center justify-content-start">

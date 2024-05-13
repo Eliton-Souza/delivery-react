@@ -174,8 +174,8 @@ export const api = {
     return response.data;
   },
 
-  cadastrarHorarios: async (horarios) => {
-    const response = await http.post('/loja/horarios', {
+  editarHorarios: async (horarios) => {
+    const response = await http.put('/loja/horarios', {
       horarios
     });
     return response.data;

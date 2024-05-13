@@ -2,9 +2,8 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Button, Dropdown, Tab, Nav } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 
-import 'lightgallery/css/lightgallery.css';
-import 'lightgallery/css/lg-zoom.css';
-import 'lightgallery/css/lg-thumbnail.css';
+import { differenceInMinutes, isWithinInterval, parse, format, isBefore, isAfter } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 import cover from "../../../../images/profile/cover.jpg";
 import suaLogo from "../../../../images/suaLogoAqui.png";
@@ -28,6 +27,8 @@ const GerenciarLoja = () => {
   const [modal, setModal] = useState(false);
   const [imagens, setImagens] = useState( {logo: null, capa: null});
   const [detalhes, setDetalhes] = useState( {nome: null, contato: null});
+  const [horariosLoja, setHorariosLoja] = useState([]);
+  const [hFuncionamento, setHFuncionamento] = useState(null);
 
   const [dadosDaLoja, setDadosDaLoja] = useState(null);
   const [produtos, setProdutos] = useState(null);
@@ -59,6 +60,8 @@ const GerenciarLoja = () => {
           nome: resultDados.loja.nome,
           contato: resultDados.loja.contato,
         });
+
+        setHorariosLoja(resultDados.loja.HorarioLojas);
     
         const resultProdutos = await api.produtosLoja(resultDados.loja.id_loja);			
 
@@ -82,6 +85,62 @@ const GerenciarLoja = () => {
   useEffect(() => {
     pegarDadosLoja();
   }, []); 
+
+
+  useEffect(() => {
+    
+    if(horariosLoja.length>0){
+      alert("mudou");
+      let horarioAtualAM = format(new Date(), 'HH:mm:ss', { timeZone: 'America/Manaus' });
+      horarioAtualAM= parse(horarioAtualAM, 'HH:mm:ss', new Date());
+
+      const diaSemanaAM = format(new Date(), 'EEEE', { timeZone: 'America/Manaus', locale: ptBR });
+
+      const dia= horariosLoja.find(horario => horario.diaSemana == diaSemanaAM);
+
+      if(dia){
+        const abre1 = dia.abertura1 ? parse(dia.abertura1, 'HH:mm:ss', new Date()) : null;
+        const fecha1 = dia.fechamento1  ? parse(dia.fechamento1, 'HH:mm:ss', new Date()) : null;
+
+        const abre2 = dia.abertura2 ? parse(dia.abertura2, 'HH:mm:ss', new Date()) : null;
+        const fecha2 = dia.fechamento2 ? parse(dia.fechamento2, 'HH:mm:ss', new Date()) : null;
+
+
+        if( abre1 && fecha1 && isWithinInterval(horarioAtualAM, { start: abre1, end: fecha1 })){
+          if(differenceInMinutes(fecha1, horarioAtualAM) > 30){
+            setHFuncionamento("aberto 🟢");
+          }else{
+            setHFuncionamento(`fecha às: ${dia.fechamento1.split(':').slice(0, 2).join(':')} ⚠️`);
+          }
+        }else if(abre2 && fecha2 && isWithinInterval(horarioAtualAM, { start: abre2, end: fecha2 })){
+          if(differenceInMinutes(fecha2, horarioAtualAM) > 30){
+            setHFuncionamento("aberto 🟢");
+          }else{
+            setHFuncionamento(`fecha às: ${dia.fechamento2.split(':').slice(0, 2).join(':')} ⚠️`);
+          }
+        }
+        else if(abre1 && isBefore(horarioAtualAM, abre1)){
+          setHFuncionamento(`abre às: ${dia.abertura1.split(':').slice(0, 2).join(':')} 🔴`);   //fechado
+        }
+        else if(fecha1 && abre2 && isWithinInterval(horarioAtualAM, { start: fecha1, end: abre2 })){
+          setHFuncionamento(`abre às: ${dia.abertura2.split(':').slice(0, 2).join(':')} 🔴`);   //fechado
+        }
+        else if(fecha2 && isAfter(horarioAtualAM, fecha2)){
+          setHFuncionamento(`fechou às: ${dia.fechamento2.split(':').slice(0, 2).join(':')} 🔴`); 
+        }
+        else if(fecha1 && isAfter(horarioAtualAM, fecha1)){
+          setHFuncionamento(`fechou às: ${dia.fechamento1.split(':').slice(0, 2).join(':')} 🔴`); 
+        } 
+        else {
+          setHFuncionamento("Fechado 🔴");  //fechado
+        } 
+      }
+      else {
+        alert("tem mudar o nome q ta esscrito no dia da semana");
+      }
+    }
+
+  }, [horariosLoja]);
 
    
 
@@ -108,7 +167,7 @@ const GerenciarLoja = () => {
                     <div className="profile-details">
                       <div className="profile-name px-3 pt-2">
                         <h4 className="text-primary mb-0">{detalhes.nome ?? '...'}</h4>
-                        <p>aberto até: 22h</p>
+                        <p>{hFuncionamento}</p>
                       </div>
                       <div className="profile-email px-2 pt-2">
                         <h4 className="text-muted mb-0 ">
@@ -179,7 +238,7 @@ const GerenciarLoja = () => {
       )}
         
       {modal && (
-        <ModalEditarDados dados={{ detalhes: detalhes, setDetalhes: setDetalhes, imagens: imagens, setImagens: setImagens }} modal={modal} setModal={setModal}/>
+        <ModalEditarDados dados={{ detalhes: detalhes, setDetalhes: setDetalhes, imagens: imagens, setImagens: setImagens, horariosLoja: horariosLoja, setHorariosLoja: setHorariosLoja }} modal={modal} setModal={setModal}/>
       )}
 
     </>
