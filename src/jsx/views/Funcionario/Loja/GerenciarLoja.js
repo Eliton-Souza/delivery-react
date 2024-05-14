@@ -90,9 +90,8 @@ const GerenciarLoja = () => {
   useEffect(() => {
     
     if(horariosLoja.length>0){
-      alert("mudou");
-      let horarioAtualAM = format(new Date(), 'HH:mm:ss', { timeZone: 'America/Manaus' });
-      horarioAtualAM= parse(horarioAtualAM, 'HH:mm:ss', new Date());
+      
+      const horarioAtualAM =  parse(format(new Date(), 'HH:mm:ss', { timeZone: 'America/Manaus' }), 'HH:mm:ss', new Date());
 
       const diaSemanaAM = format(new Date(), 'EEEE', { timeZone: 'America/Manaus', locale: ptBR });
 
@@ -104,7 +103,7 @@ const GerenciarLoja = () => {
 
         const abre2 = dia.abertura2 ? parse(dia.abertura2, 'HH:mm:ss', new Date()) : null;
         const fecha2 = dia.fechamento2 ? parse(dia.fechamento2, 'HH:mm:ss', new Date()) : null;
-
+        
 
         if( abre1 && fecha1 && isWithinInterval(horarioAtualAM, { start: abre1, end: fecha1 })){
           if(differenceInMinutes(fecha1, horarioAtualAM) > 30){

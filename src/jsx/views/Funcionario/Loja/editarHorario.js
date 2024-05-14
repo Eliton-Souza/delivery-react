@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import { toast } from "react-toastify";
 import HorariosGrid from "./horariosGrid";
@@ -19,16 +19,41 @@ const EditarHorario = ({ setModal, horariosLoja, setHorariosLoja }) => {
             })
         );
     };
+
+    const validarHorarios = async () => {
+        
+        const horariosValidados = horarios.map((horario) => {
+          const { abertura1, fechamento1, abertura2, fechamento2 } = horario;
+    
+          if (!abertura1 || !fechamento1) {
+            if(abertura2 && fechamento2){
+                return { ...horario, abertura1: abertura2, fechamento1: fechamento2, abertura2: null, fechamento2: null };
+            }
+            return { ...horario, abertura1: null, fechamento1: null };
+          }
+      
+          if (!abertura2 || !fechamento2) {
+            return { ...horario, abertura2: null, fechamento2: null };
+          }
+      
+          return horario;
+        });
+      
+        setHorarios(horariosValidados);
+        return horariosValidados;
+    };
+      
     
 
     const salvarHorarios= async () => {     
     
         setLoading(true);
-        const result = await api.editarHorarios(horarios);			
+        const hValidados= await validarHorarios();
+        const result = await api.editarHorarios(hValidados);			
 
         if(result.success){
             
-            setHorariosLoja(horarios);
+            setHorariosLoja(hValidados);
             setModal(false);   			
 
             swal("Sucesso!", "Horários de funcionamento atualizados com sucesso", "success");

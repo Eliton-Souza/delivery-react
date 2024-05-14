@@ -35,19 +35,19 @@ const HorariosGrid = ({horarios, setHorario, diaSemana}) => {
     
 
     useEffect(() => {
-        setHorario(horarios.diaSemana, "abertura1", abre1);
+        setHorario(horarios.diaSemana, "abertura1", abre1 ? abre1.padEnd(8, ':00') : null);
     }, [abre1]);
 
     useEffect(() => {
-        setHorario(horarios.diaSemana, "fechamento1", fecha1);
+        setHorario(horarios.diaSemana, "fechamento1", fecha1 ? fecha1.padEnd(8, ':00') : null);
     }, [fecha1]);
 
     useEffect(() => {
-        setHorario(horarios.diaSemana, "abertura2", abre2);
+        setHorario(horarios.diaSemana, "abertura2", abre2 ? abre2.padEnd(8, ':00') : null);
     }, [abre2]);
 
     useEffect(() => {
-        setHorario(horarios.diaSemana, "fechamento2", fecha2);
+        setHorario(horarios.diaSemana, "fechamento2", fecha2 ? fecha2.padEnd(8, ':00') : null);
     }, [fecha2]);
 
 
