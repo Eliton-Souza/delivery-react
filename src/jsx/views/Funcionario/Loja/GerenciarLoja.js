@@ -2,8 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Button, Dropdown, Tab, Nav } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 
-import { differenceInMinutes, isWithinInterval, parse, format, isBefore, isAfter } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+
 
 import cover from "../../../../images/profile/cover.jpg";
 import suaLogo from "../../../../images/suaLogoAqui.png";
@@ -17,6 +16,7 @@ import LoadingPage from "../../../components/componentes/LoadingPage";
 
 import { useUsuario } from "../../../../context/UsuarioContext";
 import ModalEditarDados from "./modalEditarDados";
+import { pegarStatusHorarios } from "./helper";
 
 const GerenciarLoja = () => {
 	
@@ -90,53 +90,7 @@ const GerenciarLoja = () => {
   useEffect(() => {
     
     if(horariosLoja.length>0){
-      
-      const horarioAtualAM =  parse(format(new Date(), 'HH:mm:ss', { timeZone: 'America/Manaus' }), 'HH:mm:ss', new Date());
-
-      const diaSemanaAM = format(new Date(), 'EEEE', { timeZone: 'America/Manaus', locale: ptBR });
-
-      const dia= horariosLoja.find(horario => horario.diaSemana == diaSemanaAM);
-
-      if(dia){
-        const abre1 = dia.abertura1 ? parse(dia.abertura1, 'HH:mm:ss', new Date()) : null;
-        const fecha1 = dia.fechamento1  ? parse(dia.fechamento1, 'HH:mm:ss', new Date()) : null;
-
-        const abre2 = dia.abertura2 ? parse(dia.abertura2, 'HH:mm:ss', new Date()) : null;
-        const fecha2 = dia.fechamento2 ? parse(dia.fechamento2, 'HH:mm:ss', new Date()) : null;
-        
-
-        if( abre1 && fecha1 && isWithinInterval(horarioAtualAM, { start: abre1, end: fecha1 })){
-          if(differenceInMinutes(fecha1, horarioAtualAM) > 30){
-            setHFuncionamento("aberto 🟢");
-          }else{
-            setHFuncionamento(`fecha às: ${dia.fechamento1.split(':').slice(0, 2).join(':')} ⚠️`);
-          }
-        }else if(abre2 && fecha2 && isWithinInterval(horarioAtualAM, { start: abre2, end: fecha2 })){
-          if(differenceInMinutes(fecha2, horarioAtualAM) > 30){
-            setHFuncionamento("aberto 🟢");
-          }else{
-            setHFuncionamento(`fecha às: ${dia.fechamento2.split(':').slice(0, 2).join(':')} ⚠️`);
-          }
-        }
-        else if(abre1 && isBefore(horarioAtualAM, abre1)){
-          setHFuncionamento(`abre às: ${dia.abertura1.split(':').slice(0, 2).join(':')} 🔴`);   //fechado
-        }
-        else if(fecha1 && abre2 && isWithinInterval(horarioAtualAM, { start: fecha1, end: abre2 })){
-          setHFuncionamento(`abre às: ${dia.abertura2.split(':').slice(0, 2).join(':')} 🔴`);   //fechado
-        }
-        else if(fecha2 && isAfter(horarioAtualAM, fecha2)){
-          setHFuncionamento(`fechou às: ${dia.fechamento2.split(':').slice(0, 2).join(':')} 🔴`); 
-        }
-        else if(fecha1 && isAfter(horarioAtualAM, fecha1)){
-          setHFuncionamento(`fechou às: ${dia.fechamento1.split(':').slice(0, 2).join(':')} 🔴`); 
-        } 
-        else {
-          setHFuncionamento("Fechado 🔴");  //fechado
-        } 
-      }
-      else {
-        alert("tem mudar o nome q ta esscrito no dia da semana");
-      }
+      pegarStatusHorarios(horariosLoja, setHFuncionamento);
     }
 
   }, [horariosLoja]);

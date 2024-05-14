@@ -1,25 +1,15 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Dropdown, Tab, Nav } from "react-bootstrap";
+import { Tab, Nav } from "react-bootstrap";
 import { useParams, useNavigate } from 'react-router-dom';
-
-import 'lightgallery/css/lightgallery.css';
-import 'lightgallery/css/lg-zoom.css';
-import 'lightgallery/css/lg-thumbnail.css';
-
-
 
 import cover from "../../../../images/profile/cover.jpg";
 import { api } from "../../../../services/api";
-
 
 import ProdutosList from "../../Produto/produtosList";
 import ProdutosGrid from "../../Produto/produtosGrid";
 import { pathGrid, pathLista } from "./icones";
 import LoadingPage from "../../../components/componentes/LoadingPage";
-
-
-
-
+import { pegarStatusHorarios } from "../../Funcionario/Loja/helper";
 
 
 const PerfilLoja = () => {
@@ -30,6 +20,8 @@ const PerfilLoja = () => {
 	const [loading, setLoading] = useState(null);
 
   const [dadosDaLoja, setDadosDaLoja] = useState(null);
+  const [horariosLoja, setHorariosLoja] = useState([]);
+  const [hFuncionamento, setHFuncionamento] = useState(null);
   const [produtos, setProdutos] = useState(null);
 
 
@@ -50,20 +42,11 @@ const PerfilLoja = () => {
 		if(resultDados.success){
 			
 			setDadosDaLoja(resultDados.loja);
+      setHorariosLoja(resultDados.loja.HorarioLojas);
 					
-			
-			const resultProdutos = await api.produtosLoja(resultDados.loja.id_loja);			
-				
-
-			if(resultProdutos.success){
-        const produtosAgrupados = agruparPorCategoria(resultProdutos.produtos);
-        setProdutos(produtosAgrupados);
-        
-			}else{
-				swal("Oops", resultProdutos.error, "error");
-			}
-
-
+      const produtosAgrupados = agruparPorCategoria(resultDados.loja.Produtos);
+      setProdutos(produtosAgrupados);
+    
 		}else{
 			swal("Oops", resultDados.error, "error");
 			navigate('/page-error-404');
@@ -77,9 +60,14 @@ const PerfilLoja = () => {
     pegarDadosLoja();
   }, []); 
 		
-    const aviso= async () => {    
-      swal("Carregando...", "", "info");
+
+  useEffect(() => {
+    
+    if(horariosLoja.length>0){
+      pegarStatusHorarios(horariosLoja, setHFuncionamento);
     }
+
+  }, [horariosLoja]);
 
 
     
@@ -111,7 +99,7 @@ const PerfilLoja = () => {
                     <div className="profile-details">
                       <div className="profile-name px-3 pt-2">
                         <h4 className="text-primary mb-0">{dadosDaLoja ? dadosDaLoja.nome : '...'}</h4>
-                        <p>aberto até: 22h</p>
+                        <p>{hFuncionamento}</p>
                       </div>
 
                       <div className="profile-email px-2 pt-2" onClick={() => window.open(`https://wa.me/55${dadosDaLoja.contato}/?text=${encodeURIComponent('Olá! vim do sistema de delivery')}`, '_blank')}>
