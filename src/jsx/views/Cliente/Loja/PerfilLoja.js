@@ -102,11 +102,13 @@ const PerfilLoja = () => {
                         <p>{hFuncionamento}</p>
                       </div>
 
-                      <div className="profile-email px-2 pt-2" onClick={() => window.open(`https://wa.me/55${dadosDaLoja.contato}/?text=${encodeURIComponent('Olá! vim do sistema de delivery')}`, '_blank')}>
-                        <h4 className="text-muted mb-0 ">
-                        <i class="fa-brands fa-whatsapp fa-fade text-success"></i>
-                          {' ' + dadosDaLoja.contato ?? '...'}
-                        </h4>
+                      <div className="profile-email px-2 pt-2">
+                        {dadosDaLoja.contato!= null && (
+                          <h4 className="text-muted mb-0" onClick={() => window.open(`https://wa.me/55${dadosDaLoja.contato}/?text=${encodeURIComponent('Olá! vim do sistema de delivery')}`, '_blank')}>
+                            <i class="fa-brands fa-whatsapp fa-fade text-success"></i>
+                            {' '+dadosDaLoja.contato}
+                          </h4>
+                         )}
                         <p>Entrega Grátis - {dadosDaLoja ? dadosDaLoja.entrega : ''}</p>
                       </div>
                     </div>
