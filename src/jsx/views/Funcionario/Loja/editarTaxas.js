@@ -4,12 +4,14 @@ import { toast } from "react-toastify";
 import { api } from "../../../../services/api";
 import Taxa from "../../../components/componentes/taxa";
 import { useUsuario } from "../../../../context/UsuarioContext";
+import LoadingPage from "../../../components/componentes/LoadingPage";
 
 const EditarTaxas = ({ setModal }) => {
 
     const { usuario } = useUsuario();
 
     const [loading, setLoading] = useState(false);
+    const [loading2, setLoading2] = useState(false);
     const [taxas, setTaxas] = useState([]);
     const [erro, setErro] = useState([]);
 
@@ -39,7 +41,7 @@ const EditarTaxas = ({ setModal }) => {
 	
         if(usuario.id_funcionario){
     
-            setLoading(true);
+            setLoading2(true);
             const resultDados = await api.pegarTaxasEntrega();			
     
             if(resultDados.success){
@@ -55,7 +57,7 @@ const EditarTaxas = ({ setModal }) => {
             }else{
               swal("Oops", resultDados.error, "error");
             }
-            setLoading(false);
+            setLoading2(false);
         }
         else{
           navigate('/logout');
@@ -90,31 +92,50 @@ const EditarTaxas = ({ setModal }) => {
         }
         setLoading(false);
     }
-
       
     return (
         <Fragment>
             <Card>
-                <Card.Body>
-                    {taxas && (           
-                        <div className='row'>
-                        {taxas.map((item, index) => (
-                            <div key={index} className="col-12 col-sm-auto col-lg-6 mb-3 d-flex align-items-center">
-                                <Taxa setTaxa={changeTaxas} valor={item.taxa} bairro={item.bairro} placeholder={"Preço"} changeErro={changeErro} desabilitado={loading}></Taxa>                
-                            </div>
-                        ))}
-                        </div>    
-                    )}   
-                </Card.Body>
 
-                <Card.Footer className="d-flex justify-content-end">
-                    <Button variant="success" disabled={loading || erro.find(err => err.erro == true)} onClick={() => salvarTaxas()}>
-                        Salvar
-                    </Button>
-                </Card.Footer>
+                {loading2 && (
+                     <Card.Body>
+                        <LoadingPage></LoadingPage>
+                    </Card.Body>
+                )}
+                
+                {!loading2 && taxas && (
+                    <>
+                        <Card.Body>
+                            <div className='row'>
+                                {taxas && taxas.map((item, index) => (
+                                    <div key={index} className="col-12 col-sm-auto col-lg-6 mb-3 d-flex align-items-center">
+                                        <Taxa
+                                            setTaxa={changeTaxas}
+                                            valor={item.taxa}
+                                            bairro={item.bairro}
+                                            placeholder={"Preço"}
+                                            changeErro={changeErro}
+                                            desabilitado={loading}
+                                        ></Taxa>                
+                                    </div>
+                                ))}
+                            </div>    
+                        </Card.Body>
+                        <Card.Footer className="d-flex justify-content-end">
+                            <Button
+                                variant="success"
+                                disabled={loading || erro.find(err => err.erro)}
+                                onClick={() => salvarTaxas()}
+                            >
+                                Salvar
+                            </Button>
+                        </Card.Footer>
+                    </>
+                )}
             </Card>
         </Fragment>
     );
+    
 };
 
 export default EditarTaxas;

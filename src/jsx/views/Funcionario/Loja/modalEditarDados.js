@@ -167,14 +167,11 @@ const ModalEditarDados = ({ dados, modal, setModal }) => {
                 </Accordion.Header>
 
                 <Accordion.Body>
-                  {loading && (
-                    <LoadingPage></LoadingPage>
-                  )}
-
-                  {taxas && !loading && (                  
+                  {taxas && (                  
                     <EditarTaxas setModal={setModal}></EditarTaxas>
                   )}
                   </Accordion.Body>
+                  
               </Accordion.Item>
             </Accordion>
 
