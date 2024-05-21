@@ -204,6 +204,19 @@ export const api = {
     return response.data;
   },
 
+  //TAXAS DE ENTREGA LOJA
+  pegarTaxasEntrega: async () => {
+    const response = await http.get('/taxas');
+    return response.data;
+  },
+
+  editarTaxas: async (taxas) => {
+    const response = await http.put('/taxas', {
+      taxas
+    });
+    return response.data;
+  },
+
 
 
   //SABOR

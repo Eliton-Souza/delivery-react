@@ -7,6 +7,8 @@ import ModalCrop from "./modalCrop";
 import TextoGenerico from "../../../components/componentes/textoGenerico";
 import { api } from "../../../../services/api";
 import EditarHorario from "./editarHorario";
+import EditarTaxas from "./editarTaxas";
+import LoadingPage from "../../../components/componentes/LoadingPage";
 
 const ModalEditarDados = ({ dados, modal, setModal }) => {
 
@@ -22,6 +24,8 @@ const ModalEditarDados = ({ dados, modal, setModal }) => {
   const [contatoErro, setContatoErro] = useState(false);
 
   const [loading, setLoading] = useState(false);
+
+  const [taxas, setTaxas] = useState(false);
 
 
 
@@ -52,6 +56,12 @@ const ModalEditarDados = ({ dados, modal, setModal }) => {
     }
     setLoading(false);
   }
+
+
+  const handleAccordionSelect = (eventKey) => {
+    // Aqui você pode colocar a lógica que deseja executar quando o item do Accordion for clicado
+   alert('Item do Accordion selecionado:', eventKey);
+  };
 
   return (
     <>
@@ -140,31 +150,45 @@ const ModalEditarDados = ({ dados, modal, setModal }) => {
                 </Accordion.Body>
               </Accordion.Item>
 
-
               <Accordion.Item key={3} eventKey={3}>
                 <Accordion.Header className="accordion-header">
                   <strong style={{ fontSize: '15px' }}>Horário de Funcionamento</strong>
                 </Accordion.Header>
-
                 <Accordion.Body>
                   <EditarHorario setModal={setModal} horariosLoja={horariosLoja} setHorariosLoja={setHorariosLoja}></EditarHorario>
                 </Accordion.Body>
               </Accordion.Item>
-          </Accordion>
 
-                            
+              
+            <Accordion onSelect={()=> setTaxas(true)}>
+              <Accordion.Item key={4} eventKey={4}>
+                <Accordion.Header className="accordion-header">
+                  <strong style={{ fontSize: '15px' }}>Entrega</strong>
+                </Accordion.Header>
+
+                <Accordion.Body>
+                  {loading && (
+                    <LoadingPage></LoadingPage>
+                  )}
+
+                  {taxas && !loading && (                  
+                    <EditarTaxas setModal={setModal}></EditarTaxas>
+                  )}
+                  </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
 
 
-                  
+             
+
+          </Accordion>   
         </Modal.Body>
-
 
         <Modal.Footer size="lg">
           <Button variant="secondary" onClick={() => setModal(false)}>
             Fechar
           </Button>
          
-
         </Modal.Footer>
       </Modal>
 
