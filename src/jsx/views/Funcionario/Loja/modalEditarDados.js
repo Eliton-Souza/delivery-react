@@ -8,11 +8,10 @@ import TextoGenerico from "../../../components/componentes/textoGenerico";
 import { api } from "../../../../services/api";
 import EditarHorario from "./editarHorario";
 import EditarTaxas from "./editarTaxas";
-import LoadingPage from "../../../components/componentes/LoadingPage";
 
 const ModalEditarDados = ({ dados, modal, setModal }) => {
 
-  const { detalhes, setDetalhes, imagens, setImagens, horariosLoja, setHorariosLoja } = dados;
+  const { detalhes, setDetalhes, imagens, setImagens, horariosLoja, setHorariosLoja, tempoEntrega, setTempoEntrega } = dados;
 
   const [nome, setNome] = useState(detalhes.nome);
   const [contato, setContato] = useState(detalhes.contato);
@@ -168,7 +167,7 @@ const ModalEditarDados = ({ dados, modal, setModal }) => {
 
                 <Accordion.Body>
                   {taxas && (                  
-                    <EditarTaxas setModal={setModal}></EditarTaxas>
+                    <EditarTaxas setModal={setModal} tempoMain={tempoEntrega} setTempoMain={setTempoEntrega}></EditarTaxas>
                   )}
                   </Accordion.Body>
                   

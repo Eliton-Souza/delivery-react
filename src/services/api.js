@@ -210,9 +210,9 @@ export const api = {
     return response.data;
   },
 
-  editarTaxas: async (taxas) => {
+  editarTaxas: async (taxas, tempo) => {
     const response = await http.put('/taxas', {
-      taxas
+      taxas, tempo
     });
     return response.data;
   },

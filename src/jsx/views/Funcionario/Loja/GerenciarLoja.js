@@ -27,6 +27,7 @@ const GerenciarLoja = () => {
   const [modal, setModal] = useState(false);
   const [imagens, setImagens] = useState( {logo: null, capa: null});
   const [detalhes, setDetalhes] = useState( {nome: null, contato: null});
+  const [tempoEntrega, setTempoEntrega] = useState(null);
   const [horariosLoja, setHorariosLoja] = useState([]);
   const [hFuncionamento, setHFuncionamento] = useState(null);
 
@@ -60,6 +61,8 @@ const GerenciarLoja = () => {
           nome: resultDados.loja.nome,
           contato: resultDados.loja.contato,
         });
+
+        setTempoEntrega(resultDados.loja.entrega);
 
         setHorariosLoja(resultDados.loja.HorarioLojas);
     
@@ -127,7 +130,7 @@ const GerenciarLoja = () => {
                         <i class="fa-brands fa-whatsapp fa-fade text-success"></i>
                           {' ' + detalhes.contato ?? '...'}
                         </h4>
-                        <p>Entrega Grátis - {dadosDaLoja ? dadosDaLoja.entrega : ''}</p>
+                        <p>{tempoEntrega ? tempoEntrega.substring(0, 5) + ' min' : 'Não realizando entregas'}</p>
                       </div>
                       <Dropdown className="ms-auto">
                         <Button className="me-2" variant="outline-primary btn-rounded" onClick={()=>{setModal(true)}}>
@@ -191,7 +194,7 @@ const GerenciarLoja = () => {
       )}
         
       {modal && (
-        <ModalEditarDados dados={{ detalhes: detalhes, setDetalhes: setDetalhes, imagens: imagens, setImagens: setImagens, horariosLoja: horariosLoja, setHorariosLoja: setHorariosLoja }} modal={modal} setModal={setModal}/>
+        <ModalEditarDados dados={{ detalhes: detalhes, setDetalhes: setDetalhes, imagens: imagens, setImagens: setImagens, horariosLoja: horariosLoja, setHorariosLoja: setHorariosLoja, tempoEntrega: tempoEntrega, setTempoEntrega: setTempoEntrega }} modal={modal} setModal={setModal}/>
       )}
 
     </>

@@ -5,8 +5,10 @@ import { api } from "../../../../services/api";
 import Taxa from "../../../components/componentes/taxa";
 import { useUsuario } from "../../../../context/UsuarioContext";
 import LoadingPage from "../../../components/componentes/LoadingPage";
+import TimePickerPicker from 'react-time-picker';
+import Switch from "../../../components/componentes/botaoSwtich";
 
-const EditarTaxas = ({ setModal }) => {
+const EditarTaxas = ({ setModal, tempoMain, setTempoMain  }) => {
 
     const { usuario } = useUsuario();
 
@@ -14,7 +16,10 @@ const EditarTaxas = ({ setModal }) => {
     const [loading2, setLoading2] = useState(false);
     const [taxas, setTaxas] = useState([]);
     const [erro, setErro] = useState([]);
-
+    
+    const [tempo, setTempo] = useState(tempoMain);
+    const [check, setCheck] = useState(tempoMain ? true : false);
+    
     const changeErro = (bairro, valor) => {
         setErro((prevState) =>
             prevState.map((item) => {
@@ -36,6 +41,12 @@ const EditarTaxas = ({ setModal }) => {
             })
         );  
     };
+
+    useEffect(() => {
+        if(!check){
+            setTempo(null);
+        }
+    }, [check]);
 
     const pegarTaxasLoja= async () => {    
 	
@@ -73,9 +84,10 @@ const EditarTaxas = ({ setModal }) => {
     const salvarTaxas= async () => {     
     
         setLoading(true);
-        const result = await api.editarTaxas(taxas);			
+        const result = await api.editarTaxas(taxas, tempo);			
 
-        if(result.success){            
+        if(result.success){   
+            setTempoMain(tempo);         
             setModal(false);   			
 
             swal("Sucesso!", "Taxas de entrega atualizadas com sucesso", "success");
@@ -96,9 +108,8 @@ const EditarTaxas = ({ setModal }) => {
     return (
         <Fragment>
             <Card>
-
                 {loading2 && (
-                     <Card.Body>
+                    <Card.Body>
                         <LoadingPage></LoadingPage>
                     </Card.Body>
                 )}
@@ -106,21 +117,53 @@ const EditarTaxas = ({ setModal }) => {
                 {!loading2 && taxas && (
                     <>
                         <Card.Body>
-                            <div className='row'>
+                            <div className="row d-flex justify-content-center align-items-center">
+                                <div className="row">
+                                    <div className="col-8 col-sm-6 mb-3 d-flex justify-content-end align-items-center">
+                                        <label className="text-label mb-1">
+                                            <strong>Tempo de entrega
+                                                <span className="text-danger"> *</span>
+                                            </strong>
+                                        </label>
+                                    </div>
+                                    <div className="col-1 espaco"></div> 
+                                    <div className="col-1 mb-3 d-flex align-items-center justify-content-center">
+                                        <Switch checked={check} setChecked={setCheck} />
+                                    </div>
+                                </div>
+
+                                <div className="row picker-data">
+                                    <div className="d-flex justify-content-center align-items-center">
+                                        {check ? (
+                                            <div className="color-time-picker style">
+                                                <TimePickerPicker onChange={setTempo} value={tempo} disableClock={false}/>
+                                            </div>
+                                        ) : (
+                                            <p className="mb-1 text-danger">
+                                                Não realizando entregas no momento
+                                            </p>
+                                        )}            
+                                    </div>            
+                                </div>
+                            </div>
+
+                            <hr className="col-12"/>
+
+                            <div className=" mb-3 d-flex justify-content-center align-items-center">
+                                <label className="text-label mb-1">
+                                    <strong>Taxas de entrega por bairro</strong>
+                                </label>
+                            </div>
+
+                            <div className="row mt-4">
                                 {taxas && taxas.map((item, index) => (
                                     <div key={index} className="col-12 col-sm-auto col-lg-6 mb-3 d-flex align-items-center">
-                                        <Taxa
-                                            setTaxa={changeTaxas}
-                                            valor={item.taxa}
-                                            bairro={item.bairro}
-                                            placeholder={"Preço"}
-                                            changeErro={changeErro}
-                                            desabilitado={loading}
-                                        ></Taxa>                
+                                        <Taxa setTaxa={changeTaxas} valor={item.taxa} bairro={item.bairro} placeholder={"Preço"} changeErro={changeErro} desabilitado={loading}/>           
                                     </div>
                                 ))}
                             </div>    
                         </Card.Body>
+
                         <Card.Footer className="d-flex justify-content-end">
                             <Button
                                 variant="success"
