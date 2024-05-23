@@ -112,7 +112,7 @@ const ModalEditarDados = ({ dados, modal, setModal }) => {
                       <ul>
                         <li className="mt-0" key={1}> 
                           <div className="row">
-                            <div className="form-group mb-3 col-md-5">                     
+                            <div className="form-group mb-3 col-lg-5">                     
                               <label className="text-label">
                                 <strong>Nome da empresa
                                     <span className="text-danger"> *</span>
@@ -124,7 +124,7 @@ const ModalEditarDados = ({ dados, modal, setModal }) => {
                               </TextoGenerico>
                             </div>  
 
-                            <div className="form-group mb-3 col-md-5">                     
+                            <div className="form-group mb-3 col-lg-5">                     
                               <label className="text-label">
                                 <strong>Número de Whatsapp
                                     <span className="text-danger"> *</span>
@@ -136,7 +136,7 @@ const ModalEditarDados = ({ dados, modal, setModal }) => {
                               </TextoGenerico>
                             </div>
 
-                            <div className="mb-3 col-md-2">
+                            <div className="mb-3 col-lg-2">
                               <Button className="mr-2 mt-4" variant="success" disabled={loading || nomeErro || contatoErro} onClick={() => salvarDetalhes()}>
                                 Salvar
                               </Button>
