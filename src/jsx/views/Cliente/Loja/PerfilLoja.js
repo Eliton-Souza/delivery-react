@@ -109,7 +109,7 @@ const PerfilLoja = () => {
                             {' '+dadosDaLoja.contato}
                           </h4>
                          )}
-                        <p>Entrega Grátis - {dadosDaLoja ? dadosDaLoja.entrega : ''}</p>
+                        <p>{dadosDaLoja.entrega ? 'Tempo de Entrega: '+ (dadosDaLoja.entrega.substring(0, 2) != '00' ? dadosDaLoja.entrega.substring(0, 2) + 'h ' : '') + (dadosDaLoja.entrega.substring(3, 5) != '00' ? dadosDaLoja.entrega.substring(3, 5) + 'min' : '') : ' Não realizando entregas no momento'}</p>
                       </div>
                     </div>
                   </div>

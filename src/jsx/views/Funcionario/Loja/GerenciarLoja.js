@@ -91,11 +91,9 @@ const GerenciarLoja = () => {
 
 
   useEffect(() => {
-    
     if(horariosLoja.length>0){
       pegarStatusHorarios(horariosLoja, setHFuncionamento);
     }
-
   }, [horariosLoja]);
 
    
@@ -130,7 +128,7 @@ const GerenciarLoja = () => {
                         <i class="fa-brands fa-whatsapp fa-fade text-success"></i>
                           {' ' + detalhes.contato ?? '...'}
                         </h4>
-                        <p>{tempoEntrega ? tempoEntrega.substring(0, 5) + ' min' : 'Não realizando entregas'}</p>
+                        <p>{tempoEntrega ? 'Tempo de Entrega: '+ (tempoEntrega.substring(0, 2) != '00' ? tempoEntrega.substring(0, 2) + 'h ' : '') + (tempoEntrega.substring(3, 5) != '00' ? tempoEntrega.substring(3, 5) + 'min' : '') : ' Não realizando entregas no momento'}</p>
                       </div>
                       <Dropdown className="ms-auto">
                         <Button className="me-2" variant="outline-primary btn-rounded" onClick={()=>{setModal(true)}}>
