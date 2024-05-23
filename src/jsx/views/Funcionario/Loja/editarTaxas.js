@@ -90,8 +90,8 @@ const EditarTaxas = ({ setModal, tempoMain, setTempoMain  }) => {
             setTempoMain(tempo);         
             setModal(false);   			
 
-            swal("Sucesso!", "Taxas de entrega atualizadas com sucesso", "success");
-            toast.success("✔️ " + "Taxas de entrega atualizadas com sucesso", {
+            swal("Sucesso!", "Taxas e tempo de entrega atualizados com sucesso", "success");
+            toast.success("✔️ " + "Taxas e tempo de entrega atualizados com sucesso", {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -136,7 +136,7 @@ const EditarTaxas = ({ setModal, tempoMain, setTempoMain  }) => {
                                     <div className="d-flex justify-content-center align-items-center">
                                         {check ? (
                                             <div className="color-time-picker style">
-                                                <TimePickerPicker onChange={setTempo} value={tempo} disableClock={false}/>
+                                                <TimePickerPicker onChange={setTempo} value={tempo} openClockOnFocus={false} hourPlaceholder={"hh "} minutePlaceholder={" mm"}/>
                                             </div>
                                         ) : (
                                             <p className="mb-1 text-danger">
