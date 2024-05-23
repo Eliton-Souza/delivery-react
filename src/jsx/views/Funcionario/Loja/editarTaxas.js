@@ -136,7 +136,7 @@ const EditarTaxas = ({ setModal, tempoMain, setTempoMain  }) => {
                                     <div className="d-flex justify-content-center align-items-center">
                                         {check ? (
                                             <div className="color-time-picker style">
-                                                <TimePickerPicker onChange={setTempo} value={tempo} openClockOnFocus={false} hourPlaceholder={"hh "} minutePlaceholder={" mm"}/>
+                                                <TimePickerPicker onChange={setTempo} value={tempo} openClockOnFocus={false} minTime={"00:01"} hourPlaceholder={"hh "} minutePlaceholder={" mm"}/>
                                             </div>
                                         ) : (
                                             <p className="mb-1 text-danger">
@@ -167,7 +167,7 @@ const EditarTaxas = ({ setModal, tempoMain, setTempoMain  }) => {
                         <Card.Footer className="d-flex justify-content-end">
                             <Button
                                 variant="success"
-                                disabled={loading || erro.find(err => err.erro)}
+                                disabled={loading || erro.find(err => err.erro) || tempo =='00:00' || tempo =='0:00'}
                                 onClick={() => salvarTaxas()}
                             >
                                 Salvar
