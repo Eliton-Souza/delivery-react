@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import { toast } from "react-toastify";
 import HorariosGrid from "./horariosGrid";
-import { api } from "../../../../services/api";
+import { api } from "../../../../../services/api";
 
 const EditarHorario = ({ setModal, horariosLoja, setHorariosLoja }) => {
 

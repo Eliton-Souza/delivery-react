@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import TimePickerPicker from 'react-time-picker';
 import { Link } from "react-router-dom";
-import Switch from "../../../components/componentes/botaoSwtich";
+import Switch from "../../../../components/componentes/botaoSwtich";
 
 
 const HorariosGrid = ({horarios, setHorario, diaSemana}) => {

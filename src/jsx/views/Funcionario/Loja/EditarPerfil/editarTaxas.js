@@ -1,12 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { api } from "../../../../services/api";
-import Taxa from "../../../components/componentes/taxa";
-import { useUsuario } from "../../../../context/UsuarioContext";
-import LoadingPage from "../../../components/componentes/LoadingPage";
+import { api } from "../../../../../services/api";
+import Taxa from "../../../../components/componentes/taxa";
+import { useUsuario } from "../../../../../context/UsuarioContext";
+import LoadingPage from "../../../../components/componentes/LoadingPage";
 import TimePickerPicker from 'react-time-picker';
-import Switch from "../../../components/componentes/botaoSwtich";
+import Switch from "../../../../components/componentes/botaoSwtich";
 
 const EditarTaxas = ({ setModal, tempoMain, setTempoMain  }) => {
 

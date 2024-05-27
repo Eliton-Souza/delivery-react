@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import FotoCrop from "../../../components/componentes/fotoCrop";
-import { api } from "../../../../services/api";
-import LoadingPage from "../../../components/componentes/LoadingPage";
-import { comprimirImagem } from "./helper";
+import FotoCrop from "../../../../components/componentes/fotoCrop";
+import { api } from "../../../../../services/api";
+import LoadingPage from "../../../../components/componentes/LoadingPage";
+import { comprimirImagem } from "../helper";
 
 
 const ModalCrop = ({ linkImagem, setImagens, setModal, tipo }) => {

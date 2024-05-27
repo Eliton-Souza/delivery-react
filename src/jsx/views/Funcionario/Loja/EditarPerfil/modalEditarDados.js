@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Accordion, Button, Card, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
-import noImage from '../../../../images/noImage.png';
+import noImage from '../../../../../images/noImage.png';
 import EditarFoto from "./editarFoto";
 import ModalCrop from "./modalCrop";
-import TextoGenerico from "../../../components/componentes/textoGenerico";
-import { api } from "../../../../services/api";
+import TextoGenerico from "../../../../components/componentes/textoGenerico";
+import { api } from "../../../../../services/api";
 import EditarHorario from "./editarHorario";
 import EditarTaxas from "./editarTaxas";
 
