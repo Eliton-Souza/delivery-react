@@ -2,23 +2,20 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Button, Dropdown, Tab, Nav } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 
-
-
 import cover from "../../../../images/profile/cover.jpg";
 import suaLogo from "../../../../images/suaLogoAqui.png";
 import { api } from "../../../../services/api";
 
-
-import ProdutosList from "../../Produto/produtosList";
-import ProdutosGrid from "../../Produto/produtosGrid";
-import { pathGrid, pathLista } from "./icones";
+import { pathGrid, pathLista } from "./Categorias/icones";
 import LoadingPage from "../../../components/componentes/LoadingPage";
 
 import { useUsuario } from "../../../../context/UsuarioContext";
-import ModalEditarDados from "./modalEditarDados";
+import ModalEditarDados from "./EditarPerfil/modalEditarDados";
 import { pegarStatusHorarios } from "./helper";
+import CategoriasList from "./Categorias/categoriasList";
+import CategoriasGrid from "./Categorias/categoriasGrid";
 
-const GerenciarLoja = () => {
+const HomeLoja = () => {
 	
 	const navigate = useNavigate();
 
@@ -27,6 +24,7 @@ const GerenciarLoja = () => {
   const [modal, setModal] = useState(false);
   const [imagens, setImagens] = useState( {logo: null, capa: null});
   const [detalhes, setDetalhes] = useState( {nome: null, contato: null});
+  const [categorias, setCategorias] = useState([]);
   const [tempoEntrega, setTempoEntrega] = useState(null);
   const [horariosLoja, setHorariosLoja] = useState([]);
   const [hFuncionamento, setHFuncionamento] = useState(null);
@@ -49,6 +47,7 @@ const GerenciarLoja = () => {
       const resultDados = await api.dadosLojaFuncionario();			
 
       if(resultDados.success){
+        console.log(resultDados.loja);
         
         setDadosDaLoja(resultDados.loja);
 
@@ -61,6 +60,8 @@ const GerenciarLoja = () => {
           nome: resultDados.loja.nome,
           contato: resultDados.loja.contato,
         });
+
+        setCategorias(resultDados.loja.Categoria);
 
         setTempoEntrega(resultDados.loja.entrega);
 
@@ -157,7 +158,7 @@ const GerenciarLoja = () => {
                   <Nav.Link as="button" className="nav-link me-3" id="pills-home-tab" eventKey="List">
                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clipPath="url(#clip0_730_817)">
-                        {pathGrid()}
+                        {pathLista()}
                       </g>
                       <defs>
                         <clipPath id="clip0_730_817">
@@ -170,7 +171,7 @@ const GerenciarLoja = () => {
                 <Nav.Item as="li" className="nav-item " role="presentation">
                   <Nav.Link as="button" className="nav-link" id="pills-grid-tab" eventKey="Grid">
                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      {pathLista()}
+                      {pathGrid()}
                     </svg>
                   </Nav.Link>
                 </Nav.Item>
@@ -179,11 +180,11 @@ const GerenciarLoja = () => {
 
             <Tab.Content>
               <Tab.Pane eventKey="List">
-                <ProdutosList produtos={produtos}/>
+                <CategoriasList categorias={categorias}/>
               </Tab.Pane>
 
               <Tab.Pane eventKey="Grid">
-                <ProdutosGrid produtos={produtos}/>
+                <CategoriasGrid categorias={categorias}/>
               </Tab.Pane>
             </Tab.Content>
 
@@ -199,4 +200,4 @@ const GerenciarLoja = () => {
   );
 }
       
-export default GerenciarLoja;
+export default HomeLoja;
