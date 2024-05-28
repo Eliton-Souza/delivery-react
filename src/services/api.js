@@ -181,6 +181,13 @@ export const api = {
     return response.data;
   },
   
+  cadastrarCategoria: async (nome, prioridade) => {
+    const response = await http.post('/categoria', {
+      nome, prioridade
+    });
+      
+    return response.data;
+  },
 
   //IMAGENS LOJA  
   pegarImagem: async (link) => {

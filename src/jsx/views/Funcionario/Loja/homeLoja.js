@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Button, Dropdown, Tab, Nav } from "react-bootstrap";
+import { Button, Dropdown, Tab, Nav, ListGroup } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 
 import cover from "../../../../images/profile/cover.jpg";
@@ -14,6 +14,7 @@ import ModalEditarDados from "./EditarPerfil/modalEditarDados";
 import { pegarStatusHorarios } from "./helper";
 import CategoriasList from "./Categorias/categoriasList";
 import CategoriasGrid from "./Categorias/categoriasGrid";
+import CadastrarCategoria from "./Categorias/cadastrarCategoria";
 
 const HomeLoja = () => {
 	
@@ -22,6 +23,7 @@ const HomeLoja = () => {
 	const { usuario } = useUsuario();
 	const [loading, setLoading] = useState(null);
   const [modal, setModal] = useState(false);
+  const [modalCategoria, setModalCategoria] = useState(false);
   const [imagens, setImagens] = useState( {logo: null, capa: null});
   const [detalhes, setDetalhes] = useState( {nome: null, contato: null});
   const [categorias, setCategorias] = useState([]);
@@ -152,31 +154,42 @@ const HomeLoja = () => {
       {produtos && (        
         <Fragment>
           <Tab.Container defaultActiveKey="List">
-            <div className="d-flex align-items-center justify-content-end mb-4">
+
+          <div className="d-flex align-items-center justify-content-between mb-4">
+            <div className="d-flex align-items-center">  
+              <Dropdown>
+                <Dropdown.Toggle variant="primary">
+                  + Adicionar
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <ListGroup.Item action as="li" onClick={() => setModalCategoria(true)}>Categoria</ListGroup.Item>
+                  <ListGroup.Item action as="li" onClick={() => alert("clicou produto")}>Produto</ListGroup.Item>        
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+
+            <div className="d-flex align-items-center">
               <Nav as="ul" className="grid-tab nav nav-pills" id="list-tab" role="tablist">
-                <Nav.Item as="li" className="nav-item" role="presentation" >
-                  <Nav.Link as="button" className="nav-link me-3" id="pills-home-tab" eventKey="List">
+                <Nav.Item as="li" className="nav-item" role="presentation">
+                  <Nav.Link as="button" className="nav-link me-3" id="pills-home-tab" onClick={()=>alert("teste")} eventKey="List">
                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clipPath="url(#clip0_730_817)">
                         {pathLista()}
                       </g>
-                      <defs>
-                        <clipPath id="clip0_730_817">
-                          <rect x="0.410156" y="0.411743" width="21.1765" height="21.1765" fill="white"/>
-                        </clipPath>
-                      </defs>
                     </svg>
                   </Nav.Link>
                 </Nav.Item>
-                <Nav.Item as="li" className="nav-item " role="presentation">
+                {/*<Nav.Item as="li" className="nav-item" role="presentation">
                   <Nav.Link as="button" className="nav-link" id="pills-grid-tab" eventKey="Grid">
                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                       {pathGrid()}
                     </svg>
                   </Nav.Link>
-                </Nav.Item>
-              </Nav>                        
+                </Nav.Item>*/}
+              </Nav>
             </div>
+          </div>
+
 
             <Tab.Content>
               <Tab.Pane eventKey="List">
@@ -194,6 +207,10 @@ const HomeLoja = () => {
         
       {modal && (
         <ModalEditarDados dados={{ detalhes: detalhes, setDetalhes: setDetalhes, imagens: imagens, setImagens: setImagens, horariosLoja: horariosLoja, setHorariosLoja: setHorariosLoja, tempoEntrega: tempoEntrega, setTempoEntrega: setTempoEntrega }} modal={modal} setModal={setModal}/>
+      )}
+
+      {modalCategoria && (
+        <CadastrarCategoria setModal={setModalCategoria} categorias={categorias} setCategorias={setCategorias}/>
       )}
 
     </>
