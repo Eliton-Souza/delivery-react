@@ -15,6 +15,7 @@ import { pegarStatusHorarios } from "./helper";
 import CategoriasList from "./Categorias/categoriasList";
 import CategoriasGrid from "./Categorias/categoriasGrid";
 import CadastrarCategoria from "./Categorias/cadastrarCategoria";
+import OrdenarCategoria from "./Categorias/ordenarCategoria";
 
 const HomeLoja = () => {
 	
@@ -24,6 +25,8 @@ const HomeLoja = () => {
 	const [loading, setLoading] = useState(null);
   const [modal, setModal] = useState(false);
   const [modalCategoria, setModalCategoria] = useState(false);
+  const [modalOrdenar, setModalOrdenar] = useState(false);
+
   const [imagens, setImagens] = useState( {logo: null, capa: null});
   const [detalhes, setDetalhes] = useState( {nome: null, contato: null});
   const [categorias, setCategorias] = useState([]);
@@ -32,14 +35,6 @@ const HomeLoja = () => {
   const [hFuncionamento, setHFuncionamento] = useState(null);
 
   const [dadosDaLoja, setDadosDaLoja] = useState(null);
-  const [produtos, setProdutos] = useState(null);
-
-  const agruparPorCategoria = (produtos) => {
-    return produtos.reduce((agrupados, produto) => {
-      (agrupados[produto.categoria] = agrupados[produto.categoria] || []).push(produto);
-      return agrupados;
-    }, {});
-  }; 
 
 	const pegarDadosLoja= async () => {    
 	
@@ -68,15 +63,6 @@ const HomeLoja = () => {
         setTempoEntrega(resultDados.loja.entrega);
 
         setHorariosLoja(resultDados.loja.HorarioLojas);
-    
-        const resultProdutos = await api.produtosLoja(resultDados.loja.id_loja);			
-
-        if(resultProdutos.success){
-          const produtosAgrupados = agruparPorCategoria(resultProdutos.produtos);
-          setProdutos(produtosAgrupados);
-        }else{
-          swal("Oops", resultProdutos.error, "error");
-        }
       }else{
         swal("Oops", resultDados.error, "error");
         navigate('/page-error-404');
@@ -151,7 +137,7 @@ const HomeLoja = () => {
       )}
 
 
-      {produtos && (        
+      {categorias && (        
         <Fragment>
           <Tab.Container defaultActiveKey="List">
 
@@ -159,7 +145,8 @@ const HomeLoja = () => {
             <div className="d-flex align-items-center">  
               <Dropdown>
                 <Dropdown.Toggle variant="primary">
-                  + Adicionar
+                <i className="fa fa-plus me-2" />
+                  Adicionar
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <ListGroup.Item action as="li" onClick={() => setModalCategoria(true)}>Categoria</ListGroup.Item>
@@ -171,7 +158,7 @@ const HomeLoja = () => {
             <div className="d-flex align-items-center">
               <Nav as="ul" className="grid-tab nav nav-pills" id="list-tab" role="tablist">
                 <Nav.Item as="li" className="nav-item" role="presentation">
-                  <Nav.Link as="button" className="nav-link me-3" id="pills-home-tab" onClick={()=>alert("teste")} eventKey="List">
+                  <Nav.Link as="button" className="nav-link me-3" id="pills-home-tab" onClick={()=> setModalOrdenar(true)} eventKey="List">
                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clipPath="url(#clip0_730_817)">
                         {pathLista()}
@@ -211,6 +198,10 @@ const HomeLoja = () => {
 
       {modalCategoria && (
         <CadastrarCategoria setModal={setModalCategoria} categorias={categorias} setCategorias={setCategorias}/>
+      )}
+
+      {modalOrdenar && (
+        <OrdenarCategoria setModal={setModalOrdenar} categorias={categorias} setCategorias={setCategorias}/>
       )}
 
     </>

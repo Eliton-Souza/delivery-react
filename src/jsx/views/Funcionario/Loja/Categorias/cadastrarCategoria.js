@@ -11,11 +11,9 @@ const CadastrarCategoria = ({ setModal, categorias, setCategorias }) => {
    const [loading, setLoading] = useState(false);
    
    const cadastrar= async () => {     
-      console.log("antes1: "+categorias);
+     
       setLoading(true);
-
       const prioridade= Number(Math.max(...categorias.map(categoria => categoria.prioridade)) + 1);
-
       const result = await api.cadastrarCategoria(nome, prioridade);			
   
       if(result.success){
@@ -27,10 +25,8 @@ const CadastrarCategoria = ({ setModal, categorias, setCategorias }) => {
             "Produtos": []
         }
 
-        
          setCategorias([novaCategoria, ...categorias]);
          
-
          setModal(false);   			
          swal("Sucesso!", "Categoria cadastrada com sucesso", "success");
          toast.success("✔️ " + "Categoria cadastrada com sucesso", {
@@ -49,11 +45,11 @@ const CadastrarCategoria = ({ setModal, categorias, setCategorias }) => {
 
    return (
       <Modal show={true} onHide={() => { setModal(false) }} size="md">
-        <Modal.Header closeButton>
-          <Modal.Title>Cadrastre uma nova categoria de produtos!</Modal.Title>
-        </Modal.Header>
+         <Modal.Header closeButton>
+            <Modal.Title>Cadrastre uma nova categoria de produtos!</Modal.Title>
+         </Modal.Header>
 
-        <Modal.Body>
+         <Modal.Body>
             <label className="text-label">
                <strong>Nome
                   <span className="text-danger"> *</span>
@@ -65,9 +61,9 @@ const CadastrarCategoria = ({ setModal, categorias, setCategorias }) => {
                   changeTexto={SetNome} campo={"Nome"} placeholder={"Nome da categoria"} changeErro={setErro} desabilitado={false}>                                 
                </TextoGenerico>
             </div>
-        </Modal.Body>
+         </Modal.Body>
 
-        <Modal.Footer size="lg">
+         <Modal.Footer size="lg">
             <Button variant="dark" onClick={() => setModal(false)}>
                Fechar
             </Button>
@@ -76,7 +72,7 @@ const CadastrarCategoria = ({ setModal, categorias, setCategorias }) => {
                <i className="fa fa-plus me-2" />
                Cadastrar
             </Button>
-        </Modal.Footer>
+         </Modal.Footer>
       </Modal>
    );
 };

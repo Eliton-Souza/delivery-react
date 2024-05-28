@@ -189,6 +189,15 @@ export const api = {
     return response.data;
   },
 
+  editarPrioridadeCategoria: async (categorias) => {
+    const response = await http.put('prioridadeCategoria', {
+      categorias
+    });
+    return response.data;
+  },
+
+  
+
   //IMAGENS LOJA  
   pegarImagem: async (link) => {
     const encodedLink = encodeURIComponent(link);
