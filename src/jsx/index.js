@@ -130,6 +130,9 @@ import Endereco from "./views/Cliente/Endereco/Endereco";
 
 import HomeLoja from "./views/Funcionario/Loja/homeLoja";
 
+//Funcionarios autenticados
+import CadastrarProduto from "./views/Funcionario/Loja/Produtos/cadastrarProduto";
+
 
 import Logout from "./views/Acesso/Logout";
 
@@ -157,6 +160,11 @@ const Markup = () => {
 
     //rotas de funcionarios autenticados
     { url: "restaurant", component: (usuario?.id_funcionario) ? <HomeLoja /> : <Logout/> },
+    { url: "funcionario/cadastrarProduto", component: (usuario?.id_funcionario) ? <CadastrarProduto /> : <Logout/> },
+
+
+
+
     { url: "withdrow", component: <Withdrow /> },
     { url: "menu", component: <Menu /> },
     { url: "orders", component: <Orders /> },

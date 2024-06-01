@@ -150,7 +150,7 @@ const HomeLoja = () => {
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <ListGroup.Item action as="li" onClick={() => setModalCategoria(true)}>Categoria</ListGroup.Item>
-                  <ListGroup.Item action as="li" onClick={() => alert("clicou produto")}>Produto</ListGroup.Item>        
+                  <ListGroup.Item action as="li" onClick={() => navigate('/funcionario/cadastrarProduto')}>Produto</ListGroup.Item>        
                 </Dropdown.Menu>
               </Dropdown>
             </div>
@@ -203,7 +203,6 @@ const HomeLoja = () => {
       {modalOrdenar && (
         <OrdenarCategoria setModal={setModalOrdenar} categorias={categorias} setCategorias={setCategorias}/>
       )}
-
     </>
   );
 }
