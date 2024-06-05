@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import TituloPagina from "../../../../components/componentes/TituloPagina";
 import CadastrarProdutoSimples from "./cadastrarProdutoSimples";
 import { OpcoesHamburgueriaLanchonetePizzaria, OpcoesRestaurante } from "./helper";
+import SelecaoComplemento from "./selecaoComplemento";
 
 const CadastrarProduto = () => {
 
@@ -69,6 +70,10 @@ const CadastrarProduto = () => {
 
          {step == 2 && (   
             <CadastrarProdutoSimples tipo={tipo} setStep={setStep}></CadastrarProdutoSimples>
+         )}
+
+         {step == 3 && (   
+            <SelecaoComplemento setStep={setStep}></SelecaoComplemento>
          )}
 
 
