@@ -62,7 +62,4 @@ export const pegarStatusHorarios = (horariosLoja, setStatusFuncionamento) => {
       setStatusFuncionamento("Fechado 🔴");  //fechado
     } 
   }
-  else {
-    alert("tem mudar o nome q ta esscrito no dia da semana");
-  }
 };
