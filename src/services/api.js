@@ -162,6 +162,16 @@ export const api = {
     return response.data;
   },
 
+  //Produto
+
+  cadastrarProduto: async (nome, preco, tipo, id_categoria, imagem, descricao) => {
+    const response = await http.post('/produto', {
+      nome, preco, tipo, id_categoria, imagem, descricao
+    });
+      
+    return response.data;
+  },
+
   produtosLoja: async (id_loja) => {
     const response = await http.get(`/produtos/${id_loja}`);
     return response.data;
@@ -186,6 +196,11 @@ export const api = {
       nome, prioridade
     });
       
+    return response.data;
+  },
+
+  pegarCategorias: async () => {
+    const response = await http.get('/categoria');
     return response.data;
   },
 
