@@ -8,7 +8,7 @@ const Preco = ({ setPreco, placeholder, changeErro, desabilitado }) => {
 
   const validaPreco = Yup.object().shape({
     texto: Yup.string()
-      .matches(/^\d+(\,\d+)?$/, 'Deve ser um valor numérico positivo separo por vírgula')
+      .matches(/^\d+(\,\d+)?$/, 'Deve ser 0 ou um valor numérico positivo separado por vírgula')
       .required('O campo Preço é obrigatório')
   });  
     
