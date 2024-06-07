@@ -126,7 +126,7 @@ const CadastrarProdutoSimples = ({ tipo, setStep }) => {
 
                            <div className="form-group mb-3 col-md-6">                     
                               <label className="text-label">
-                                 <strong>Preco
+                                 <strong>Preço
                                     <span className="text-danger"> *</span>
                                  </strong>
                               </label>
