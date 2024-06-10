@@ -248,6 +248,32 @@ export const api = {
     return response.data;
   },
 
+  //GRUPOS LOJA
+  pegarGrupos: async () => {
+    const response = await http.get('/grupo');
+    return response.data;
+  },
+  
+  editarGrupo: async (id_grupo, nome) => {
+    const response = await http.put('/grupo', {
+      id_grupo, nome
+    });
+    return response.data;
+  },
+
+  //COMPLEMENTOS LOJA
+  cadastrarComplemento: async (id_grupo, nome, preco) => {
+    const response = await http.post('/complemento', {
+      id_grupo, nome, preco
+    });
+    return response.data;
+  },
+
+  pegarComplementos: async (id_grupo) => {
+    const response = await http.get(`/complemento/${id_grupo}`);
+    return response.data;
+  },
+
 
 
   //SABOR

@@ -132,6 +132,8 @@ import HomeLoja from "./views/Funcionario/Loja/homeLoja";
 
 //Funcionarios autenticados
 import CadastrarProduto from "./views/Funcionario/Loja/Produtos/cadastrarProduto";
+import GerenciarGrupos from "./views/Funcionario/Loja/Grupos/gerenciarGrupos";
+
 
 
 import Logout from "./views/Acesso/Logout";
@@ -161,6 +163,7 @@ const Markup = () => {
     //rotas de funcionarios autenticados
     { url: "restaurant", component: (usuario?.id_funcionario) ? <HomeLoja /> : <Logout/> },
     { url: "funcionario/cadastrarProduto", component: (usuario?.id_funcionario) ? <CadastrarProduto /> : <Logout/> },
+    { url: "funcionario/gerenciarGrupo", component: (usuario?.id_funcionario) ? <GerenciarGrupos /> : <Logout/> },
 
 
 
