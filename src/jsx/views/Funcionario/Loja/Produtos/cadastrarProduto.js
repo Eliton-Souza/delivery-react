@@ -1,17 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
 import imagem from "../../../../../images/pacote.png"
 import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import TituloPagina from "../../../../components/componentes/TituloPagina";
 import CadastrarProdutoSimples from "./cadastrarProdutoSimples";
 import { OpcoesHamburgueriaLanchonetePizzaria, OpcoesRestaurante } from "./helper";
 import SelecaoComplemento from "./selecaoComplemento";
 
 const CadastrarProduto = () => {
-
-	const navigate = useNavigate();
-
-	const [loading, setLoading]= useState(false);
 
    const [tipo, setTipo] = useState(null);
    const [step, setStep]= useState(1);

@@ -35,20 +35,20 @@ const CategoriasList = ({ categorias }) =>{
                                                                 <div>
                                                                     <Link to="#"><h4>{item.nome}</h4></Link>
 
-                                                                    {item.tipo !== 'fixo' && (
+                                                                    {item.tipo == 'pizza' && (
                                                                         <span className='text-success'>
                                                                             <div className="d-flex align-items-center">
                                                                                 a partir de &nbsp;
                                                                                 <h3 className="mb-0 text-primary">
-                                                                                    R$ {(item.preco.toFixed(2)).replace('.', ',')}
+                                                                                    R$ {(item.preco).replace('.', ',')}
                                                                                 </h3>
                                                                             </div>
                                                                         </span>
                                                                     )}
 
-                                                                    {item.tipo == 'fixo' && (
+                                                                    {item.tipo !== 'pizza' && (
                                                                         <h3 className="mb-0 text-primary">
-                                                                            R$ {(item.preco.toFixed(2)).replace('.', ',')}
+                                                                            R$ {(item.preco).replace('.', ',')}
                                                                         </h3>
                                                                     )}
                                                                 </div>                                   

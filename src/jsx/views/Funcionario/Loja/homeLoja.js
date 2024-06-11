@@ -6,14 +6,12 @@ import cover from "../../../../images/profile/cover.jpg";
 import suaLogo from "../../../../images/suaLogoAqui.png";
 import { api } from "../../../../services/api";
 
-import { pathGrid, pathLista } from "./Categorias/icones";
+import { pathLista } from "./Categorias/icones";
 import LoadingPage from "../../../components/componentes/LoadingPage";
 
-import { useUsuario } from "../../../../context/UsuarioContext";
 import ModalEditarDados from "./EditarPerfil/modalEditarDados";
 import { pegarStatusHorarios } from "./helper";
 import CategoriasList from "./Categorias/categoriasList";
-import CategoriasGrid from "./Categorias/categoriasGrid";
 import CadastrarCategoria from "./Categorias/cadastrarCategoria";
 import OrdenarCategoria from "./Categorias/ordenarCategoria";
 
@@ -21,7 +19,6 @@ const HomeLoja = () => {
 	
 	const navigate = useNavigate();
 
-	const { usuario } = useUsuario();
 	const [loading, setLoading] = useState(null);
   const [modal, setModal] = useState(false);
   const [modalCategoria, setModalCategoria] = useState(false);
@@ -38,8 +35,6 @@ const HomeLoja = () => {
 
 	const pegarDadosLoja= async () => {    
 	
-    if(usuario.id_funcionario){
-
       setLoading(true);
       const resultDados = await api.dadosLojaFuncionario();			
 
@@ -69,10 +64,7 @@ const HomeLoja = () => {
         
       }
       setLoading(false);
-    }
-    else{
-      navigate('/logout');
-    }
+    
 	}    
   useEffect(() => {
     pegarDadosLoja();
@@ -167,25 +159,13 @@ const HomeLoja = () => {
                     </svg>
                   </Nav.Link>
                 </Nav.Item>
-                {/*<Nav.Item as="li" className="nav-item" role="presentation">
-                  <Nav.Link as="button" className="nav-link" id="pills-grid-tab" eventKey="Grid">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      {pathGrid()}
-                    </svg>
-                  </Nav.Link>
-                </Nav.Item>*/}
               </Nav>
             </div>
           </div>
 
-
             <Tab.Content>
               <Tab.Pane eventKey="List">
                 <CategoriasList categorias={categorias}/>
-              </Tab.Pane>
-
-              <Tab.Pane eventKey="Grid">
-                <CategoriasGrid categorias={categorias}/>
               </Tab.Pane>
             </Tab.Content>
 
