@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-const Preco = ({ setPreco, placeholder, changeErro, desabilitado }) => {
+const Preco = ({setPreco, valor, placeholder, changeErro, desabilitado }) => {
   
   const [erro, setErro] = useState(false);
 
@@ -16,7 +16,7 @@ const Preco = ({ setPreco, placeholder, changeErro, desabilitado }) => {
     <div className="row">
       <div className="col-12">
         <Formik
-          initialValues={{ texto: "" }}
+          initialValues={{ texto: valor ?? "" }}
           validationSchema={validaPreco}
         >
           {({ values, errors, handleChange, handleBlur }) => {
