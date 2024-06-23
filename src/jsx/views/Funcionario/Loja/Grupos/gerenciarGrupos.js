@@ -6,6 +6,7 @@ import TituloPagina from "../../../../components/componentes/TituloPagina";
 import ModalNome from "./modalNome";
 import LoadingPage from "../../../../components/componentes/LoadingPage";
 import ModalAddComp from "./modalAddComp";
+import ModalAddGrupo from "./modalAddGrupo";
 
 const GerenciarGrupos = ({ }) => {
 
@@ -76,6 +77,13 @@ const GerenciarGrupos = ({ }) => {
       <TituloPagina titulo={"/Gerenciar Grupos"}></TituloPagina>
       <br></br>
 
+      <div className="d-flex align-items-center justify-content-between mb-4">
+        <Button variant="primary" disabled={loading} onClick={()=> setModalAddGrupo(true)}>
+          <i className="fa fa-plus me-2" />
+          Cadastrar Grupo
+        </Button>
+      </div>
+
       <Card>
         <Card.Body>
           {loading ? 
@@ -137,6 +145,10 @@ const GerenciarGrupos = ({ }) => {
 
       {modalAddComp && (
         <ModalAddComp setModal={setModalAddComp} id_grupo={id_grupo} pegarComplementos={pegarComplementos}></ModalAddComp>
+      )}
+
+      {modalAddGrupo && (
+        <ModalAddGrupo setModal={setModalAddGrupo} grupos={grupos} setGrupos={setGrupos}></ModalAddGrupo>
       )}
 
     </>

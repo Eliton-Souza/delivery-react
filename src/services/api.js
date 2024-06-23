@@ -249,6 +249,13 @@ export const api = {
   },
 
   //GRUPOS LOJA
+  cadastrarGrupo: async (nome, tipo) => {
+    const response = await http.post('/grupo', {
+      nome, tipo
+    });
+    return response.data;
+  },
+
   pegarGrupos: async () => {
     const response = await http.get('/grupo');
     return response.data;
