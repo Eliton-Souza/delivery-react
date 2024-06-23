@@ -5,7 +5,7 @@ import { toast } from "react-toastify"
 import { api } from "../../../../../services/api";
 import Preco from "../../../../components/componentes/preco";
 
-const ModalAddComp = ({ setModal, id_grupo, setGrupos }) => {
+const ModalAddComp = ({ setModal, id_grupo, pegarComplementos }) => {
 
    const [nome, setNome] = useState(null);
    const [preco, setPreco] = useState(null);
@@ -32,7 +32,7 @@ const ModalAddComp = ({ setModal, id_grupo, setGrupos }) => {
   
       if(result.success){
 
-        //setar no main
+        pegarComplementos(id_grupo);
          
         swal("Sucesso!", "Item adicionado ao grupo com sucesso", "success");
         toast.success("✔️ " + "Item adicionado ao grupo com sucesso", {

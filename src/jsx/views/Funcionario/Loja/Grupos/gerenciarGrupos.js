@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Accordion, Button, Card, Modal } from "react-bootstrap";
-import { toast } from "react-toastify";
 import { api } from "../../../../../services/api";
-import ExibirProdutosGrupo from "./ExibirProdutosGrupo";
+import ExibirComplementosGrupo from "./ExibirComplementosGrupo";
 import TituloPagina from "../../../../components/componentes/TituloPagina";
 import ModalNome from "./modalNome";
 import LoadingPage from "../../../../components/componentes/LoadingPage";
@@ -11,7 +10,6 @@ import ModalAddComp from "./modalAddComp";
 const GerenciarGrupos = ({ }) => {
 
   const [loading, setLoading]= useState(false);
-
   const [loadingComp, setLoadingComp]= useState(false);
 
   const [grupos, setGrupos] = useState([]);
@@ -43,6 +41,8 @@ const GerenciarGrupos = ({ }) => {
     pegarGrupos();
   }, []); 
 
+
+
   const pegarComplementos= async (id) => {    
 	
     setLoadingComp(true);
@@ -50,18 +50,17 @@ const GerenciarGrupos = ({ }) => {
 
     if(result.success){
       setComplementos(result.complementos);
-      console.log(result.complementos);
     }else{
       swal("Oops", result.error, "error");
     }
     setLoadingComp(false);
 	}
 
+
   
   const handleAccordionToggle = async (eventKey) => {
     if(eventKey){
       await pegarComplementos(eventKey);
-      
     }
     setIdGrupo(eventKey);
   };
@@ -101,7 +100,7 @@ const GerenciarGrupos = ({ }) => {
                                 <LoadingPage></LoadingPage>              
                               ):(
                                 <div>
-                                  <ExibirProdutosGrupo id_grupo={id_grupo} />
+                                  <ExibirComplementosGrupo id_grupo={id_grupo} complementos={complementos} pegarComplementos={pegarComplementos} />
                                 </div>
                               )}
                             </Card.Body>
@@ -137,7 +136,7 @@ const GerenciarGrupos = ({ }) => {
       )}
 
       {modalAddComp && (
-        <ModalAddComp setModal={setModalAddComp} id_grupo={id_grupo} setGrupos={setGrupos}></ModalAddComp>
+        <ModalAddComp setModal={setModalAddComp} id_grupo={id_grupo} pegarComplementos={pegarComplementos}></ModalAddComp>
       )}
 
     </>

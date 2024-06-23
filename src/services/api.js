@@ -274,6 +274,10 @@ export const api = {
     return response.data;
   },
 
+  deletarComplemento: async (id_complemento) => {
+    const response = await http.delete(`/complemento/${id_complemento}`);
+    return response.data;
+  },
 
 
   //SABOR
