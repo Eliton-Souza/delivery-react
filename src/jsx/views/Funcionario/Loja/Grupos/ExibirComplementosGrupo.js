@@ -1,9 +1,13 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Dropdown, Table } from "react-bootstrap";
 import { api } from "../../../../../services/api";
 import { toast } from "react-toastify";
+import ModalEditComp from "./modalEditComp";
 
 const ExibirComplementosGrupo = ({ id_grupo, complementos, pegarComplementos }) => {    
+
+    const [modalEditComp, setModalEditComp] = useState(false);
+    const [itemEdit, setItemEdit] = useState(null);
 
     const deletar= async (id_complemento) => {    
 	
@@ -79,7 +83,7 @@ const ExibirComplementosGrupo = ({ id_grupo, complementos, pegarComplementos }) 
                             </td>
                             <td>
                                 <div className="card-title card-intro-title mb-1">
-                                    {item.preco}
+                                    {(item.preco).replace('.', ',')}
                                 </div>
                             </td>
                             <td>
@@ -115,7 +119,7 @@ const ExibirComplementosGrupo = ({ id_grupo, complementos, pegarComplementos }) 
                                     </svg>
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu>
-                                        <Dropdown.Item>Edit</Dropdown.Item>
+                                        <Dropdown.Item onClick={()=> {setItemEdit(item); setModalEditComp(true)}}>Editar</Dropdown.Item>
                                         <Dropdown.Item onClick={()=> deletarComplemento(item.id_complemento)}>Excluir</Dropdown.Item>
                                     </Dropdown.Menu>
                                 </Dropdown>
@@ -124,7 +128,12 @@ const ExibirComplementosGrupo = ({ id_grupo, complementos, pegarComplementos }) 
                     ))}
                 </tbody>
             </Table>
-        </Fragment>
+
+            {modalEditComp && (
+                <ModalEditComp item={itemEdit} setModal={setModalEditComp} id_grupo={id_grupo} pegarComplementos={pegarComplementos}></ModalEditComp>
+            )}
+
+        </Fragment> 
     );
 };
 

@@ -274,6 +274,13 @@ export const api = {
     return response.data;
   },
 
+  editarComplemento: async (id_complemento, nome, preco, status) => {
+    const response = await http.put(`/complemento/${id_complemento}`, {
+      nome, preco, status
+    }); 
+    return response.data;
+  },
+
   deletarComplemento: async (id_complemento) => {
     const response = await http.delete(`/complemento/${id_complemento}`);
     return response.data;
